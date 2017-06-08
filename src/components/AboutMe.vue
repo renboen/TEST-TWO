@@ -1,0 +1,38 @@
+<template>
+  <div>
+    <keep-alive>
+      <component :is="currentView"></component>
+    </keep-alive>
+  </div>
+</template>zz
+<script>
+
+  import AddressList from "@/components/Address"
+  import Longguest from "@/components/Longguest"
+
+  export default{
+      data(){
+          return {
+            currentView:localStorage.getItem("addressBook"),
+          }
+      },
+    components:{
+      AddressList,
+      Longguest
+    },
+    mounted(){
+      let that=this;
+      that.$bus.$on('longguestAndAddress',function( arg1, arg2){
+        localStorage.setItem("addressBook", arg2);
+        that.currentView=arg2;
+      });
+    }
+
+  }
+</script>
+<style scoped>
+  div{
+    background: white;
+  }
+
+</style>

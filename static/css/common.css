@@ -1,0 +1,53 @@
+*{
+    margin: 0;
+    padding: 0;
+   
+}
+body{
+    background:#EDEDED
+}
+#order .mint-field-core{
+    text-align: right;
+}
+#order .poupSearch .mint-field-core{
+    text-align: left;
+    font-size:14px
+    
+}
+#order .poupSearch .mint-cell{
+    height:30px;
+}
+#order .mint-cell-wrapper{
+    padding: 0 0px!important;
+    width: calc(100% - 16px)!important;
+    margin-left:8px!important; 
+}
+
+.sgm-png{
+       background:url(../img/sgm.png) no-repeat 0 0;
+}
+.patac-png{
+    background:url(../img/patac.png) no-repeat 0 0;
+  
+}
+
+/*按钮点击反馈效果*/
+.mint-button::after {
+    background-color: blue!important;
+    content: " ";
+    opacity: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}
+/*.mint-loadmore{
+    width:100%;
+    /*height:76px;*/
+    /*overflow:auto!important*/
+/*}*/
+::-webkit-scrollbar {
+    display: none;
+}
+
