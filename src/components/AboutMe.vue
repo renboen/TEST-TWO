@@ -4,7 +4,7 @@
       <component :is="currentView"></component>
     </keep-alive>
   </div>
-</template>zz
+</template>
 <script>
 
   import AddressList from "@/components/Address"
