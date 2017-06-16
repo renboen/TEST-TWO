@@ -1,31 +1,29 @@
-<!--<script src="../../../任博恩/访客预约项目/访客预约/js/ajax.js"></script>-->
 <template>
   <div id="headBot">
-    <!--<div style="position: fixed;width: 100%">-->
-    <mt-header fixed title="访客预约管理系统" style="height:50px;z-index:990"></mt-header>
+    <div  class="hheader">
+    <!--<mt-header fixed title="访客预约管理系统" ></mt-header>-->
+    <header >访客预约管理系统</header>
     <div class="orderSelect" v-show='selected=="order"' @click="showpoup">{{isSgmOrPatac}} <span
       class=" fa fa-angle-down"></span></div>
     <div class="aboutmeSelect" v-show='selected=="check"' @click="PoupCheckShow"><span v-show="IsshowPoupCheck">{{IscheckingOrChecked}}</span>
       <span v-show="IsshowPoupCheck" class=" fa fa-angle-down"></span></div>
 
-    <div class="addressSelect" v-show='selected=="aboutme"' @click="IsshowLongguest"><span>{{IsaddressbookOrLongguest}}</span>
-      <span  class=" fa fa-angle-down"></span></div>
-    <!--</div>-->
-    <div style="height:50px" class="nouse"></div>
+    <div class="addressSelect" v-show='selected=="aboutme"' @click="IsshowLongguest"><span v-show="IsshowPoupCheck">{{IsaddressbookOrLongguest}}</span>
+      <span v-show="IsshowPoupCheck"  class=" fa fa-angle-down"></span></div>
+    </div>
+    <div style="height:50px;background:#EDEDED" class="nouse"></div>
     <router-view>
     </router-view>
-
-
     <div style="height:55px; background:#EDEDED"></div>
-    <mt-tabbar v-model="selected" fixed style="z-index:990">
+    <mt-tabbar v-model="selected" fixed style="z-index:990;height: 55px">
       <mt-tab-item id="order">
-        <i class="fa fa-calendar fa-lg  fa-2x"></i><br><br> 预约
+        <span class="fa fa-calendar fa-lg  fa-2x" style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span>预约
       </mt-tab-item>
       <mt-tab-item id="check">
-        <i class="fa fa-book fa-lg  fa-2x"></i><br><br> 历史
+        <span class="fa fa-book fa-lg  fa-2x" style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span><span>历史</span>
       </mt-tab-item>
       <mt-tab-item id="aboutme">
-        <i class="fa fa-user fa-lg  fa-2x"></i><br><br> 我的
+        <span class="fa fa-user fa-lg  fa-2x" style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span><span>我的</span>
       </mt-tab-item>
     </mt-tabbar>
 
@@ -33,7 +31,7 @@
       <div class="poup">
         <div class="poupHead">
           <h4>请选择你需要的平台</h4>
-          <span class="fa fa-remove" @click="hidePoup"></span>
+          <span class="fa fa-remove" @click="hidePoup" style="width: 10%;height: 40px;line-height: 40px;"></span>
         </div>
         <div class="poupContent">
           <mt-button type="primary" @click='sgmOrPatac("SGM")' :class='this.isSgmOrPatac=="SGM"? "btnhaschecked":""'>
@@ -51,7 +49,7 @@
       <div class="poup">
         <div class="poupHead">
           <h4>请选择分类</h4>
-          <span class="fa fa-remove" @click="hidePoupCheck"></span>
+          <span class="fa fa-remove" @click="hidePoupCheck" style="width: 10%;height: 40px;line-height: 40px;"></span>
         </div>
         <div class="poupContent">
           <mt-button type="primary" @click='checkOrchecked("历史","HasChecked")'
@@ -68,7 +66,7 @@
       <div class="poup">
         <div class="poupHead">
           <h4>请选择分类</h4>
-          <span class="fa fa-remove" @click="hideLongguest"></span>
+          <span class="fa fa-remove" @click="hideLongguest" style="width: 10%;height: 40px;line-height: 40px;"></span>
         </div>
         <div class="poupContent">
           <mt-button type="primary" @click='longguestOrAddress("通讯录","AddressList")'
@@ -106,14 +104,14 @@
       }
     },
     created: function () {
+
 //      alert(2)
       Vue.PlusReady(function () {
 //        var uid = NativeObj.getUserName();
 //        Vue.GetLogin(uid);
-//        Vue.GetLogin("apptest01");
-        Vue.GetLogin("apptest02") ;
+        Vue.GetLogin("apptest01");
+//        Vue.GetLogin("apptest02") ;
       })
-
 
       if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
         this.IsshowPoupCheck = true
@@ -133,8 +131,13 @@
       //       // Vue.GetLogin(uid);
       //       Vue.GetLogin("apptest01");
       //  })
-      $(".poup").width($(window).width() * 0.75);
-      $(".poup").height($(window).height() * 0.3);
+
+
+    },
+    mounted:function(){
+//      alert($(window).width())
+//      $(".poup").width($(window).width()*0.95);
+//      $(".poup").height($(window).height()*0.35);
     },
     watch: {
       isSgmOrPatac: function (e) {
@@ -212,10 +215,10 @@
       hideLongguest(){
         this.showLongguest=false;
       },
-      longguestOrAddress(arg1,arg2){
+      longguestOrAddress(arg1,arg2,arg3){
       //向组件About发送消息
         this.IsaddressbookOrLongguest=arg1;
-        this.$bus.$emit('longguestAndAddress', arg1, arg2); //Hub触发事件
+        this.$bus.$emit('longguestAndAddress', arg1, arg2,); //Hub触发事件
         $("body").css({overflow: "auto"})
         this.showLongguest=false;
       }
@@ -226,6 +229,16 @@
   #headBot {
     background: white
   }
+  .hheader{
+    width: 100%;
+    height:50px;
+    line-height:50px;
+    position: fixed;
+    top:0;
+    left:0;
+    z-index: 1500;
+    color:white
+  }
   .orderSelect, .aboutmeSelect,.addressSelect {
     font-size: 12px;
     height: 50px;
@@ -235,7 +248,7 @@
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 991;
+    z-index: 1501;
   }
 
   header {
@@ -244,7 +257,8 @@
   }
 
   .poup > .poupHead {
-    height: 20%;
+    /*height: 20%;*/
+    height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -255,7 +269,9 @@
   }
 
   .poup > .poupContent {
-    height: 80%;
+    /*height: 80%;*/
+    height:calc(100% - 40px);
+    /*background: red;*/
     display: flex;
     justify-content: center;
     align-items: center;
@@ -265,17 +281,19 @@
   .poup > .poupContent > button {
     background: transparent;
     color: #0434B2;
-    border: 1px solid #0434B2
+    border: 1px solid #0434B2;
+    font-size:16px;
+    /*margin-top: -10px;*/
   }
 
   .poup > .poupContent > button:nth-child(1) {
-    width: 35%;
+    width: 40%;
     margin-right: 5%;
 
   }
 
   .poup > .poupContent > button:nth-child(2) {
-    width: 35%;
+    width: 40%;
     margin-left: 5%
   }
 

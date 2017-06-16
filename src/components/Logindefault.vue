@@ -29,8 +29,8 @@
       Vue.PlusReady(function () {
 //        var uid = NativeObj.getUserName()
 //        Vue.GetLogin(uid);
-//         Vue.GetLogin("apptest01");
-         Vue.GetLogin("apptest02");
+         Vue.GetLogin("apptest01");
+//         Vue.GetLogin("apptest02");
       })
       //默认为已审核
       localStorage.setItem("hased", "HasChecked");

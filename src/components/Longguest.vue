@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div>
-      <ul v-for="item in list">
+  <div style="background: #EDEDED">
+    <div class="longguest" style="background: #EDEDED">
+      <ul v-for="item in list" style="background: white">
         <li>
           <div>供应商公司名称</div>
           <div>{{item.name}}</div>
@@ -35,6 +35,10 @@
           <div>{{item.status | changeStatus}}</div>
         </li>
       </ul>
+      <div v-show="nodata" style="width:100%;height:35px;text-align:center;line-height:35px; background: #EDEDED;">
+        没有更多数据
+      </div>
+
 
     </div>
   </div>
@@ -45,7 +49,8 @@
   export default{
     data(){
       return {
-        list: []
+        list: [],
+        nodata:false
       }
     },
     filters: {
@@ -72,9 +77,16 @@
     },
     mounted(){
       let that = this;
+      $(".longguest").css({
+        minHeight: $(window).height() - 105
+      })
       Vue.GetLongGuest(function (e) {
         console.log(e)
         that.list = e.rows;
+        if(that.list.length==0){
+          that.nodata=true
+        }
+        window.Wlongguest=that.list;
       })
     }
   }
@@ -85,22 +97,30 @@
     /*margin-left: 8px;*/
     /*background: black;*/
   }
-
+  .longguest{
+    border-left: 8px solid #EDEDED;
+    border-right: 8px solid #EDEDED;
+    /*border-bottom: 4px solid #EDEDED;*/
+  }
+  .longguest:first-child{
+    margin-top: -8px;
+  }
   div > div > ul {
     background: white;
     width: 100%;
     list-style: none;
     /*margin-top: 8px;*/
-    border-left: 8px solid #EDEDED;
-    border-right: 8px solid #EDEDED;
-    border-bottom: 4px solid #EDEDED;
-    border-top: 4px solid #EDEDED;
+    /*border-left: 8px solid #EDEDED;*/
+    /*border-right: 8px solid #EDEDED;*/
+    /*border-bottom: 4px solid #EDEDED;*/
+    border-top: 8px solid #EDEDED;
+    font-size: 14px;
     box-sizing: border-box;
     padding: 5px;
   }
 
   ul:nth-child(1) {
-    margin-top: -4px;
+    margin-top: 8px;
   }
 
   ul > li {

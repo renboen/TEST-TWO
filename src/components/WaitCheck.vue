@@ -1,7 +1,8 @@
 <template>
   <!--<div id="waiting">-->
-  <div style="border:8px solid #EDEDED;border-top:0px">
+  <div style="border:8px solid #EDEDED;border-top:0px;background: #EDEDED">
     <mt-loadmore
+      :autoFill=false
       :top-method="loadTop"
       @top-status-change="handleTopChange"
       :bottom-all-loaded="allLoaded"
@@ -9,7 +10,9 @@
       :bottom-method="loadbottom"
       @bottom-status-change="handlebottomChange"
     >
-      <div>
+      <!--612-->
+      <div id="waiting" >
+        <!--<div style="height: 8px;background: #ededed"></div>-->
         <div class="content" v-for="(item,index) in list">
           <div class="hd"><h3><span>预约单号</span><span>{{item.visitNo}}</span></h3></div>
           <ul>
@@ -23,6 +26,13 @@
             <li class="visitperson other" v-for="items in visitPersonlist[index]">
               <div> <span>{{items[0]}}</span><span>{{items[1]}}</span> </div>
             </li>
+            <li v-show="Boolean(Ushowcar[index])"><span>随访车辆</span><span>{{Uhascar[index][0]}}</span></li>
+            <li v-show="Boolean(Ushowcar[index])" class="visitercar other" v-for="Car in Ucar[index] ">
+              <div><span>车牌号</span><span>{{Car[0]}}</span></div>
+            </li>
+
+
+
             <li><span>随访物品</span><span>{{hasThing[index][0]}}</span></li>
             <li class="visitthi other" v-for="items in visitThinglist[index]">
               <div><span>名称</span><span>{{items[0]}}</span></div>
@@ -37,8 +47,11 @@
             <mt-button type="primary" @click='yesorno(index,orderid[index],2)'>拒绝</mt-button>
           </div>
         </div>
+        <div v-show="allLoaded" style="width:100%;height:35px;text-align:center;line-height:35px;margin-top: -8px">没有更多数据</div>
+
       </div>
     </mt-loadmore>
+
   </div>
 </template>
 
@@ -51,7 +64,8 @@ export default {
   data() {
     name:"aboutme"
     return {
-      allLoaded: true,
+//      allLoaded: true,
+      allLoaded: false,
       bottomStatus: '',
       topStatus: '',
       list: [],//待审核
@@ -59,6 +73,11 @@ export default {
       hasPerson: [],//是否有随访人员
       visitThinglist: [],//是否有随访物品
       hasThing: [],//是否有物品
+
+      Uhascar: [],
+      Ucar: [],
+      Ushowcar: [],
+
       orderid: [],//点击同意或者拒所需参数
     };
   },
@@ -193,10 +212,6 @@ export default {
     loadbottom() {
       let that = this;
       console.log("上拉加载");
-      Indicator.open({
-        text: '加载中...',
-        spinnerType: 'fading-circle'
-      });
       that.getWaitCheck("up")
     },
     getWaitCheck(updown){
@@ -210,6 +225,12 @@ export default {
         var ishasPerson = [];
         var aboutthingList = [];
         var ishasthing = [];
+
+        var showcar=[];
+        var ishascar=[];
+        var aboutcarList=[];
+
+
         for (var i = 0; i < vist.length; i++) {
           that.orderid.push(vist[i].id)
         }
@@ -235,8 +256,33 @@ export default {
 
             var tL = [];
             var pL = [];
+
+            var cL=[];
+
             var hasper = [];
             var hasth = [];
+
+            var hascar=[];
+
+
+            if (val.data.visitDoorIdIn == "PATAC0001") {
+              showcar.push(false)
+            } else {
+              showcar.push(true)
+            }
+
+            if (val.data.cars.length ==0) {
+              hascar.push("无");
+            } else {
+              hascar.push("有");
+            }
+
+            for (var j = 0; j < val.data.cars.length; j++) {
+                cL.push(val.data.cars[j].carNo)
+                console.log(pL);
+            }
+
+
 
             if (val.data.guests.length == 1) {
               hasper.push("无");
@@ -266,8 +312,11 @@ export default {
             }
             ishasPerson.push(hasper)
             ishasthing.push(hasth)
+            ishascar.push(hasth)
             aboutpersonList.push(pL);
             aboutthingList.push(tL);
+            aboutcarList.push(tL);
+
           }));
         }
         Promise.all(forList).then(function () {
@@ -275,6 +324,11 @@ export default {
           // console.log(ishasPerson);//是否有人
 //            console.log(aboutpersonList);//有多少人
 //            console.log(ishasthing);//是否有物品
+            console.log("000000000000");//是否有物品
+            console.log(ishascar);//是否有物品
+            console.log(aboutcarList);//是否有物品
+            console.log(showcar);//是否有物品
+
           Indicator.close();
           if (updown == "up") {
             that.list = vist;
@@ -282,8 +336,16 @@ export default {
             that.hasPerson = ishasPerson;
             that.hasThing = ishasthing;
             that.visitThinglist = aboutthingList;
+
+            that.Ucar = aboutcarList;
+            that.Uhascar = ishascar;
+            that.Ushowcar = showcar;
+
             that.allLoaded = that.list.length < 10 ? true : false;
             that.$refs.loadmore.onBottomLoaded();
+            setTimeout(function(){
+              window.scrollTo(0,0)
+            },10)
           } else {
             console.log("下拉刷新");
             that.list = [];//待审核
@@ -341,21 +403,31 @@ export default {
   },
   mounted(){
 //        alert(2)
+    Indicator.open({
+      text: '加载中...',
+      spinnerType: 'fading-circle'
+    });
+//612
     $("#waiting").css({
-      height: $(window).height() - 90
+      minHeight: $(window).height() - 113
     })
-  }
+let that=this;
+    that.getWaitCheck("up")
+
+}
 };
 </script>
 <style scoped>
+
   .content {
     width: 100%;
     border-bottom: 8px solid #EDEDED;
+    background: white;
   }
+
   .content > div.hd {
     border-bottom: 1px dashed #EDEDED
   }
-
   .content > div.hd > h3 {
     width: calc(100% - 16px);
     margin-left: 8px;
@@ -374,8 +446,10 @@ export default {
 
   .content > ul > li {
     box-sizing: border-box;
-    padding: 5px 0;
+    /*padding: 5px 0;*/
+    margin-top: 5px;
     display: flex;
+
     justify-content: space-between;
     align-items: center;
   }
@@ -395,9 +469,11 @@ export default {
 
 
   .other{
-    width:calc(100% - 8px);
-    margin-left: 4px;
+    /*width:calc(100% - 8px);*/
+    /*margin-left: 4px;*/
     flex-direction: column;
+    /*border-left: 2px solid #0434b2;*/
+
   }
   .other>div{
     width: 100%;

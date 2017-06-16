@@ -3,6 +3,7 @@
   <div style="border:8px solid #EDEDED;border-top:0px;border-bottom:0px ;">
     <!--<div>-->
       <mt-loadmore
+        style="background: #EDEDED"
         :autoFill=false
         :top-method="loadTop"
         :bottomPullText="pullup"
@@ -26,13 +27,13 @@
                   ]">
               <div class="fa fa-user-circle-o fa-3x"></div>
               <ul>
-                <li><span>{{item.name}}:</span><span>{{item.phone}}</span></li>
-                <li><span>公司:</span><span>{{item.companyName}}</span></li>
+                <li><span>{{item.name}}</span><span>{{item.phone}}</span></li>
+                <li><span>{{item.companyName}}</span></li>
               </ul>
             </mt-cell-swipe>
           </div>
           <div style="height:4px;background:#EDEDED"></div>
-          <div v-show="allLoaded" style="width:100%;height:50px;text-align:center;line-height:50px; background: white;">
+          <div v-show="allLoaded" style="width:100%;height:35px;text-align:center;line-height:35px; background: #EDEDED;margin-top: -10px">
             没有更多数据
           </div>
         </div>
@@ -47,7 +48,6 @@
   import {Toast} from 'mint-ui';
   export default {
     data() {
-//      name:"aboutme"
       return {
         allLoaded: false,
         bottomStatus: '',
@@ -115,17 +115,17 @@
       },
     },
     mounted(){
+      Indicator.open({
+        text: '加载中...',
+        spinnerType: 'fading-circle'
+      });
       $("#tongxunlu").css({overflow: "scroll"});
-//      $("#tongxunlu").css({height: $(window).height()})
-//      $("#tongxunlu>div").css({ height: $(window).height()-100
-//      })
       this.loadTop()
-//      $("#tongxunlu>div>div").css({height: $(window).height() - 50,
-//      })
-//      $("#tongxunlu #telT").css({ height: $(window).height()
-//      })
-//      $("#tongxunlu .mint-loadmore-content").css({ minHeight: $(window).height() - 80
-//        ,oveflow:"scroll"})
+//      612
+      $("#about").css({
+        minHeight: $(window).height() - 105
+      })
+
 
     },
 
@@ -143,7 +143,9 @@
     border-sizing: border-box;
     border-bottom: 8px solid #EDEDED;
   }
-
+  #about .aboutMeMsg:nth-child(1){
+    margin-top: 8px;
+  }
   #about .mint-cell-title {
     display: none;
   }
@@ -152,7 +154,7 @@
     width: 100%
   }
   #about .fa-user-circle-o{
-    color:blue
+    color:#0434B2
   }
   #about .mint-cell-wrapper {
 

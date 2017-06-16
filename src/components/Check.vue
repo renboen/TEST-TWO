@@ -1,8 +1,8 @@
 <template>
   <div id="">
-    <keep-alive include="WaitCheck,HasChecked">
+    <!--<keep-alive include="WaitCheck,HasChecked">-->
       <component :is="currentView"></component>
-    </keep-alive>
+    <!--</keep-alive>-->
   </div>
 </template>
 <script>

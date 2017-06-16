@@ -1,270 +1,250 @@
 <template>
   <div id="order">
 
-    <div class="test">
+    <!--<mt-field label="来访日期" placeholder="来访日期" type="date" v-model="visitdate"></mt-field>-->
 
-      <div @click="clickinput($event)">
-        <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
-          class=" fa fa-search"
-          style="padding-left:8px"
-          @click.stop="showSearch"></span>
-        </mt-field>
-      </div>
+    <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
+      class=" fa fa-search"
+      style="padding-left:8px"
+      @click.stop="showSearch"></span>
+    </mt-field>
 
-      <mt-cell title="证件类型">
-        <select v-model="cardType">
-          <option v-for="item in cardTypeList">{{item.value}}</option>
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
+    <mt-cell title="证件类型">
+      <select v-model="cardType">
+        <option v-for="item in cardTypeList">{{item.value}}</option>
+      </select>
+      <strong class="selectiIcon fa fa-angle-down"></strong>
+    </mt-cell>
 
-      <div @click="clickinput($event)">
-        <mt-field label="证件号" placeholder="请输入证件号" v-model="guestIdcardNo" :disableClear="true"></mt-field>
-      </div>
 
-      <div @click="clickinput($event)">
-        <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="telnum"></mt-field>
-      </div>
+    <mt-field label="证件号" placeholder="请输入身份证号" v-model="guestIdcardNo" :disableClear="true"></mt-field>
+    <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="telnum"></mt-field>
 
-      <mt-cell title="来访时间">
-        <div class="page-datetime " style="width: 100%;height: 100%; ">
-          <div class="page-datetime-wrapper" style="height: 100%;width: 100%; ">
-            <mt-button @click.native.stop="open('picker1')" size="large"
-                       style="text-align: right;background: white;border: none!important;outline: none!important;box-shadow: none;font-size: 16px;">
-              {{youWant}}
-            </mt-button>
-          </div>
+    <mt-cell title="来访时间"  >
+      <div class="page-datetime " style="width: 100%;height: 100%; ">
+        <!--<h1 class="page-title" @click="open('picker1')">{{youWant}}</h1>-->
+        <div class="page-datetime-wrapper" style="height: 100%;width: 100%; ">
+          <mt-button @click.native.stop="open('picker1')"  size="large"  style="text-align: right;background: white;border: none!important;outline: none!important;box-shadow: none;font-size: 16px;" >{{youWant}}</mt-button>
+          <!--<input type="button" @click.native.stop="open('picker1')" size="large"  style="text-align: right;background: white;border: none!important;outline: none!important;box-shadow: none;font-size: 16px;" value="Test" >-->
         </div>
-      </mt-cell>
-      <mt-datetime-picker
-        ref="picker1"
-        v-model="value"
-        yearFormat="{value}"
-        hourFormat="{value} 时"
-        monthFormat="{value} 月"
-        dateFormat="{value} 日"
-        @confirm="handleChange">
-      </mt-datetime-picker>
 
-      <mt-cell title="有效天数" v-show='this.showCar=="SGM"?false:true'>
-        <select v-model="validDay">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
 
-      <mt-cell class="current" title="供应商类型" v-show='this.showCar=="SGM"?false:true'>
-        <select v-model="supplierType" class="sel">
-          <option>普通供应商</option>
-          <option>长期供应商</option>
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
-
-      <div @click="clickinput($event)">
-        <mt-field v-show="!isLongGuestCompany" label="来访单位" placeholder="请输入来访单位" type="text"
-                  v-model="visitaddress"></mt-field>
+        <!--<div>{{value}}</div>-->
       </div>
+      <!--<strong class="selectiIcon fa fa-angle-down"></strong>-->
+    </mt-cell>
+    <mt-datetime-picker
+      ref="picker1"
+      v-model="value"
+      yearFormat="{value}"
+      hourFormat="{value} 时"
+      monthFormat="{value} 月"
+      dateFormat="{value} 日"
+      @confirm="handleChange">
+    </mt-datetime-picker>
+    <mt-cell title="有效天数" v-show='this.showCar=="SGM"?false:true'>
+      <select v-model="validDay">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+      </select>
+      <strong class="selectiIcon fa fa-angle-down"></strong>
+    </mt-cell>
 
-      <mt-cell title="来访单位" v-show="isLongGuestCompany">
-        <select v-model="visitaddress1">
-          <!--<option value=""></option>-->
-          <option v-for="item in longguestCompany">{{item.name}}</option>
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
+    <mt-cell class="current" title="供应商类型" v-show='this.showCar=="SGM"?false:true'>
+      <select v-model="supplierType" class="sel">
+        <option>普通供应商</option>
+        <option>长期供应商</option>
+      </select>
+      <strong class="selectiIcon fa fa-angle-down"></strong>
+    </mt-cell>
 
-      <div @click="clickinput($event)">
-        <mt-field label="来访事由" placeholder="请输入来访事由" type="text" v-model="visitmatter"></mt-field>
+
+
+
+    <mt-field  v-show="!isLongGuestCompany" label="来访单位" placeholder="请输入来访单位" type="text" v-model="visitaddress"></mt-field>
+
+    <mt-cell title="来访单位" v-show="isLongGuestCompany">
+      <select v-model="visitaddress1" >
+        <!--<option value=""></option>-->
+        <option v-for="item in longguestCompany">{{item.name}}</option>
+      </select>
+      <strong class="selectiIcon fa fa-angle-down"></strong>
+    </mt-cell>
+
+
+    <mt-field label="来访事由" placeholder="请输入来访事由" type="text" v-model="visitmatter"></mt-field>
+
+
+
+    <mt-cell title="厂区">
+      <select v-model="factoryselected">
+        <option v-for="(item,index) in factory" :value="item[1]">{{item[0]}}</option>
+      </select>
+      <strong class="selectiIcon fa fa-angle-down"></strong>
+    </mt-cell>
+
+
+    <mt-cell title="区域">
+      <select v-model="areaselected">
+        <option v-for="item in area" :value="item[1]">{{item[0]}}</option>
+      </select>
+      <strong class="selectiIcon fa fa-angle-down"></strong>
+    </mt-cell>
+
+    <mt-cell title="门岗">
+      <select v-model="gateselected">
+        <option v-for="item in gate" :value="item[1]">{{item[0]}}</option>
+      </select>
+      <strong class=" selectiIcon fa fa-angle-down"></strong>
+    </mt-cell>
+
+
+
+
+    <mt-field label="被访人" type="text" v-model="visiter" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="部门" type="text" v-model="department" :readonly="true" :disableClear="true"></mt-field>
+
+    <mt-cell title="审核人" v-show='this.showCar=="SGM"?false:true'>
+      <select v-model="sendForChecker">
+        <option v-for="(item,index) in checkerInfo" v-bind:value="item.checkerNameForSend">{{item.checkerNameForShow}}
+        </option>
+        -
+      </select>
+      <strong class="selectiIcon fa fa-angle-down"></strong>
+    </mt-cell>
+
+
+
+    <div class="addformation">
+      <div class="head">
+        <div>随访人员信息<span style="padding-left: 15px"> ({{personContent.length}})</span></div>
+        <div class="icongroup">
+          <span class="fa fa-plus" @click="addData"></span>　　　　　　
+          <span class="fa fa-minus" @click="deleteiconShow"></span>　　　　　　
+          <span class=" fa " :class='showOrHideForPerson?"fa-chevron-down":"fa-chevron-up"'
+                @click="isShowPerson"></span></div>
       </div>
-
-      <mt-cell title="厂区">
-        <select v-model="factoryselected">
-          <option v-for="(item,index) in factory" :value="item[1]">{{item[0]}}</option>
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
-
-      <mt-cell title="区域">
-        <select v-model="areaselected">
-          <option v-for="item in area" :value="item[1]">{{item[0]}}</option>
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
-
-      <mt-cell title="门岗">
-        <select v-model="gateselected">
-          <option v-for="item in gate" :value="item[1]">{{item[0]}}</option>
-        </select>
-        <strong class=" selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
-
-
-      <mt-field label="被访人" type="text" v-model="visiter" :readonly="true" :disableClear="true"></mt-field>
-      <mt-field label="部门" type="text" v-model="department" :readonly="true" :disableClear="true"></mt-field>
-
-      <mt-cell title="审核人" v-show='this.showCar=="SGM"?false:true'>
-        <select v-model="sendForChecker">
-          <option v-for="(item,index) in checkerInfo" v-bind:value="item.checkerNameForSend">{{item.checkerNameForShow}}
-          </option>
-          -
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
-
-      <div class="addformation">
-        <div class="head">
-          <div>随访人员信息<span style="padding-left: 15px"> ({{personContent.length}})</span></div>
-          <div class="icongroup">
-            <span class="fa fa-plus" @click="addData"></span>　　　　　　
-            <span class="fa fa-minus" @click="deleteiconShow"></span>　　　　　　
-            <span class=" fa " :class='showOrHideForPerson?"fa-chevron-down":"fa-chevron-up"'
-                  @click="isShowPerson"></span></div>
+      <div class="content" v-for="(item,index) in personContent" v-show="showOrHideForPerson">
+        <div style="width:100%">
+          <mt-field label="姓名" placeholder="请输入用户名" v-model="item.name"></mt-field>
+          <mt-field label="身份证" placeholder="请输入身份证号" v-model="item.idNo" type="tel"></mt-field>
         </div>
-        <div class="content" v-for="(item,index) in personContent" v-show="showOrHideForPerson">
-          <div style="width:100%">
-            <div @click="clickinput($event)">
-
-              <mt-field label="姓名" placeholder="请输入用户名" v-model="item.name"></mt-field>
-            </div>
-            <div @click="clickinput($event)">
-
-              <mt-field label="身份证" placeholder="请输入身份证号" v-model="item.idNo" type="tel"></mt-field>
-            </div>
-
-          </div>
-          <div v-show="deleteicon" @click="deleteData(index)">
-            <span class="fa fa-remove"></span>
-          </div>
+        <div v-show="deleteicon" @click="deleteData(index)">
+          <span class="fa fa-remove"></span>
         </div>
       </div>
+    </div>
 
 
-      <div class="addthingformation car " v-show='this.showCar=="SGM"?true:false'>
-        <div class="head">
-          <div>随访车辆信息<span style="padding-left: 15px"> ({{personContentForCar.length}})</span></div>
-          <div class="icongroup">
-            <span class="fa fa-plus" @click="addDataForCar"></span>　　　　　　
-            <span class="fa fa-minus" @click="deleteiconShowForCar"></span>　　　　　　
-            <span class=" fa " :class='showOrHideForCar?"fa-chevron-down":"fa-chevron-up"' @click="isShowCar"></span>
-          </div>
-        </div>
-        <div class="content" v-for="(item,index) in personContentForCar" v-show="showOrHideForCar">
-          <div style="width:100%" @click="clickinput($event)">
-            <mt-field label="车牌号" placeholder="请输入车牌号" v-model="item.carNo"></mt-field>
-          </div>
-          <div v-show="deleteiconForCar" @click="deleteDataForCar(index)">
-            <span class="fa fa-remove"></span>
-          </div>
+    <div class="addthingformation car " v-show='this.showCar=="SGM"?true:false'>
+      <div class="head">
+        <div>随访车辆信息<span style="padding-left: 15px"> ({{personContentForCar.length}})</span></div>
+        <div class="icongroup">
+          <span class="fa fa-plus" @click="addDataForCar"></span>　　　　　　
+          <span class="fa fa-minus" @click="deleteiconShowForCar"></span>　　　　　　
+          <span class=" fa " :class='showOrHideForCar?"fa-chevron-down":"fa-chevron-up"' @click="isShowCar"></span>
         </div>
       </div>
-
-      <div class="addthingformation ">
-        <div class="head">
-          <div>随访物品信息<span style="padding-left: 15px"> ({{personContentForThing.length}})</span></div>
-          <!--<div>随访物品信息<span style="padding-left:15px">({{personContentForThing.length}})</span></div>-->
-          <div class="icongroup">
-            <span class="fa fa-plus" @click="addDataForThing"></span>　　　　　　
-            <span class="fa fa-minus" @click="deleteiconShowForThing"></span>　　　　　　
-            <span class=" fa " :class='showOrHideForThing?"fa-chevron-down":"fa-chevron-up"'
-                  @click="isShowThing"></span>
-          </div>
+      <div class="content" v-for="(item,index) in personContentForCar" v-show="showOrHideForCar">
+        <div style="width:100%">
+          <mt-field label="车牌号" placeholder="请输入车牌号" v-model="item.carNo"></mt-field>
         </div>
-        <div class="content" v-for="(item,index) in personContentForThing" v-show="showOrHideForThing">
-          <div style="width:100%">
-            <div @click="clickinput($event)">
-              <mt-field label="名称" placeholder="请输入随访物品名称" v-model="item.name"></mt-field>
-            </div>
-            <div @click="clickinput($event)">
-              <mt-field label="数量" placeholder="请输入随访物品数量" type="tel" v-model="item.number"></mt-field>
-            </div>
-            <div @click="clickinput($event)">
-              <mt-field label="类型" placeholder="请输入随访物品类型" v-model="item.type"></mt-field>
-            </div>
-            <div @click="clickinput($event)">
-              <mt-field label="备注" placeholder="请输入随访物品备注" v-model="item.desc" type="text"></mt-field>
-            </div>
-          </div>
-          <div v-show="deleteiconForThing" @click="deleteDataForThing(index)">
-            <span class="fa fa-remove"></span>
-          </div>
+        <div v-show="deleteiconForCar" @click="deleteDataForCar(index)">
+          <span class="fa fa-remove"></span>
         </div>
       </div>
+    </div>
 
-      <!--:options="['是否需要访客补充信息']">-->
-
-
-      <mt-checklist
-        class="AddVisiterchecklist"
-        v-model="isAddVisiterInfor"
-        :options="addmymesg">
-      </mt-checklist>
-
-      <mt-popup v-model="showAlert" popup-transition="popup-fade">
-        <div class="poup ">
-          <div class="poupHead">
-            <h4>是否确认预约</h4>
-            <span class="fa fa-remove" @click="hideAlert"></span>
-          </div>
-          <div class="poupContent">
-            <mt-button type="primary" @click='isSure'>确定</mt-button>
-            <mt-button type="primary" @click='hideAlert'>取消</mt-button>
-          </div>
+    <div class="addthingformation ">
+      <div class="head">
+        <div>随访物品信息<span style="padding-left: 15px"> ({{personContentForThing.length}})</span></div>
+        <!--<div>随访物品信息<span style="padding-left:15px">({{personContentForThing.length}})</span></div>-->
+        <div class="icongroup">
+          <span class="fa fa-plus" @click="addDataForThing"></span>　　　　　　
+          <span class="fa fa-minus" @click="deleteiconShowForThing"></span>　　　　　　
+          <span class=" fa " :class='showOrHideForThing?"fa-chevron-down":"fa-chevron-up"' @click="isShowThing"></span>
         </div>
-      </mt-popup>
-
-      <mt-popup v-model="showSearchByName" popup-transition="popup-fade">
-        <div class="poup poupSearch ">
-          <div class="poupHead">
-            <mt-navbar v-model="searchByNameselected">
-              <mt-tab-item id="1">搜索</mt-tab-item>
-              <mt-tab-item id="2" v-show='this.showCar=="SGM"?true:false'>常用记录</mt-tab-item>
-            </mt-navbar>
-            <span class="fa fa-remove" @click="hideSearchByName" style="width: 10%;height: 36px;line-height: 36px;"></span>
-          </div>
-          <div class="poupContent">
-            <mt-tab-container v-model="searchByNameselected">
-              <mt-tab-container-item id="1">
-                <mt-field placeholder="输入要搜索的访客姓名关键字" v-model="searchKW" :disableClear="false" ></mt-field>
-                <!--<div style="margin-top: 48px;">-->
-                  <ul v-for="(item,index) in SearchByNameList ">
-                    <li @click="searchclick(index)">
-                      <div>{{item.name}}</div>
-                      <div>{{item.tel}}</div>
-                      <div>{{item.company}}</div>
-                    </li>
-                  </ul>
-                <!--</div>-->
-              </mt-tab-container-item>
-
-
-              <mt-tab-container-item id="2">
-                <!--<div>记录名</div>-->
-                <ul class="useHistory" v-for="(item,index) in frequentlyUsedHistory" @click="addInput(index)">
-                  <!--<li v-for="(item,index) in frequentlyUsedHistory" @click="addInput(index)">-->
-                  <li>
-                    <span style="width:60%">{{item.historyName}}</span>
-                    <span style="width:20%;text-align:center;height: 48px;line-height: 48px" class="fa fa-pencil "
-                          @click.stop="changeName(index)"></span>
-                    <span style="width:20%;text-align:right;height: 48px;line-height: 48px" class="fa fa-remove"
-                          @click.stop="deleteThisHistory(index)"></span>
-                  </li>
-                </ul>
-              </mt-tab-container-item>
-            </mt-tab-container>
-          </div>
-        </div>
-      </mt-popup>
-
-
-      <div class="buttongroup ">
-        <mt-button type="primary" @click="ShowAlert">预约</mt-button>
-        <mt-button type="primary" @click="clearInput">取消</mt-button>
       </div>
+      <div class="content" v-for="(item,index) in personContentForThing" v-show="showOrHideForThing">
+        <div style="width:100%">
+          <mt-field label="名称" placeholder="请输入随访物品名称" v-model="item.name"></mt-field>
+          <mt-field label="数量" placeholder="请输入随访物品数量" type="tel" v-model="item.number"></mt-field>
+          <mt-field label="类型" placeholder="请输入随访物品类型" v-model="item.type"></mt-field>
+          <mt-field label="备注" placeholder="请输入随访物品备注" v-model="item.desc" type="text"></mt-field>
+        </div>
+        <div v-show="deleteiconForThing" @click="deleteDataForThing(index)">
+          <span class="fa fa-remove"></span>
+        </div>
+      </div>
+    </div>
+
+    <mt-checklist
+      class="AddVisiterchecklist"
+      v-model="isAddVisiterInfor"
+      :options="['是否需要访客补充信息']">
+    </mt-checklist>
+
+    <mt-popup v-model="showAlert" popup-transition="popup-fade">
+      <div class="poup ">
+        <div class="poupHead">
+          <h4>是否确认预约</h4>
+          <span class="fa fa-remove" @click="hideAlert"></span>
+        </div>
+        <div class="poupContent">
+          <mt-button type="primary" @click='isSure'>确定</mt-button>
+          <mt-button type="primary" @click='hideAlert'>取消</mt-button>
+        </div>
+      </div>
+    </mt-popup>
+
+
+    <mt-popup v-model="showSearchByName" popup-transition="popup-fade">
+      <div class="poup poupSearch ">
+        <div class="poupHead">
+          <mt-navbar v-model="searchByNameselected">
+            <mt-tab-item id="1">搜索</mt-tab-item>
+            <mt-tab-item id="2" v-show='this.showCar=="SGM"?true:false'>常用记录</mt-tab-item>
+          </mt-navbar>
+          <span class="fa fa-remove" @click="hideSearchByName"></span>
+        </div>
+        <div class="poupContent">
+          <mt-tab-container v-model="searchByNameselected">
+            <mt-tab-container-item id="1">
+              <mt-field placeholder="输入要搜索的访客姓名关键字" v-model="searchKW" :disableClear="false"></mt-field>
+              <ul v-for="(item,index) in SearchByNameList ">
+                <li @click="searchclick(index)">
+                  <div>{{item.name}}</div>
+                  <div>{{item.tel}}</div>
+                  <div>{{item.company}}</div>
+                </li>
+              </ul>
+            </mt-tab-container-item>
+
+
+            <mt-tab-container-item id="2">
+              <div>记录名</div>
+              <ul class="useHistory" v-for="(item,index) in frequentlyUsedHistory" @click="addInput(index)">
+                <!--<li v-for="(item,index) in frequentlyUsedHistory" @click="addInput(index)">-->
+                <li>
+                  <span style="width:80%">{{item.historyName}}</span>
+                  <span style="width:10%;text-align:left;" class="fa fa-pencil" @click.stop="changeName(index)"></span>
+                  <span style="width:10%;text-align:right;margin-bottom:4px" class="fa fa-remove"
+                        @click.stop="deleteThisHistory(index)"></span>
+                </li>
+              </ul>
+            </mt-tab-container-item>
+          </mt-tab-container>
+        </div>
+      </div>
+    </mt-popup>
+
+
+    <div class="buttongroup ">
+      <mt-button type="primary" @click="ShowAlert">预约</mt-button>
+      <mt-button type="primary" @click="clearInput">取消</mt-button>
     </div>
   </div>
 </template>
@@ -282,7 +262,7 @@
         telnum: "",
         visitdate: "",
         visitaddress: "",
-        visitaddress1: "",
+        visitaddress1:"",
         visitmatter: "",
         visiter: "",
         department: "",
@@ -319,13 +299,14 @@
         supplierType: "普通供应商",
         validDay: 1,
         longguestCompany: [],
-        isLongGuestCompany: false,
+        isLongGuestCompany:false,
+
+
+
 
 
         value: null,
         youWant: "请选择来访日期",
-
-        addmymesg: ['是否需要访客补充信息']
 //        mindate:null
 //        minute:"5"
       }
@@ -336,40 +317,53 @@
 //        next(true)
     },
     mounted: function () {
-      //      alert( "order"+localStorage.token)
+      (function ($) {
+        "use strict";
+        $.fn.openSelect = function () {
+          return this.each(function (idx, domEl) {
+            if (document.createEvent) {
+              var event = document.createEvent("MouseEvents");
+              event.initMouseEvent("mousedown", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+              domEl.dispatchEvent(event);
+            } else if (element.fireEvent) {
+              domEl.fireEvent("onmousedown");
+            }
+          });
+        }
+      }($));
+//       $(window).resize(function(){
+//           alert("有变化")
+//         })
+      $(".mint-cell").click(function (e) {
+//    alert(JSON.stringify( $("header").offset()))
+////        $("header").offset(0,0)
+//    alert(JSON.stringify( $("header").scrollTop()))
 
-//      (function ($) {
-//        "use strict";
-//        $.fn.openSelect = function () {
-//          return this.each(function (idx, domEl) {
-//            if (document.createEvent) {
-//              var event = document.createEvent("MouseEvents");
-//              event.initMouseEvent("mousedown", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-//              domEl.dispatchEvent(event);
-//            } else if (element.fireEvent) {
-//              domEl.fireEvent("onmousedown");
-//            }
-//          });
-//        }
-//      }($));
-//      $(".mint-cell").click(function (e) {
-//            $(this).find("input").focus();
-//            $(this).find("select").openSelect();
-//            if($(this).find("button").length>0){
-//              var myDate = new Date()
-//              that.value = myDate
-//              setTimeout(function () {
-//                that.open('picker1')
-//              },100)
-//            }
+
+            $(this).find("input").focus();
+            $(this).find("select").openSelect();
+//        $(".hhheader").removeClass("hheader").addClass("ffixed")
+            if($(this).find("button").length>0){
+              var myDate = new Date()
+              that.value = myDate
+              setTimeout(function () {
+                that.open('picker1')
+              },100)
+            }
+
+        console.log(e.target.className)
+      })
+
+      $("select").click(function (e) {
+        $(this).parent().parent().parent().click()
+      })
 //
-//        console.log(e.target.className)
-//      })
-//      $("select").click(function (e) {
-//        $(this).parent().parent().parent().click()
+//      $("#order").on("blur","input",function () {
+//      $(".hheader").removeClass("ffixed")
 //      })
 
       window.scrollTo(0, 0);
+//      alert( "order"+localStorage.token)
       let that = this;
       //获取门岗信息
       that.ajaxfactoryanddoor();
@@ -396,50 +390,43 @@
       }
 
       if (window.Wlongguest != undefined) {
-        that.longguestCompany = window.Wlongguest;
+          that.longguestCompany = window.Wlongguest;
       } else {
         Vue.GetLongGuest(function (e) {
           console.log(e)
           that.longguestCompany = e.rows;
-          window.Wlongguest = that.longguestCompany;
+          window.Wlongguest=that.longguestCompany;
         })
       }
 
-      if (that.showCar == "SGM") {
-        that.addmymesg = ["是否保存为常用联系人"]
-      } else {
-        that.addmymesg = ['是否需要访客补充信息']
-      }
+
       //监听是sgm还是patac
       that.$bus.$on('sgmorpathcchange', function (arg) {
         that.factory = window.factoryanddoor[0];
         console.log(window.factoryanddoor)
         if (arg == "SGM") {
-
           that.showCar = arg;
-          that.isLongGuestCompany = false;
+          that.isLongGuestCompany=false;
           that.area = window.factoryanddoor[1][0];
           that.gate = window.factoryanddoor[2][0];
           that.factoryselected = that.factory[0][1];
           that.areaselected = that.area[0][1];
           that.gateselected = that.gate[0][1];
-          that.visitaddress1 = "";
-          that.addmymesg = ["是否保存为常用联系人"]
-
+          that.visitaddress1=""
         } else {
           that.showCar = arg;
 
 
-          that.visitaddress = ""
+          that.visitaddress=""
 
 
-          if (that.supplierType == "长期供应商") {
-            that.isLongGuestCompany = true;
-            that.visitaddress = ""
-          } else {
-            that.isLongGuestCompany = false;
-            that.visitaddress1 = ""
-          }
+        if(that.supplierType=="长期供应商"){
+          that.isLongGuestCompany=true;
+          that.visitaddress=""
+        }else{
+          that.isLongGuestCompany=false;
+          that.visitaddress1=""
+        }
 
 
           that.area = window.factoryanddoor[1][1];
@@ -447,9 +434,6 @@
           that.factoryselected = that.factory[1][1];
           that.areaselected = that.area[0][1];
           that.gateselected = that.gate[0][1];
-
-          that.addmymesg = ['是否需要访客补充信息']
-
         }
       })
       //修复BUG
@@ -458,16 +442,14 @@
       }, false);
       $(".poup").width($(window).width() * 0.95);
       $(".poup").height($(window).height() * 0.35);
-      $(".poupSearch").height($(window).height() * 0.55);
 //      $(".mint-tab-item-label").height($(window).height() * 0.3);
 
     },
-//    updated:function () {
-//
-//      $(".mint-cell").click(function (e) {
-//        $(this).find("input").focus();
-//      })
-//    },
+    updated:function () {
+      $(".mint-cell").click(function (e) {
+        $(this).find("input").focus();
+      })
+    },
 
 
     watch: {
@@ -475,27 +457,27 @@
 //        alert(r)
       },
       youWant(e){
-        if (e != "请输入来访日期") {
+          if(e!="请输入来访日期"){
           $(".page-datetime-wrapper button").addClass("color1")
-        } else {
-          $(".page-datetime-wrapper button").removeClass("color1").addClass("color2")
-        }
+          }else{
+            $(".page-datetime-wrapper button").removeClass("color1").addClass("color2")
+          }
       },
       visitaddress(q){
 //          alert(q)
       },
       supplierType(arg){
-        let that = this;
-        if (arg == "长期供应商" && that.showCar == "PATAC") {
-          that.isLongGuestCompany = true;
-          that.visitaddress = ""
+          let that=this;
+          if(arg=="长期供应商"&&that.showCar=="PATAC"){
+            that.isLongGuestCompany=true;
+            that.visitaddress=""
 //            that.visitaddress1=that.longguestCompany[0].name
-          that.visitaddress1 = ""
-        } else {
-          that.isLongGuestCompany = false;
-          that.visitaddress = ""
-          that.visitaddress1 = ""
-        }
+            that.visitaddress1=""
+          }else{
+            that.isLongGuestCompany=false;
+            that.visitaddress=""
+            that.visitaddress1=""
+          }
 
       },
       searchByNameselected(arg){
@@ -560,9 +542,8 @@
       },
     },
     methods: {
-
-      clickinput(e){
-        $(e.currentTarget).find("input").focus()
+      clickinput(){
+        alert("b")
       },
       deleteiconShow(){
         console.log(this.personContent)
@@ -616,53 +597,7 @@
         this.showAlert = false
       },
       ShowAlert(){
-        let that = this;
-        //验证表单
-        if (that.isLongGuestCompany) {
-          var company = that.visitaddress1
-        } else {
-          var company = that.visitaddress
-        }
-
-        if (!that.visitername) {
-          Toast({
-            message: '访客姓名不能为空',
-            duration: 1000
-          });
-        } else if (!that.guestIdcardNo) {
-          Toast({
-            message: '证件号不能为空',
-            duration: 1000
-          });
-        } else if (!that.telnum) {
-          Toast({
-            message: '手机号码不能为空',
-            duration: 1000
-          });
-        }else if (!that.visitdate) {
-          Toast({
-            message: '来访日期不能为空',
-            duration: 1000
-          });
-        }else if (!company) {
-          Toast({
-            message: '来访单位不能为空',
-            duration: 1000
-          });
-        }else if (!that.visitmatter) {
-          Toast({
-            message: '来访事由不能为空',
-            duration: 1000
-          });
-        }  else {
-          that.showAlert = true
-
-        }
-
-
-
-
-
+        this.showAlert = true
       },
       ajaxfactoryanddoor(){
         let that = this;
@@ -769,13 +704,11 @@
           var yesNo = "0";
         }
 
-        if (that.isLongGuestCompany) {
-          var company = that.visitaddress1
-        } else {
-          var company = that.visitaddress
+        if(that.isLongGuestCompany){
+            var company=that.visitaddress1
+        }else{
+          var company=that.visitaddress
         }
-
-
         var senddata = {
           "token": localStorage.token,
           "uid": localStorage.id,
@@ -804,15 +737,7 @@
           "guestCompanyType": guestCompanyType,
           "visitValidDays": that.validDay,
         }
-        if (that.showCar == "SGM") {
-          delete senddata.additionInfo
-        }
         console.log(senddata)
-
-
-        //预约验证
-
-
         //预约发起接口
         Vue.AddInvite(senddata,
           function () {
@@ -844,7 +769,7 @@
                 "visitDoorIdIn": that.gateselected,
                 "guestIdcardNo": that.guestIdcardNo,
                 "checkUserId": SendcheckUserId,
-                "additionInfo": yesNo
+                "additionInfo": yesNo,
               };
               var newHistoryItem = {
                 "historyName": historyName,
@@ -858,7 +783,7 @@
               localStorage.setItem("frequentlyUsedHistory", JSON.stringify(oldHistory))
               console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
               console.log(that.frequentlyUsedHistory);
-            }
+            };
             //清空
             that.clearInput()
           }
@@ -958,67 +883,68 @@
         that.personContentForCar = [];
 
 
-        that.value = null,
-          that.youWant = "请输入来访日期"
+
+      that.value=null,
+      that.youWant= "请输入来访日期"
       },
 
 
       open(picker) {
-        let that = this;
-//        $(".picker-slot-wrapper:last").html('<div class="picker-item picker-selected" style="height: 36px; line-height: 36px;">00 分</div>')
-//        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">15 分</div>')
-//        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">30 分</div>')
-//        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">45 分</div>')
-//        $(".picker-slot-wrapper:last").on("touchstart",function (e) {
-//            e.preventDefault()
-//        })
-//        $(".picker-slot-wrapper:last").on("touchmove",function () {
-//          setTimeout(function(){
-//            var str = $(this).attr("style").split("translate(0px,")[1];
-//            var transLateY=str.split("px")[0];
-//            var index= parseInt(Math.abs(transLateY/36-4)-1);
-//            $(".picker-slot-wrapper:last>div").removeClass("picker-selected")
-//            $(".picker-slot-wrapper:last>div").eq(index).addClass("picker-selected")
-//          }.bind(this),100)
-//        })
-//
-//        $(".picker-slot-wrapper:last").on("touchend",function () {
-//          var str = $(this).attr("style").split("translate(0px,")[1];
-//          var transLateY=str.split("px")[0];
-//          if(transLateY<0){
-//            //height: 252px; transform: translate(0px, 108px) translateZ(0px);
-//            $(this).attr("style","height: 252px; transform: translate(0px, 0px) translateZ(0px);")
-//          }
-//        })
+          let that=this;
+
+        $(".picker-slot-wrapper:last").html('<div class="picker-item picker-selected" style="height: 36px; line-height: 36px;">00 分</div>')
+        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">15 分</div>')
+        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">30 分</div>')
+        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">45 分</div>')
+        $(".picker-slot-wrapper:last").on("touchstart",function (e) {
+            e.preventDefault()
+        })
+        $(".picker-slot-wrapper:last").on("touchmove",function () {
+          setTimeout(function(){
+            var str = $(this).attr("style").split("translate(0px,")[1];
+            var transLateY=str.split("px")[0];
+            var index= parseInt(Math.abs(transLateY/36-4)-1);
+            $(".picker-slot-wrapper:last>div").removeClass("picker-selected")
+            $(".picker-slot-wrapper:last>div").eq(index).addClass("picker-selected")
+          }.bind(this),100)
+        })
+
+        $(".picker-slot-wrapper:last").on("touchend",function () {
+          var str = $(this).attr("style").split("translate(0px,")[1];
+          var transLateY=str.split("px")[0];
+          if(transLateY<0){
+            //height: 252px; transform: translate(0px, 108px) translateZ(0px);
+            $(this).attr("style","height: 252px; transform: translate(0px, 0px) translateZ(0px);")
+          }
+        })
         var datatime = new Date()
         let year = datatime.getFullYear();
-        let mounth = datatime.getMonth() + 1 < 10 ? "0" + (datatime.getMonth() + 1) : datatime.getMonth() + 1;
-        let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate() + 1
+        let mounth=datatime.getMonth() + 1<10?"0"+(datatime.getMonth() + 1):datatime.getMonth() + 1;
+        let date=datatime.getDate()<10?"0"+datatime.getDate():datatime.getDate()+1
 //        let hour=datatime.getHours()<10?"0"+datatime.getHours():datatime.getHours();
-        let hour = "09";
-        this.value = year + '-' + mounth + '-' + date + ' ' + hour + ":00";
+        let hour="09";
+        this.value = year + '-' + mounth + '-' + date + ' ' + hour+":00";
         this.$refs[picker].open();
       },
       handleChange(value) {
-//        var str =  $(".picker-slot-wrapper:last").attr("style").split("translate(0px,")[1];
-//        var transLateY=str.split("px")[0]/36;
-//        var minutes=(Math.abs(transLateY-4)-1)*15
-//        if(minutes==0){
-//          minutes="00"
-//        }
+        var str =  $(".picker-slot-wrapper:last").attr("style").split("translate(0px,")[1];
+        var transLateY=str.split("px")[0]/36;
+        var minutes=(Math.abs(transLateY-4)-1)*15
+        if(minutes==0){
+          minutes="00"
+        }
         let that = this;
         let datatime = new Date(value);
         let year = datatime.getFullYear();
-        let mounth = datatime.getMonth() + 1 < 10 ? "0" + (datatime.getMonth() + 1) : datatime.getMonth() + 1;
-        let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate()
-        let hour = datatime.getHours() < 10 ? "0" + datatime.getHours() : datatime.getHours();
-        let minutes = datatime.getMinutes() < 10 ? "0" + datatime.getMinutes() : datatime.getMinutes();
-        that.youWant = year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
+        let mounth=datatime.getMonth() + 1<10?"0"+(datatime.getMonth() + 1):datatime.getMonth() + 1;
+        let date=datatime.getDate()<10?"0"+datatime.getDate():datatime.getDate()
+        let hour=datatime.getHours()<10?"0"+datatime.getHours():datatime.getHours();
+//        let hour="09";
+//        let minutes=datatime.getMinutes()<10?"0"+datatime.getMinutes():datatime.getMinutes() ;
+        that.youWant = year + '-' + mounth + '-' + date + ' ' + hour + ':' +minutes ;
 //        alert(that.youWant)
-        console.log(value, year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes)
-        that.visitdate = that.youWant
-//        alert(that.visitdate)
-
+        console.log(value, year + '-' + mounth + '-' + date + ' ' + hour + ':' +minutes)
+        that.visitdate=that.youWant
 
       }
     }
@@ -1027,37 +953,24 @@
 
 <style scoped>
   #order {
-    width: 100%;
     text-align: left;
-    /*第二种方案*/
+
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 50px;
-    bottom: 55px;
-    /*overflow-y: scroll;*/
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
 
-  }
-
-  .test {
-    width: 100%;
   }
 
   select {
-
+    /*position: absolute;*/
+    /*right: 4px;*/
     width: 100%;
     border: none;
+    /*text-align: right;*/
     font-size: 16px;
     direction: rtl;
     padding-right: 15px;
     -webkit-appearance: none;
     outline: none;
-    background: transparent !important;
-    position: relative;
-    z-index: 51;
-
+    background: white !important;
   }
 
   select > option {
@@ -1067,7 +980,6 @@
   .selectiIcon {
     position: absolute;
     right: 10px;
-    z-index: 50;
   }
 
   option {
@@ -1106,7 +1018,7 @@
   .addthingformation > .content {
     height: 96px;
     /*width: calc(100% - 8px);*/
-    width: 100%;
+    width:100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1172,7 +1084,7 @@
 
   .poup > .poupContent {
     /*height: 80%;*/
-    height: calc(100% - 40px);
+    height:calc(100% - 40px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1210,23 +1122,16 @@
     background: #0434b2
 
   }
-
-  .fa-search {
-    height: 48px;
-    width: 20px;
-    line-height: 48px;
-    /*background: red;*/
-  }
-
+.fa-search{
+  height: 48px;
+  width:20px;
+  line-height: 48px;
+  /*background: red;*/
+}
   .poupSearch .fa-remove {
     position: absolute;
-    right: 4px;
-    top: 0px;
-    height: 40px;
-    width: 20px;
-    /*background: red;*/
-    line-height: 40px;
-    text-align: center;
+    right: 8px;
+    top: 4px;
   }
 
   .poupSearch .mint-tab-container-wrap {
@@ -1261,16 +1166,6 @@
     text-overflow: clip;
 
   }
-  .poupSearch .mint-tab-container li div:nth-child(1) {
-    flex: 40%;
-    height: 24px;
-    line-height: 24px;
-    overflow: hidden;
-    text-overflow: clip;
-    padding-right: 10%;
-
-
-  }
 
   .poupSearch .mint-navbar .mint-tab-item {
     padding: 0;
@@ -1283,24 +1178,21 @@
   .poupSearch .useHistory li {
     display: flex;
     align-items: center;
-    font-size: 14px;
 
   }
 
   .poupSearch .useHistory li > span {
     position: relative;
   }
-
-  .color1 {
-    color: #969696
+  .color1{
+    color:#969696
+  }
+  .color1{
+    color:black
   }
 
-  .color1 {
-    color: black
-  }
-
-  .ffixed {
-    position: absolute !important;
+  .ffixed{
+    position:absolute!important;
   }
 
 </style scoped>
