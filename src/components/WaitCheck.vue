@@ -345,7 +345,7 @@ export default {
             that.$refs.loadmore.onBottomLoaded();
             setTimeout(function(){
               window.scrollTo(0,0)
-            },10)
+            },10);
           } else {
             console.log("下拉刷新");
             that.list = [];//待审核
