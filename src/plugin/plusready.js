@@ -2,9 +2,9 @@ import $ from "jquery"
 import Vue from 'vue'
 
 //测试环境
-window.baseUrl = "https://apigatewayqa.sgmlink.com:3223/service/visitormobile/"
+// window.baseUrl = "https://apigatewayqa.sgmlink.com:3223/service/visitormobile/"
 // 发布环境
-// window.baseUrl = "https://apigatewayqa.sgmlink.com:13101/service/visitormobile/"
+window.baseUrl = "https://apigatewayqa.sgmlink.com:13101/service/visitormobile/"
 function PlusReady(value) {
   this.Ok = Boolean(value);
   return this.Ok;
@@ -16,7 +16,7 @@ PlusReady.prototype.setReady = function (newValue, cb) {
   }
 };
 // plusready  false 不自动触发plusready true 自动触发
-let plusReady = new PlusReady(true);
+let plusReady = new PlusReady(false);
 export default {
   install(Vue, Opt) {
     Vue.PlusReady = function (cb) {
@@ -34,6 +34,20 @@ export default {
       }
 
     };
+
+    Vue.getWaitCheckNum=function (success) {
+      $.ajax({
+        type:"get",
+        url:baseUrl + "api/visit/01/getVerifyNumber",
+        data: {
+          "token": localStorage.token,
+          "uid": localStorage.id
+        },
+        success: success
+      })
+    };
+
+
     Vue.AddInvite = function (data, beforeSend, success) {
       //发起预约接口
       $.ajax({

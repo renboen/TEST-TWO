@@ -27,13 +27,24 @@
     mounted(){
 //      alert("登陆默认模块")
       Vue.PlusReady(function () {
-//        var uid = NativeObj.getUserName()
-//        Vue.GetLogin(uid);
-         Vue.GetLogin("apptest01");
+        var uid = NativeObj.getUserName()
+        Vue.GetLogin(uid);
+//         Vue.GetLogin("apptest01");
 //         Vue.GetLogin("apptest02");
       })
       //默认为已审核
+
+
+
+
       localStorage.setItem("hased", "HasChecked");
+
+//      this.$bus.$on('hubchange', function (data1, data2) {
+//        alert(1)
+//        localStorage.setItem("hased", data2)
+//
+//      })
+
       localStorage.setItem("addressBook", "AddressList");
 
 

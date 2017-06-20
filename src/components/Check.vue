@@ -28,6 +28,7 @@
       }
     },
     mounted: function () {
+//        alert(localStorage.getItem("hased"))
       var that = this;
       $("#check").css({
         height: $(window).height() - 90
@@ -38,7 +39,7 @@
         that.currentView = "HasChecked"
       }
 
-      //  that.currentView= "HasChecked"
+//        that.currentView= "HasChecked"
 
       that.$bus.$on('hubchange', function (data1, data2) {
         localStorage.setItem("hased", data2)

@@ -12,7 +12,7 @@
     >
       <!--612-->
       <div id="waiting" >
-        <!--<div style="height: 8px;background: #ededed"></div>-->
+        <div style="height: 8px;background: #ededed"></div>
         <div class="content" v-for="(item,index) in list">
           <div class="hd"><h3><span>预约单号</span><span>{{item.visitNo}}</span></h3></div>
           <ul>
@@ -403,6 +403,14 @@ export default {
   },
   mounted(){
 //        alert(2)
+let that=this;
+
+    Vue.getWaitCheckNum(function (e) {
+        console.log("444444444")
+        console.log(e.data);
+       let num=e.data
+      that.$bus.$emit('checkNum', num); //Hub触发事件
+    })
     Indicator.open({
       text: '加载中...',
       spinnerType: 'fading-circle'
@@ -411,7 +419,6 @@ export default {
     $("#waiting").css({
       minHeight: $(window).height() - 113
     })
-let that=this;
     that.getWaitCheck("up")
 
 }

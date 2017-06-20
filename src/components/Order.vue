@@ -43,6 +43,7 @@
         hourFormat="{value} 时"
         monthFormat="{value} 月"
         dateFormat="{value} 日"
+        style=""
         @confirm="handleChange">
       </mt-datetime-picker>
 
@@ -336,6 +337,10 @@
 //        next(true)
     },
     mounted: function () {
+
+
+
+
       //      alert( "order"+localStorage.token)
 
 //      (function ($) {
@@ -413,7 +418,7 @@
       //监听是sgm还是patac
       that.$bus.$on('sgmorpathcchange', function (arg) {
         that.factory = window.factoryanddoor[0];
-        console.log(window.factoryanddoor)
+//        console.log(window.factoryanddoor)
         if (arg == "SGM") {
 
           that.showCar = arg;

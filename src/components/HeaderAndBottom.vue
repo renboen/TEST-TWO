@@ -5,7 +5,7 @@
     <header >访客预约管理系统</header>
     <div class="orderSelect" v-show='selected=="order"' @click="showpoup">{{isSgmOrPatac}} <span
       class=" fa fa-angle-down"></span></div>
-    <div class="aboutmeSelect" v-show='selected=="check"' @click="PoupCheckShow"><span v-show="IsshowPoupCheck">{{IscheckingOrChecked}}</span>
+    <div class="aboutmeSelect" v-show='selected=="check"' @click="PoupCheckShow"><span v-show="IsshowPoupCheck">{{IscheckingOrChecked}} <span v-show='IscheckingOrChecked=="待审核"'>({{checkingNum}})</span></span>
       <span v-show="IsshowPoupCheck" class=" fa fa-angle-down"></span></div>
 
     <div class="addressSelect" v-show='selected=="aboutme"' @click="IsshowLongguest"><span v-show="IsshowPoupCheck">{{IsaddressbookOrLongguest}}</span>
@@ -100,16 +100,17 @@
         IscheckingOrChecked: "历史",
         IsshowPoupCheck: false,
         IsaddressbookOrLongguest:"",
+        checkingNum:""
 
       }
     },
     created: function () {
-
+let that=this;
 //      alert(2)
       Vue.PlusReady(function () {
-//        var uid = NativeObj.getUserName();
-//        Vue.GetLogin(uid);
-        Vue.GetLogin("apptest01");
+        var uid = NativeObj.getUserName();
+        Vue.GetLogin(uid);
+//        Vue.GetLogin("apptest01");
 //        Vue.GetLogin("apptest02") ;
       })
 
@@ -122,7 +123,15 @@
         this.IsaddressbookOrLongguest="通讯录"
       }else{
         this.IsaddressbookOrLongguest="长期供应商"
-      }
+      };
+
+
+
+
+
+      that.$bus.$on('checkNum', function(num){
+        that.checkingNum=num
+      }); //Hub触发事件
       //不考虑频繁切换账号
       //   Vue.PlusReady(function(){
       //       // var uid = NativeObj.getUserName()
@@ -135,6 +144,16 @@
 
     },
     mounted:function(){
+
+        //619历史和待审核重新等路的问题
+    if( localStorage.getItem("hased")=="WaitCheck"){
+      this.IscheckingOrChecked = "待审核";
+    }else{
+      this.IscheckingOrChecked = "历史";
+    }
+
+
+
 //      alert($(window).width())
 //      $(".poup").width($(window).width()*0.95);
 //      $(".poup").height($(window).height()*0.35);
@@ -200,6 +219,12 @@
       },
       checkOrchecked(arg1, arg2){
         this.$bus.$emit('hubchange', arg1, arg2); //Hub触发事件
+
+
+//        alert(arg1)
+//
+//        localStorage.setItem("hased", arg2)
+
         this.IscheckingOrChecked = arg1;
         this.showPoupCheck = false;
       },
