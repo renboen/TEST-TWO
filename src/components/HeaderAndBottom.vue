@@ -14,7 +14,7 @@
     <div style="height:50px;background:#EDEDED" class="nouse"></div>
     <router-view>
     </router-view>
-    <div style="height:55px; background:#EDEDED"></div>
+    <div class="forbottom" style="height:55px; background:#EDEDED"></div>
     <mt-tabbar v-model="selected" fixed style="z-index:990;height: 55px">
       <mt-tab-item id="order">
         <span class="fa fa-calendar fa-lg  fa-2x" style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span>预约
@@ -259,6 +259,7 @@ let that=this;
     height:50px;
     line-height:50px;
     position: fixed;
+    /*position: absolute;*/
     top:0;
     left:0;
     z-index: 1500;

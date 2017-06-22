@@ -38,12 +38,11 @@
       </mt-cell>
       <mt-datetime-picker
         ref="picker1"
-        v-model="value"
+        v-model="datetimevalue"
         yearFormat="{value}"
         hourFormat="{value} 时"
         monthFormat="{value} 月"
         dateFormat="{value} 日"
-        style=""
         @confirm="handleChange">
       </mt-datetime-picker>
 
@@ -323,7 +322,9 @@
         isLongGuestCompany: false,
 
 
-        value: null,
+        datetimevalue: null,
+        starttime:null,
+        endtime:null,
         youWant: "请选择来访日期",
 
         addmymesg: ['是否需要访客补充信息']
@@ -341,38 +342,6 @@
 
 
 
-      //      alert( "order"+localStorage.token)
-
-//      (function ($) {
-//        "use strict";
-//        $.fn.openSelect = function () {
-//          return this.each(function (idx, domEl) {
-//            if (document.createEvent) {
-//              var event = document.createEvent("MouseEvents");
-//              event.initMouseEvent("mousedown", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-//              domEl.dispatchEvent(event);
-//            } else if (element.fireEvent) {
-//              domEl.fireEvent("onmousedown");
-//            }
-//          });
-//        }
-//      }($));
-//      $(".mint-cell").click(function (e) {
-//            $(this).find("input").focus();
-//            $(this).find("select").openSelect();
-//            if($(this).find("button").length>0){
-//              var myDate = new Date()
-//              that.value = myDate
-//              setTimeout(function () {
-//                that.open('picker1')
-//              },100)
-//            }
-//
-//        console.log(e.target.className)
-//      })
-//      $("select").click(function (e) {
-//        $(this).parent().parent().parent().click()
-//      })
 
       window.scrollTo(0, 0);
       let that = this;
@@ -963,13 +932,17 @@
         that.personContentForCar = [];
 
 
-        that.value = null,
+        that.datetimevalue = null,
           that.youWant = "请输入来访日期"
       },
 
 
       open(picker) {
+
         let that = this;
+//        alert(that.datetimevalue)
+
+//        that.visitdate="";
 //        $(".picker-slot-wrapper:last").html('<div class="picker-item picker-selected" style="height: 36px; line-height: 36px;">00 分</div>')
 //        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">15 分</div>')
 //        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">30 分</div>')
@@ -1001,28 +974,103 @@
         let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate() + 1
 //        let hour=datatime.getHours()<10?"0"+datatime.getHours():datatime.getHours();
         let hour = "09";
-        this.value = year + '-' + mounth + '-' + date + ' ' + hour + ":00";
+        let intdatetime=year + '-' + mounth + '-' + date + ' ' + hour + ":00";
+//        that.starttime = new Date(year + '-' + mounth + '-' + date + ' ' + hour + ":00")
+//        that.endtime = new Date((year+20) + '-' + mounth + '-' + date + ' ' + hour + ":00")
+//        that.datetimevalue = year + '-' + mounth + '-' + date + ' ' + hour + ":00"
+        that.datetimevalue = new Date(year + '/' + mounth + '/' + date + ' ' + hour + ":00")
+        window.isvalue=  that.datetimevalue;
+//        alert(that.datetimevalue)
         this.$refs[picker].open();
+//解决苹果时间组件遮盖不了底部Tabbar
+        $(".mint-tabbar").css("display","none")
+        $(".forbottom").css("display","none")
+        $("#order").css("bottom","0")
+//        $("#order").css("top","0")
+
+        setTimeout(function () {
+          $(".mint-datetime-action.mint-datetime-cancel").click(function(){
+            $(".forbottom").css("display","block")
+            $(".mint-tabbar").css("display","flex")
+            $("#order").css("bottom","55px")
+//            $("#order").css("top","50px")
+          })
+
+          $(".v-modal").click(function () {
+            $(".forbottom").css("display","block")
+            $(".mint-tabbar").css("display","flex")
+            $("#order").css("bottom","55px")
+//            $("#order").css("top","50px")
+          })
+        })
       },
+
+
       handleChange(value) {
-//        var str =  $(".picker-slot-wrapper:last").attr("style").split("translate(0px,")[1];
-//        var transLateY=str.split("px")[0]/36;
-//        var minutes=(Math.abs(transLateY-4)-1)*15
-//        if(minutes==0){
-//          minutes="00"
-//        }
         let that = this;
-        let datatime = new Date(value);
-        let year = datatime.getFullYear();
-        let mounth = datatime.getMonth() + 1 < 10 ? "0" + (datatime.getMonth() + 1) : datatime.getMonth() + 1;
-        let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate()
-        let hour = datatime.getHours() < 10 ? "0" + datatime.getHours() : datatime.getHours();
-        let minutes = datatime.getMinutes() < 10 ? "0" + datatime.getMinutes() : datatime.getMinutes();
-        that.youWant = year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
-//        alert(that.youWant)
+//        value=new Date(value)
+//          alert(value)
+//alert(typeof value.getFullYear=="undefined")
+//        if(typeof value.getFullYear=="undefined"){
+//            alert(1)
+//                  value=new Date(value)
+//        }
+        let year = value.getFullYear();
+        let mounth = value.getMonth() + 1 < 10 ? "0" + (value.getMonth() + 1) : value.getMonth() + 1;
+        let date = value.getDate() < 10 ? "0" + value.getDate() : value.getDate()
+        let hour = value.getHours() < 10 ? "0" + value.getHours() : value.getHours();
+        let minutes = value.getMinutes() < 10 ? "0" + value.getMinutes() : value.getMinutes();
+        let isPrevYouWant=year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
         console.log(value, year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes)
+        that.youWant = year + '-' + mounth + '-' + date + '  ' + hour + ':' + minutes;
         that.visitdate = that.youWant
-//        alert(that.visitdate)
+
+
+
+//        let datatime = new Date(value);
+//        let year = datatime.getFullYear();
+//        let mounth = datatime.getMonth() + 1 < 10 ? "0" + (datatime.getMonth() + 1) : datatime.getMonth() + 1;
+//        let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate()
+//        let hour = datatime.getHours() < 10 ? "0" + datatime.getHours() : datatime.getHours();
+//        let minutes = datatime.getMinutes() < 10 ? "0" + datatime.getMinutes() : datatime.getMinutes();
+//        let isPrevYouWant=year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
+//        alert(that.youWant)
+//        alert(isPrevYouWant)
+//        alert(typeof (that.youWant))
+//        alert(typeof(isPrevYouWant))
+//        alert(isPrevYouWant==that.youWant)
+//        alert(that.datetimevalue==window.isvalue)
+//        alert(window.isvalue)
+//        alert(isPrevYouWant)
+//        alert(isPrevYouWant==window.isvalue)
+//
+//        if(isPrevYouWant==window.isvalue){
+//          alert(2)
+//          return
+//        }else{
+//          console.log(value, year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes)
+//          that.youWant = year + '-' + mounth + '-' + date + '  ' + hour + ':' + minutes;
+//          that.visitdate = that.youWant
+//        }
+//
+//
+//        if(isPrevYouWant.indexOf("NaN")>0){
+//          alert(1)
+//          that.visitdate=window.isvalue
+//        }
+
+
+
+
+
+        setTimeout(function(){
+//            $(".mint-tabbar").css("height","55px")
+//            $(".forbottom").css("height","55px")
+          $(".forbottom").css("display","block")
+          $(".mint-tabbar").css("display","flex")
+          $("#order").css("bottom","55px")
+//          $("#order").css("top","50px")
+        })
 
 
       }
@@ -1044,12 +1092,19 @@
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 
+
   }
 
   .test {
     width: 100%;
   }
 
+
+
+  .dis{
+    display: none!important;
+    background:red!important;
+  }
   select {
 
     width: 100%;
