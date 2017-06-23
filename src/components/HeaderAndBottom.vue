@@ -1,15 +1,18 @@
 <template>
   <div id="headBot">
-    <div  class="hheader">
-    <!--<mt-header fixed title="访客预约管理系统" ></mt-header>-->
-    <header >访客预约管理系统</header>
-    <div class="orderSelect" v-show='selected=="order"' @click="showpoup">{{isSgmOrPatac}} <span
-      class=" fa fa-angle-down"></span></div>
-    <div class="aboutmeSelect" v-show='selected=="check"' @click="PoupCheckShow"><span v-show="IsshowPoupCheck">{{IscheckingOrChecked}} <span v-show='IscheckingOrChecked=="待审核"'>({{checkingNum}})</span></span>
-      <span v-show="IsshowPoupCheck" class=" fa fa-angle-down"></span></div>
+    <div class="hheader">
+      <!--<mt-header fixed title="访客预约管理系统" ></mt-header>-->
+      <header>访客预约管理系统</header>
+      <!--<i class="fa fa-angle-left " aria-hidden="true"></i>-->
+      <span class="fa fa-angle-left fa-2x " @click.stop="close"></span>
+      <div class="orderSelect" v-show='selected=="order"' @click="showpoup">{{isSgmOrPatac}} <span
+        class=" fa fa-angle-down"></span></div>
+      <div class="aboutmeSelect" v-show='selected=="check"' @click="PoupCheckShow"><span v-show="IsshowPoupCheck">{{IscheckingOrChecked}} <span
+        v-show='IscheckingOrChecked=="待审核"'>({{checkingNum}})</span></span>
+        <span v-show="IsshowPoupCheck" class=" fa fa-angle-down"></span></div>
 
-    <div class="addressSelect" v-show='selected=="aboutme"' @click="IsshowLongguest"><span v-show="IsshowPoupCheck">{{IsaddressbookOrLongguest}}</span>
-      <span v-show="IsshowPoupCheck"  class=" fa fa-angle-down"></span></div>
+      <div class="addressSelect" v-show='selected=="aboutme"' @click="IsshowLongguest"><span v-show="IsshowPoupCheck">{{IsaddressbookOrLongguest}}</span>
+        <span v-show="IsshowPoupCheck" class=" fa fa-angle-down"></span></div>
     </div>
     <div style="height:50px;background:#EDEDED" class="nouse"></div>
     <router-view>
@@ -17,13 +20,16 @@
     <div class="forbottom" style="height:55px; background:#EDEDED"></div>
     <mt-tabbar v-model="selected" fixed style="z-index:990;height: 55px">
       <mt-tab-item id="order">
-        <span class="fa fa-calendar fa-lg  fa-2x" style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span>预约
+        <span class="fa fa-calendar fa-lg  fa-2x"
+              style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span>预约
       </mt-tab-item>
       <mt-tab-item id="check">
-        <span class="fa fa-book fa-lg  fa-2x" style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span><span>历史</span>
+        <span class="fa fa-book fa-lg  fa-2x"
+              style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span><span>历史</span>
       </mt-tab-item>
       <mt-tab-item id="aboutme">
-        <span class="fa fa-user fa-lg  fa-2x" style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span><span>我的</span>
+        <span class="fa fa-user fa-lg  fa-2x"
+              style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span><span>我的</span>
       </mt-tab-item>
     </mt-tabbar>
 
@@ -96,22 +102,23 @@
         SgmOrPatacFlag: "",
         showPoup: false,
         showPoupCheck: false,
-        showLongguest:false,
+        showLongguest: false,
         IscheckingOrChecked: "历史",
         IsshowPoupCheck: false,
-        IsaddressbookOrLongguest:"",
-        checkingNum:""
+        IsaddressbookOrLongguest: "",
+        checkingNum: "",
+        canClickSgm: true
 
       }
     },
     created: function () {
-let that=this;
+      let that = this;
 //      alert(2)
       Vue.PlusReady(function () {
         var uid = NativeObj.getUserName();
         Vue.GetLogin(uid);
 //        Vue.GetLogin("apptest01");
-//        Vue.GetLogin("apptest02") ;
+//        Vue.GetLogin("apptest02");
       })
 
       if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
@@ -119,18 +126,16 @@ let that=this;
       } else {
         this.IsshowPoupCheck = false
       }
-      if( localStorage.getItem("addressBook")=="AddressList"){
-        this.IsaddressbookOrLongguest="通讯录"
-      }else{
-        this.IsaddressbookOrLongguest="长期供应商"
-      };
+      if (localStorage.getItem("addressBook") == "AddressList") {
+        this.IsaddressbookOrLongguest = "通讯录"
+      } else {
+        this.IsaddressbookOrLongguest = "长期供应商"
+      }
+      ;
 
 
-
-
-
-      that.$bus.$on('checkNum', function(num){
-        that.checkingNum=num
+      that.$bus.$on('checkNum', function (num) {
+        that.checkingNum = num
       }); //Hub触发事件
       //不考虑频繁切换账号
       //   Vue.PlusReady(function(){
@@ -143,15 +148,19 @@ let that=this;
 
 
     },
-    mounted:function(){
+    mounted: function () {
+      //622解决遮罩不了头，使头(sgm)不能点击
+      let that = this;
+      this.$bus.$on('isDisableCkick', function (arg) {
+        that.canClickSgm = arg;
+      });
 
-        //619历史和待审核重新等路的问题
-    if( localStorage.getItem("hased")=="WaitCheck"){
-      this.IscheckingOrChecked = "待审核";
-    }else{
-      this.IscheckingOrChecked = "历史";
-    }
-
+      //619历史和待审核重新等路的问题
+      if (localStorage.getItem("hased") == "WaitCheck") {
+        this.IscheckingOrChecked = "待审核";
+      } else {
+        this.IscheckingOrChecked = "历史";
+      }
 
 
 //      alert($(window).width())
@@ -173,26 +182,26 @@ let that=this;
         this.$router.push('/' + data)
       },
       showPoup(e){
-          //SGM和PATAC的poup是否显示
-          if(e){
-            $("body").css({overflow: "hidden"})
-          }else{
-            $("body").css({overflow: "auto"})
-          }
+        //SGM和PATAC的poup是否显示
+        if (e) {
+          $("body").css({overflow: "hidden"})
+        } else {
+          $("body").css({overflow: "auto"})
+        }
       },
       showPoupCheck(e){
         //已审核和历史
-        if(e){
+        if (e) {
           $("body").css({overflow: "hidden"})
-        }else{
+        } else {
           $("body").css({overflow: "auto"})
         }
       },
       showLongguest(e){
         //长期和通讯录
-        if(e){
+        if (e) {
           $("body").css({overflow: "hidden"})
-        }else{
+        } else {
           $("body").css({overflow: "auto"})
         }
       },
@@ -205,7 +214,12 @@ let that=this;
     },
     methods: {
       showpoup(){
-        this.showPoup = true;
+        if (this.canClickSgm) {
+          this.showPoup = true;
+        } else {
+          return
+        }
+
       },
       hidePoup(){
         this.showPoup = false;
@@ -235,17 +249,28 @@ let that=this;
         this.showPoupCheck = false;
       },
       IsshowLongguest(){
-        this.showLongguest=true;
+        this.showLongguest = true;
       },
       hideLongguest(){
-        this.showLongguest=false;
+        this.showLongguest = false;
       },
-      longguestOrAddress(arg1,arg2,arg3){
-      //向组件About发送消息
-        this.IsaddressbookOrLongguest=arg1;
+      longguestOrAddress(arg1, arg2, arg3){
+        //向组件About发送消息
+        this.IsaddressbookOrLongguest = arg1;
         this.$bus.$emit('longguestAndAddress', arg1, arg2,); //Hub触发事件
         $("body").css({overflow: "auto"})
-        this.showLongguest=false;
+        this.showLongguest = false;
+      },
+      close(){
+//          var href=window.location.href;
+//        window.location.href="about:blank";
+//        window.open(href,"_self","")
+//        window.close();
+        Vue.PlusReady(function () {
+          mplus.closeWindow()
+        })
+
+
       }
     }
   }
@@ -254,26 +279,29 @@ let that=this;
   #headBot {
     background: white
   }
-  .hheader{
+
+  .hheader {
     width: 100%;
-    height:50px;
-    line-height:50px;
+    height: 50px;
+    line-height: 50px;
     position: fixed;
     /*position: absolute;*/
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     z-index: 1500;
-    color:white
+    color: white
   }
-  .orderSelect, .aboutmeSelect,.addressSelect {
+
+  .orderSelect, .aboutmeSelect, .addressSelect {
     font-size: 12px;
     height: 50px;
     line-height: 50px;
-    padding-right: 10px;
+    /*padding-right: 10px;*/
     color: white;
     position: fixed;
     top: 0;
     right: 0;
+    margin-right: 10px;
     z-index: 1501;
   }
 
@@ -296,7 +324,7 @@ let that=this;
 
   .poup > .poupContent {
     /*height: 80%;*/
-    height:calc(100% - 40px);
+    height: calc(100% - 40px);
     /*background: red;*/
     display: flex;
     justify-content: center;
@@ -308,7 +336,7 @@ let that=this;
     background: transparent;
     color: #0434B2;
     border: 1px solid #0434B2;
-    font-size:16px;
+    font-size: 16px;
     /*margin-top: -10px;*/
   }
 
@@ -327,5 +355,7 @@ let that=this;
     background: #0434B2 !important;
     color: white !important;
   }
-
+  .fa.fa-angle-left{
+    position: absolute; z-index: 1501;color:white;top: 0;left:0;line-height: 50px;display: inline-block;width: 40px
+  }
 </style>

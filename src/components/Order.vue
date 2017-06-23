@@ -217,27 +217,28 @@
         </div>
       </mt-popup>
 
-      <mt-popup v-model="showSearchByName" popup-transition="popup-fade">
+      <mt-popup v-model="showSearchByName" popup-transition="popup-fade" class="tab">
         <div class="poup poupSearch ">
           <div class="poupHead">
             <mt-navbar v-model="searchByNameselected">
               <mt-tab-item id="1">搜索</mt-tab-item>
               <mt-tab-item id="2" v-show='this.showCar=="SGM"?true:false'>常用记录</mt-tab-item>
             </mt-navbar>
-            <span class="fa fa-remove" @click="hideSearchByName" style="width: 10%;height: 36px;line-height: 36px;"></span>
+            <span class="fa fa-remove" @click="hideSearchByName"
+                  style="width: 10%;height: 36px;line-height: 36px;"></span>
           </div>
           <div class="poupContent">
             <mt-tab-container v-model="searchByNameselected">
               <mt-tab-container-item id="1">
-                <mt-field placeholder="输入要搜索的访客姓名关键字" v-model="searchKW" :disableClear="false" ></mt-field>
+                <mt-field placeholder="输入要搜索的访客姓名关键字" v-model="searchKW" :disableClear="false"></mt-field>
                 <!--<div style="margin-top: 48px;">-->
-                  <ul v-for="(item,index) in SearchByNameList ">
-                    <li @click="searchclick(index)">
-                      <div>{{item.name}}</div>
-                      <div>{{item.tel}}</div>
-                      <div>{{item.company}}</div>
-                    </li>
-                  </ul>
+                <ul v-for="(item,index) in SearchByNameList ">
+                  <li @click="searchclick(index)">
+                    <div>{{item.name}}</div>
+                    <div>{{item.tel}}</div>
+                    <div>{{item.company}}</div>
+                  </li>
+                </ul>
                 <!--</div>-->
               </mt-tab-container-item>
 
@@ -247,9 +248,18 @@
                 <ul class="useHistory" v-for="(item,index) in frequentlyUsedHistory" @click="addInput(index)">
                   <!--<li v-for="(item,index) in frequentlyUsedHistory" @click="addInput(index)">-->
                   <li>
-                    <span style="width:60%">{{item.historyName}}</span>
-                    <span style="width:20%;text-align:center;height: 48px;line-height: 48px" class="fa fa-pencil "
+                    <span v-show="ischangeName==index?false:true"  style="width:60%">{{item.historyName}}</span>
+                    <span @click.stop="useHistoryClick" v-show="ischangeName==index?true:false"  style="width:60%"><input type="text" v-model="changeNameVal"  style="height:25px;width:100%;padding: 0;outline: none;border: none" autofocus placeholder="请输入备注名称"></span>
+
+
+
+
+                    <span v-show="ischangeName==index?false:true" style="width:20%;text-align:center;height: 48px;line-height: 48px;" class="fa fa-pencil "
                           @click.stop="changeName(index)"></span>
+
+                    <span v-show="ischangeName==index?true:false"   style="width:20%;text-align:center;height: 48px;line-height: 48px"
+                          @click.stop="save(index,item.historyName)" >保存</span>
+
                     <span style="width:20%;text-align:right;height: 48px;line-height: 48px" class="fa fa-remove"
                           @click.stop="deleteThisHistory(index)"></span>
                   </li>
@@ -323,13 +333,16 @@
 
 
         datetimevalue: null,
-        starttime:null,
-        endtime:null,
+        starttime: null,
+        endtime: null,
         youWant: "请选择来访日期",
 
-        addmymesg: ['是否需要访客补充信息']
+        addmymesg: ['是否需要访客补充信息'],
 //        mindate:null
 //        minute:"5"
+
+        ischangeName:-1,
+        changeNameVal:""
       }
 
     },
@@ -338,9 +351,6 @@
 //        next(true)
     },
     mounted: function () {
-
-
-
 
 
       window.scrollTo(0, 0);
@@ -473,12 +483,13 @@
 
       },
       searchByNameselected(arg){
-        let that = this
+        let that = this;
         let gg = false;
         if (arg == 2) {
-
           $(".poupSearch .mint-tab-container-item").eq(1).css("display", "block")
           that.searchKW = ""
+          that.ischangeName=-1;
+          that.changeNameVal="";
         } else {
           that.searchByName("")
         }
@@ -506,13 +517,18 @@
 
       showSearchByName: function (arg) {
         let that = this;
+        let flag=!arg
+
+        that.$bus.$emit('isDisableCkick', flag);
+
+
         if (arg) {
           //在访客姓名里面进行访客赛选
+
           that.searchByName(that.searchKW);
           that.searchByNameselected = "1";
           $(".poupSearch .mint-tab-container-item").eq(0).css("display", "block")
         } else {
-//          alert( )
           $(".poupContent").scrollTop(0)
 
         }
@@ -591,6 +607,8 @@
       },
       ShowAlert(){
         let that = this;
+
+
         //验证表单
         if (that.isLongGuestCompany) {
           var company = that.visitaddress1
@@ -613,29 +631,87 @@
             message: '手机号码不能为空',
             duration: 1000
           });
-        }else if (!that.visitdate) {
+        } else if (!that.visitdate) {
           Toast({
             message: '来访日期不能为空',
             duration: 1000
           });
-        }else if (!company) {
+        } else if (!company) {
           Toast({
             message: '来访单位不能为空',
             duration: 1000
           });
-        }else if (!that.visitmatter) {
+        } else if (!that.visitmatter) {
           Toast({
             message: '来访事由不能为空',
             duration: 1000
           });
-        }  else {
+        } else if (that.personContent.length != 0 || that.personContentForThing.length != 0 || that.personContentForCar.length != 0) {
+          var personFlag = true;
+          var ThingFlag = true;
+          var CarFlag = true;
+          console.log(that.personContentForThing)
+
+
+          if (that.personContent.length != 0) {
+            personFlag = that.personContent.every(function (item, index) {
+              return item.idNo != "" && item.name != ""
+            });
+          }
+          console.log(personFlag)
+
+
+          if (that.personContentForThing.length != 0) {
+            ThingFlag = that.personContentForThing.every(function (item, index) {
+              return item.number != "" && item.name != ""
+            });
+          }
+          console.log(ThingFlag)
+
+          if (that.personContentForCar.length != 0) {
+            CarFlag = that.personContentForCar.every(function (item) {
+              return item.carNo != ""
+            });
+          }
+          console.log(CarFlag)
+
+          if (that.showCar == "SGM") {
+            if (!personFlag) {
+              Toast({
+                message: '随访人员信息不能为空',
+                duration: 1000
+              });
+            } else if (!CarFlag) {
+              Toast({
+                message: '随访车辆信息不能为空',
+                duration: 1000
+              });
+            } else if (!ThingFlag) {
+              Toast({
+                message: '随访物品名称和数量不能为空',
+                duration: 1000
+              });
+            } else {
+              that.showAlert = true
+            }
+          } else {
+            if (!personFlag) {
+              Toast({
+                message: '随访人员信息不能为空',
+                duration: 1000
+              });
+            } else if (!ThingFlag) {
+              Toast({
+                message: '随访物品名称和数量不能为空',
+                duration: 1000
+              });
+            } else {
+              that.showAlert = true
+            }
+          }
+        } else {
           that.showAlert = true
-
         }
-
-
-
-
 
       },
       ajaxfactoryanddoor(){
@@ -688,10 +764,10 @@
             that.areaselected = that.area[0][1];
             that.gateselected = that.gate[0][1];
           }
-          console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-          console.log(that.factory)
-          console.log(that.area)
-          console.log(that.gate)
+//          console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+//          console.log(that.factory)
+//          console.log(that.area)
+//          console.log(that.gate)
         });
       },
       getChercker(){
@@ -722,6 +798,8 @@
       isSure(){
         let that = this;
         console.log("ajax请求");
+
+
         if (that.showCar == "SGM") {
           var SendcheckUserId = "";//审核人
           var jsoncars = that.personContentForCar;//随访车辆
@@ -808,7 +886,8 @@
                 "uid": localStorage.id,
                 "guestName": that.visitername,
                 "guestPhone": that.telnum,
-                "visitPlanTime": that.visitdate,
+//                "visitPlanTime": that.visitdate,
+                "visitPlanTime": "",
                 "guestCompanyName": that.visitaddress,
                 "guestVisitDesc": that.visitmatter,
                 "userName": localStorage.userName,
@@ -873,9 +952,13 @@
         that.showSearchByName = false;
       },
       showSearch(){
+
         let that = this;
         that.showSearchByName = true;
-
+        setTimeout(function () {
+          $(".mint-popup.tab").css("z-index", "3001")
+          $(".v-modal").css("z-index", "3000")
+        })
 
       },
       hideSearchByName(){
@@ -899,14 +982,57 @@
 
         that.showSearchByName = false;
       },
+
+
+      useHistoryClick(e){
+        e.stopPropagation()
+        e.preventDefault()
+
+      },
+      save(arg,oldval){
+        this.ischangeName=-1
+        if(this.changeNameVal!=""){
+        this.frequentlyUsedHistory[arg].historyName = this.changeNameVal
+          console.log(this.frequentlyUsedHistory[arg].historyName)
+          localStorage.setItem("frequentlyUsedHistory", JSON.stringify(this.frequentlyUsedHistory))
+          this.changeNameVal=""
+        }else{
+            return
+        }
+
+
+
+      },
+
       changeName(arg){
         let that = this;
-        MessageBox.prompt('请输入姓名').then(({value, action}) => {
-          that.frequentlyUsedHistory[arg].historyName = value;
-          console.log(that.frequentlyUsedHistory[arg].historyName)
-          localStorage.setItem("frequentlyUsedHistory", JSON.stringify(that.frequentlyUsedHistory))
-        });
+        that.ischangeName=arg;
 
+//        setTimeout(function () {
+//          $(".mint-msgbox-wrapper").css("z-index", "3004")
+//          $(".v-modal").css("z-index", "3003")
+//        })
+////        let zindex = $(".v-modal").attr("style")
+////
+//        $(".v-modal").click(function () {
+//          setTimeout(function () {
+//            $(".v-modal").css("z-index", "3000")
+//          })
+//        })
+//        MessageBox.prompt('请输入备注名称').then(({value, action}) => {
+//          that.frequentlyUsedHistory[arg].historyName = value;
+//          console.log(that.frequentlyUsedHistory[arg].historyName)
+//          localStorage.setItem("frequentlyUsedHistory", JSON.stringify(that.frequentlyUsedHistory))
+//          setTimeout(function () {
+//            $(".v-modal").css("z-index", "3000")
+//          })
+//        }, function (arg) {
+//          setTimeout(function () {
+//            $(".v-modal").css("z-index", "3000")
+//          })
+//
+//
+//        });
       },
       deleteThisHistory(arg){
         let that = this;
@@ -930,8 +1056,7 @@
         that.personContent = [];
         that.personContentForThing = [];
         that.personContentForCar = [];
-
-
+        that.isAddVisiterInfor = []
         that.datetimevalue = null,
           that.youWant = "请输入来访日期"
       },
@@ -974,33 +1099,44 @@
         let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate() + 1
 //        let hour=datatime.getHours()<10?"0"+datatime.getHours():datatime.getHours();
         let hour = "09";
-        let intdatetime=year + '-' + mounth + '-' + date + ' ' + hour + ":00";
+        let intdatetime = year + '-' + mounth + '-' + date + ' ' + hour + ":00";
 //        that.starttime = new Date(year + '-' + mounth + '-' + date + ' ' + hour + ":00")
 //        that.endtime = new Date((year+20) + '-' + mounth + '-' + date + ' ' + hour + ":00")
 //        that.datetimevalue = year + '-' + mounth + '-' + date + ' ' + hour + ":00"
         that.datetimevalue = new Date(year + '/' + mounth + '/' + date + ' ' + hour + ":00")
-        window.isvalue=  that.datetimevalue;
+        window.isvalue = that.datetimevalue;
 //        alert(that.datetimevalue)
         this.$refs[picker].open();
 //解决苹果时间组件遮盖不了底部Tabbar
-        $(".mint-tabbar").css("display","none")
-        $(".forbottom").css("display","none")
-        $("#order").css("bottom","0")
+        $(".mint-tabbar").css("display", "none")
+        $(".forbottom").css("display", "none")
+        $("#order").css("bottom", "0")
 //        $("#order").css("top","0")
 
+
+//622解决苹果日期不遮罩头
+        that.$bus.$emit('isDisableCkick', false);
+
         setTimeout(function () {
-          $(".mint-datetime-action.mint-datetime-cancel").click(function(){
-            $(".forbottom").css("display","block")
-            $(".mint-tabbar").css("display","flex")
-            $("#order").css("bottom","55px")
+          $(".mint-datetime-action.mint-datetime-cancel").click(function (e) {
+
+            $(".forbottom").css("display", "block")
+            $(".mint-tabbar").css("display", "flex")
+            $("#order").css("bottom", "55px")
 //            $("#order").css("top","50px")
+            //622解决苹果日期不遮罩头
+            that.$bus.$emit('isDisableCkick', true);
           })
 
           $(".v-modal").click(function () {
-            $(".forbottom").css("display","block")
-            $(".mint-tabbar").css("display","flex")
-            $("#order").css("bottom","55px")
+            $(".forbottom").css("display", "block")
+            $(".mint-tabbar").css("display", "flex")
+            $("#order").css("bottom", "55px")
 //            $("#order").css("top","50px")
+
+//622解决苹果日期不遮罩头
+            that.$bus.$emit('isDisableCkick', true);
+
           })
         })
       },
@@ -1020,11 +1156,10 @@
         let date = value.getDate() < 10 ? "0" + value.getDate() : value.getDate()
         let hour = value.getHours() < 10 ? "0" + value.getHours() : value.getHours();
         let minutes = value.getMinutes() < 10 ? "0" + value.getMinutes() : value.getMinutes();
-        let isPrevYouWant=year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
+        let isPrevYouWant = year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
         console.log(value, year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes)
         that.youWant = year + '-' + mounth + '-' + date + '  ' + hour + ':' + minutes;
         that.visitdate = that.youWant
-
 
 
 //        let datatime = new Date(value);
@@ -1060,16 +1195,16 @@
 //        }
 
 
-
-
-
-        setTimeout(function(){
+        setTimeout(function () {
 //            $(".mint-tabbar").css("height","55px")
 //            $(".forbottom").css("height","55px")
-          $(".forbottom").css("display","block")
-          $(".mint-tabbar").css("display","flex")
-          $("#order").css("bottom","55px")
+          $(".forbottom").css("display", "block")
+          $(".mint-tabbar").css("display", "flex")
+          $("#order").css("bottom", "55px")
 //          $("#order").css("top","50px")
+//622解决苹果日期不遮罩头
+          that.$bus.$emit('isDisableCkick', true);
+
         })
 
 
@@ -1092,19 +1227,17 @@
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 
-
   }
 
   .test {
     width: 100%;
   }
 
-
-
-  .dis{
-    display: none!important;
-    background:red!important;
+  .dis {
+    display: none !important;
+    background: red !important;
   }
+
   select {
 
     width: 100%;
@@ -1321,6 +1454,7 @@
     text-overflow: clip;
 
   }
+
   .poupSearch .mint-tab-container li div:nth-child(1) {
     flex: 40%;
     height: 24px;
@@ -1328,7 +1462,6 @@
     overflow: hidden;
     text-overflow: clip;
     padding-right: 10%;
-
 
   }
 

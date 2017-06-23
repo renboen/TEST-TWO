@@ -10,24 +10,31 @@
 </template>
   <script>
     import Vue from 'vue'
-    import Logindefault from "@/components/Logindefault"
+    import $ from "jquery"
+
+    import Logindefault from "@/components/Logindefault";
+
     export default {
       name: 'app',
       data(){
         return{
           isShow:false,
+          ver:'1.0.0'
         }
       },
       components:{
         Logindefault
       },
       created(){
+          $("title").text('访客预约管理系统 Ver.'+this.ver)
 //        alert("判断是否是首次登陆的标志")
           if(localStorage.getItem("LoginIsInit")==null){
 //            alert("首次登陆")
             this.isShow=true;
+
           }
       },
+
       methods:{
         showstart(d){
           console.log(d)
