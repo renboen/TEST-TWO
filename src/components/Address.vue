@@ -64,7 +64,7 @@
       },
       loadTop() {
         let that = this;
-        console.log("下拉刷新");
+//        console.log("下拉刷新");
         that.directioryNumber = 1;
         that.ajaxAbout("down")
       },
@@ -72,7 +72,7 @@
         this.bottomStatus = status;
       },
       loadbottom() {
-        console.log("上拉加载");
+//        console.log("上拉加载");
         let that = this;
         that.ajaxAbout("up")
       },
@@ -84,9 +84,9 @@
         Vue.GetLinkers(updown,that.directioryNumber, 10, "", function (e) {
           let Tlist = [];
           Indicator.close();
-          console.log(that.directioryNumber);
-          console.log("wwwwwwww" + e.rows.length);
-          console.log(e.rows.length <10 ? true : false)
+//          console.log(that.directioryNumber);
+//          console.log("wwwwwwww" + e.rows.length);
+//          console.log(e.rows.length <10 ? true : false)
           e.rows.map(function (item) {
             Tlist.push(item);
           })
@@ -94,11 +94,11 @@
             that.list = [];
             that.list = that.list.concat(Tlist);
             that.allLoaded = e.rows.length < 10 ? true : false;
-            console.log(that.allLoaded)
+//            console.log(that.allLoaded)
             that.$refs.loadmore.onTopLoaded();
           }else{
           that.list = that.list.concat(Tlist);
-          console.log(that.list)
+//          console.log(that.list)
 //          that.directioryNumber++;
           that.allLoaded = e.rows.length <10 ? true : false;
           that.$refs.loadmore.onBottomLoaded();
@@ -107,7 +107,7 @@
       },
       deletLinker(i, id){
         let that = this;
-        console.log(i + "|||" + id)
+//        console.log(i + "|||" + id)
          Vue.removeLinkers(id,function(e){
          Toast('操作成功');
          that.list.splice(i,1);

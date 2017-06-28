@@ -2,14 +2,92 @@
   <div id="order">
 
     <div class="test">
+      <mt-cell title="来访时间">
+        <div class="page-datetime " style="width: 100%;height: 100%; ">
+          <div class="page-datetime-wrapper" style="height: 100%;width: 100%; ">
+            <mt-button @click.native.stop="open('picker1')" size="large"
+                       style="text-align: right;background: white;border: none!important;outline: none!important;box-shadow: none;font-size: 16px;">
+              {{youWant}}
+              <strong class=" fa fa-angle-down"></strong>
+            </mt-button>
+          </div>
+        </div>
+      </mt-cell>
+      <mt-datetime-picker
+        ref="picker1"
+        v-model="datetimevalue"
+        yearFormat="{value}"
+        hourFormat="{value} 时"
+        monthFormat="{value} 月"
+        dateFormat="{value} 日"
+        @confirm="handleChange">
+      </mt-datetime-picker>
 
-      <div @click="clickinput($event)">
+
+
+
+      <mt-cell title="有效天数" v-show='this.showCar=="SGM"?false:true'>
+        <select v-model="validDay">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        <strong class="selectiIcon fa fa-angle-down"></strong>
+      </mt-cell>
+
+
+
+      <mt-cell class="current" title="供应商类型" v-show='this.showCar=="SGM"?false:true'>
+        <select v-model="supplierType" class="sel">
+          <option>普通供应商</option>
+          <option>长期供应商</option>
+        </select>
+        <strong class="selectiIcon fa fa-angle-down"></strong>
+      </mt-cell>
+
+
+
+
+
+      <div @click="clickinput($event)" v-show='this.showCar=="PATAC"&& isLongGuestCompany?false:true'>
         <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
           class=" fa fa-search"
           style="padding-left:8px"
           @click.stop="showSearch"></span>
         </mt-field>
       </div>
+
+
+
+      <mt-cell title="来访单位" v-show="isLongGuestCompany">
+        <select v-model="visitaddress1">
+          <!--<option value=""></option>-->
+          <option v-for="item in longguestCompany">{{item.name}}</option>
+        </select>
+        <strong class="selectiIcon fa fa-angle-down"></strong>
+      </mt-cell>
+
+
+      <div @click="clickinput($event)">
+        <mt-field v-show="!isLongGuestCompany" label="来访单位" placeholder="请输入来访单位" type="text"
+                  v-model="visitaddress"></mt-field>
+      </div>
+
+
+      <div @click="clickinput($event)" v-show='this.showCar=="PATAC" && isLongGuestCompany?true:false'>
+        <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
+          class=" fa fa-search"
+          style="padding-left:8px"
+          @click.stop="showSearch"></span>
+        </mt-field>
+      </div>
+
+
+
+
+
 
       <mt-cell title="证件类型">
         <select v-model="cardType">
@@ -26,57 +104,10 @@
         <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="telnum"></mt-field>
       </div>
 
-      <mt-cell title="来访时间">
-        <div class="page-datetime " style="width: 100%;height: 100%; ">
-          <div class="page-datetime-wrapper" style="height: 100%;width: 100%; ">
-            <mt-button @click.native.stop="open('picker1')" size="large"
-                       style="text-align: right;background: white;border: none!important;outline: none!important;box-shadow: none;font-size: 16px;">
-              {{youWant}}
-            </mt-button>
-          </div>
-        </div>
-      </mt-cell>
-      <mt-datetime-picker
-        ref="picker1"
-        v-model="datetimevalue"
-        yearFormat="{value}"
-        hourFormat="{value} 时"
-        monthFormat="{value} 月"
-        dateFormat="{value} 日"
-        @confirm="handleChange">
-      </mt-datetime-picker>
 
-      <mt-cell title="有效天数" v-show='this.showCar=="SGM"?false:true'>
-        <select v-model="validDay">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
 
-      <mt-cell class="current" title="供应商类型" v-show='this.showCar=="SGM"?false:true'>
-        <select v-model="supplierType" class="sel">
-          <option>普通供应商</option>
-          <option>长期供应商</option>
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
 
-      <div @click="clickinput($event)">
-        <mt-field v-show="!isLongGuestCompany" label="来访单位" placeholder="请输入来访单位" type="text"
-                  v-model="visitaddress"></mt-field>
-      </div>
 
-      <mt-cell title="来访单位" v-show="isLongGuestCompany">
-        <select v-model="visitaddress1">
-          <!--<option value=""></option>-->
-          <option v-for="item in longguestCompany">{{item.name}}</option>
-        </select>
-        <strong class="selectiIcon fa fa-angle-down"></strong>
-      </mt-cell>
 
       <div @click="clickinput($event)">
         <mt-field label="来访事由" placeholder="请输入来访事由" type="text" v-model="visitmatter"></mt-field>
@@ -372,7 +403,7 @@
       }
       //审核人
       if (window.WcheckerList != undefined) {
-        console.log(window.WcheckerList)
+//        console.log(window.WcheckerList)
         that.checkerInfo = window.WcheckerList;
         that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
       } else {
@@ -383,7 +414,7 @@
         that.longguestCompany = window.Wlongguest;
       } else {
         Vue.GetLongGuest(function (e) {
-          console.log(e)
+//          console.log(e)
           that.longguestCompany = e.rows;
           window.Wlongguest = that.longguestCompany;
         })
@@ -498,7 +529,7 @@
         //监听factory的变化。从而使区域和门岗进行对应变化。
         let that = this;
         that.factory = window.factoryanddoor[0];
-        console.log(window.factoryanddoor)
+//        console.log(window.factoryanddoor)
         if (selected == "1") {
           that.area = window.factoryanddoor[1][0];
           that.gate = window.factoryanddoor[2][0];
@@ -509,7 +540,7 @@
           that.area = window.factoryanddoor[1][1];
           that.gate = window.factoryanddoor[2][1];
           that.factoryselected = that.factory[1][1];
-          console.log("uuuuuuuuuuuuuuuuuu")
+//          console.log("uuuuuuuuuuuuuuuuuu")
           that.areaselected = that.area[0][1];
           that.gateselected = that.gate[0][1];
         }
@@ -555,7 +586,7 @@
         $(e.currentTarget).find("input").focus()
       },
       deleteiconShow(){
-        console.log(this.personContent)
+//        console.log(this.personContent)
         if (this.personContent.length == 0) return;
         this.deleteicon = !this.deleteicon
       },
@@ -597,7 +628,7 @@
         this.showOrHideForThing = !this.showOrHideForThing
       },
       isShowCar(){
-        console.log(this.personContentForCar)
+//        console.log(this.personContentForCar)
 
         if (this.personContentForCar.length == 0) return;
         this.showOrHideForCar = !this.showOrHideForCar
@@ -650,7 +681,7 @@
           var personFlag = true;
           var ThingFlag = true;
           var CarFlag = true;
-          console.log(that.personContentForThing)
+//          console.log(that.personContentForThing)
 
 
           if (that.personContent.length != 0) {
@@ -658,7 +689,7 @@
               return item.idNo != "" && item.name != ""
             });
           }
-          console.log(personFlag)
+//          console.log(personFlag)
 
 
           if (that.personContentForThing.length != 0) {
@@ -666,14 +697,14 @@
               return item.number != "" && item.name != ""
             });
           }
-          console.log(ThingFlag)
+//          console.log(ThingFlag)
 
           if (that.personContentForCar.length != 0) {
             CarFlag = that.personContentForCar.every(function (item) {
               return item.carNo != ""
             });
           }
-          console.log(CarFlag)
+//          console.log(CarFlag)
 
           if (that.showCar == "SGM") {
             if (!personFlag) {
@@ -747,13 +778,13 @@
           window.factoryanddoor = [visitBranch, visitAreaIdInList, visitDoorIdInList];
           that.factory = visitBranch;
 
-          console.log(window.factoryanddoor)
-          console.log(that.factory)
+//          console.log(window.factoryanddoor)
+//          console.log(that.factory)
           if (localStorage.getItem("isSgmOrPatac") == "SGM") {
             that.area = visitAreaIdInList[0];
             that.gate = visitDoorIdInList[0];
-            console.log(777777777777)
-            console.log(that.area)
+//            console.log(777777777777)
+//            console.log(that.area)
             that.factoryselected = that.factory[0][1];
             that.areaselected = that.area[0][1];
             that.gateselected = that.gate[0][1];
@@ -774,7 +805,7 @@
         //获取审核人
         let that = this;
         if (!window.WcheckerList) {
-          console.log("第一次请求待审核人")
+//          console.log("第一次请求待审核人")
           Vue.GetSearchId(function (e) {
             let checkerList = [];
             if (e.rows.length == 0) {
@@ -789,7 +820,7 @@
               that.checkerInfo = checkerList;
               that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
               window.WcheckerList = checkerList;
-              console.log(that.checkerInfo)
+//              console.log(that.checkerInfo)
             }
           });
         }
@@ -797,7 +828,7 @@
 
       isSure(){
         let that = this;
-        console.log("ajax请求");
+//        console.log("ajax请求");
 
 
         if (that.showCar == "SGM") {
@@ -877,7 +908,7 @@
             Toast("预约成功");
             //预约成功则添加常用记录
             if (yesNo == 1 && that.showCar == "SGM") {
-              console.log("Order", localStorage.getItem("frequentlyUsedHistory"))
+//              console.log("Order", localStorage.getItem("frequentlyUsedHistory"))
               var oldHistory = JSON.parse(localStorage.getItem("frequentlyUsedHistory"));
               var Len = oldHistory.length + 1;
               var historyName = "记录" + Len;
@@ -903,14 +934,14 @@
                 "historyName": historyName,
                 "historyItem": historyItem
               };
-              console.log(oldHistory.constructor === Array)
+//              console.log(oldHistory.constructor === Array)
               // console.log(newHistoryItem)
               oldHistory.push(newHistoryItem)
-              console.log(oldHistory)
+//              console.log(oldHistory)
               that.frequentlyUsedHistory = oldHistory;
               localStorage.setItem("frequentlyUsedHistory", JSON.stringify(oldHistory))
-              console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
-              console.log(that.frequentlyUsedHistory);
+//              console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
+//              console.log(that.frequentlyUsedHistory);
             }
             //清空
             that.clearInput()
@@ -925,7 +956,7 @@
         if (that.searchByNameselected == "1") {
 
           Vue.GetLinkers("up", 1, 100, KW, function (e) {
-            console.log("pppppppppppppppppppp");
+//            console.log("pppppppppppppppppppp");
             // console.log(e.rows);
             e.rows.map(function (item) {
               search.push({
@@ -936,14 +967,14 @@
               });
             })
             that.SearchByNameList = search;
-            console.log(that.SearchByNameList);
+//            console.log(that.SearchByNameList);
 
           })
         }
       },
       searchclick(arg){
         let that = this;
-        console.log(that.SearchByNameList[arg])
+//        console.log(that.SearchByNameList[arg])
         let search = that.SearchByNameList[arg]
         that.visitername = search.name;
         that.guestIdcardNo = search.idcard;
@@ -968,7 +999,7 @@
       addInput(arg){
         let that = this;
         let thisItenm = that.frequentlyUsedHistory[arg].historyItem;
-        console.log(thisItenm)
+//        console.log(thisItenm)
         that.visitername = thisItenm.guestName;
         that.guestIdcardNo = thisItenm.guestIdcardNo;
         that.telnum = thisItenm.guestPhone;
@@ -993,7 +1024,7 @@
         this.ischangeName=-1
         if(this.changeNameVal!=""){
         this.frequentlyUsedHistory[arg].historyName = this.changeNameVal
-          console.log(this.frequentlyUsedHistory[arg].historyName)
+//          console.log(this.frequentlyUsedHistory[arg].historyName)
           localStorage.setItem("frequentlyUsedHistory", JSON.stringify(this.frequentlyUsedHistory))
           this.changeNameVal=""
         }else{
@@ -1042,10 +1073,10 @@
         //   item.historyName="记录"+(index+1)
         // });
         localStorage.setItem("frequentlyUsedHistory", JSON.stringify(that.frequentlyUsedHistory))
-        console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
+//        console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
       },
       clearInput(){
-        console.log("清空input")
+//        console.log("清空input")
         let that = this;
         that.visitername = "";
         that.guestIdcardNo = "";
@@ -1157,7 +1188,7 @@
         let hour = value.getHours() < 10 ? "0" + value.getHours() : value.getHours();
         let minutes = value.getMinutes() < 10 ? "0" + value.getMinutes() : value.getMinutes();
         let isPrevYouWant = year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
-        console.log(value, year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes)
+//        console.log(value, year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes)
         that.youWant = year + '-' + mounth + '-' + date + '  ' + hour + ':' + minutes;
         that.visitdate = that.youWant
 
@@ -1408,9 +1439,8 @@
     height: 48px;
     width: 20px;
     line-height: 48px;
-    /*background: red;*/
+    color:black;
   }
-
   .poupSearch .fa-remove {
     position: absolute;
     right: 4px;
@@ -1421,6 +1451,8 @@
     line-height: 40px;
     text-align: center;
   }
+
+
 
   .poupSearch .mint-tab-container-wrap {
     /*margin-top: 20px;*/

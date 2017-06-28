@@ -137,6 +137,17 @@ header{
   /*height:100%;*/
 /*}*/
 
+/*6.27*/
+
+.mint-cell-value .fa.fa-angle-down{
+  color:black
+}
+.mint-button-text .fa.fa-angle-down{
+  color:black!important;
+  opacity: .9;
+}
+
+/*6.27*/
 
 ::-webkit-input-placeholder{
   color:#656b79

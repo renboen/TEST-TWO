@@ -1,5 +1,7 @@
 import $ from "jquery"
 import Vue from 'vue'
+import {Toast} from 'mint-ui';
+
 
 //测试环境
 // window.baseUrl = "https://apigatewayqa.sgmlink.com:3223/service/visitormobile/"
@@ -107,7 +109,6 @@ export default {
           "account": account
         },
         success: function (e) {
-          // alert("登陆成功" + e);
           localStorage.token = e.data.token;
           localStorage.id = e.data.id;
           localStorage.account = account;
@@ -124,7 +125,10 @@ export default {
         },
         error: function (e, err) {
           if (e.status != "success") {
-            alert("22222网络异常" + JSON.stringify(e) + err)
+            Toast({
+              message: JSON.stringify(e) + err,
+              duration: 1000
+            });
           }
         }
       });
@@ -178,7 +182,10 @@ export default {
         },
         success: success,
         error: function (err) {
-          alert(err)
+          Toast({
+            message:  err,
+            duration: 1000
+          });
         }
       })
     };
@@ -249,7 +256,7 @@ export default {
         },
         success: success,
         error: function (err) {
-          alert(err)
+
         },
       });
     };

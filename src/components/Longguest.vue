@@ -81,6 +81,7 @@
         minHeight: $(window).height() - 105
       })
       Vue.GetLongGuest(function (e) {
+        console.log("长期供应商")
         console.log(e)
         that.list = e.rows;
         if(that.list.length==0){

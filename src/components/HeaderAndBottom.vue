@@ -176,7 +176,7 @@
         } else {
           that.IsshowPoupCheck = false
         }
-        console.log("监听变化从而改变sgm和pa的不同")
+//        console.log("监听变化从而改变sgm和pa的不同")
       },
       selected: function (data) {
         this.$router.push('/' + data)
@@ -227,7 +227,7 @@
       sgmOrPatac(arg){
         localStorage.setItem("isSgmOrPatac", arg);
         this.isSgmOrPatac = localStorage.getItem("isSgmOrPatac");
-        console.log("yyyyy" + localStorage.getItem("isSgmOrPatac"))
+//        console.log("yyyyy" + localStorage.getItem("isSgmOrPatac"))
         this.$bus.$emit('sgmorpathcchange', arg); //Hub触发事件
         this.showPoup = false;
       },
@@ -262,12 +262,15 @@
         this.showLongguest = false;
       },
       close(){
-//          var href=window.location.href;
-//        window.location.href="about:blank";
-//        window.open(href,"_self","")
-//        window.close();
+        let that=this;
         Vue.PlusReady(function () {
-          mplus.closeWindow()
+
+          if (that.canClickSgm) {
+            mplus.closeWindow()
+          } else {
+            return
+          }
+
         })
 
 

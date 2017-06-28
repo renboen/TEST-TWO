@@ -83,8 +83,7 @@ export default {
   },
   filters: {
     FilterFactory(value){
-      console.log(5555555555555555)
-      console.log(value);
+//      console.log(value);
       // console.log(value.visitBranchIdIn)
       let visitBranchIdIn = value.visitBranchIdIn;
       let visitAreaIdIn = value.visitAreaIdIn;
@@ -211,7 +210,7 @@ export default {
     },
     loadbottom() {
       let that = this;
-      console.log("上拉加载");
+//      console.log("上拉加载");
       that.getWaitCheck("up")
     },
     getWaitCheck(updown){
@@ -234,25 +233,27 @@ export default {
         for (var i = 0; i < vist.length; i++) {
           that.orderid.push(vist[i].id)
         }
-        console.log(that.orderid)//预约信息ID
-        console.log("iiiiiiiiiiiiiii")//预约信息ID
+//        console.log(that.orderid)//预约信息ID
         for (var i = 0; i < vist.length; i++) {
           forList.push(new Promise(function (ok, err) {
             var vv = vist[i];
             Vue.QueryVisit(
               vist[i].visitNo,
               function (e) {
-                console.log(vist[i].visitNo)
-                console.log(e)
+//                console.log(vist[i].visitNo)
+//                console.log(e)
                 ok(e)
               },
               function (error) {
-                alert(error)
+                Toast({
+                  message: error,
+                  duration: 1000
+                });
               }
             )
           }).then(function (val) {
-            console.log(8888888888888888)
-            console.log(val.data)
+//            console.log(8888888888888888)
+//            console.log(val.data)
 
             var tL = [];
             var pL = [];
@@ -279,7 +280,7 @@ export default {
 
             for (var j = 0; j < val.data.cars.length; j++) {
                 cL.push(val.data.cars[j].carNo)
-                console.log(pL);
+//                console.log(pL);
             }
 
 
@@ -297,9 +298,9 @@ export default {
 
             for (var j = 0; j < val.data.guests.length; j++) {
               if (val.data.guests[j].guestType != "1") {
-                console.log(pL);
+//                console.log(pL);
                 pL.push([val.data.guests[j].guestName, val.data.guests[j].guestIdcardNo])
-                console.log(pL);
+//                console.log(pL);
               }
             }
 
@@ -324,10 +325,9 @@ export default {
           // console.log(ishasPerson);//是否有人
 //            console.log(aboutpersonList);//有多少人
 //            console.log(ishasthing);//是否有物品
-            console.log("000000000000");//是否有物品
-            console.log(ishascar);//是否有物品
-            console.log(aboutcarList);//是否有物品
-            console.log(showcar);//是否有物品
+//            console.log(ishascar);//是否有物品
+//            console.log(aboutcarList);//是否有物品
+//            console.log(showcar);//是否有物品
 
           Indicator.close();
           if (updown == "up") {
@@ -347,7 +347,7 @@ export default {
               window.scrollTo(0,0)
             },10);
           } else {
-            console.log("下拉刷新");
+//            console.log("下拉刷新");
             that.list = [];//待审核
             that.visitPersonlist = [];//随访人员
             that.hasPerson = [];//是否有随访人员
@@ -369,11 +369,11 @@ export default {
     },
     yesorno(index, id, checkstatus){
       let that = this;
-      console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-      console.log(index, id, checkstatus)
-      console.log("调用" + "Vue.UpdateStatus病弹框")
+//      console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+//      console.log(index, id, checkstatus)
+//      console.log("调用" + "Vue.UpdateStatus病弹框")
       Vue.UpdateStatus(index, id, checkstatus, function (e) {
-        console.log(e)
+//        console.log(e)
         if (e.description == "该预约信息已被审核过") {
           Toast("该预约信息已被审核过")
         } else {
@@ -406,8 +406,7 @@ export default {
 let that=this;
 
     Vue.getWaitCheckNum(function (e) {
-        console.log("444444444")
-        console.log(e.data);
+//        console.log(e.data);
        let num=e.data
       that.$bus.$emit('checkNum', num); //Hub触发事件
     })

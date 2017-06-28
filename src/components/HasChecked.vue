@@ -55,6 +55,8 @@
   import Vue from 'vue';
   import $ from "jquery";
   import {Indicator} from 'mint-ui';
+  import {Toast} from 'mint-ui';
+
   //设置不自动加载，然后自调用一下下拉刷新的方法达到进入默认加载一次
   export default {
     data() {
@@ -88,9 +90,9 @@
     methods: {
       handleTopChange(status) {
         this.topStatus = status;
-        console.log(this.topStatus)
+//        console.log(this.topStatus)
         if (this.topStatus != "pull") {
-          console.log("加载动画");
+//          console.log("加载动画");
         }
       },
       loadTop() {
@@ -114,8 +116,8 @@
 
         Vue.GetMyReservation(that.pagNO, function (e) {
           let visit = e.rows;
-          console.log("长度为" + e.rows.length)
-          console.log("yyyyyymmmmmm" + that.pagNO);
+//          console.log("长度为" + e.rows.length)
+//          console.log("yyyyyymmmmmm" + that.pagNO);
           let nextajax = [];//循环ajax所需参数
           let len = e.rows.length;
           let currenti = 0;//判断循环请求是否请求完，每次成功++
@@ -181,7 +183,7 @@
                       }
 
                     }
-                    console.log(Zp)
+//                    console.log(Zp)
                     person[myindex] = Zp;
                     for (var i = 0; i < e.data.cars.length; i++) {
                       Zc.push([e.data.cars[i].carNo])
@@ -228,11 +230,11 @@
                         that.Ushowcar = [];
 
                         for (var i = 0; i < visterlist.length; i++) {
-                          console.log(visterlist[i])
+//                          console.log(visterlist[i])
                           that.list.push(visterlist[i]);
                         }
                         for (var i = 0; i < hasperson.length; i++) {
-                          console.log(hasperson[i])
+//                          console.log(hasperson[i])
                           that.Uhasperson.push(hasperson[i]);
 
                         }
@@ -259,7 +261,7 @@
                           //  console.log(hasthing[i])
                           that.Uthing.push(thing[i]);
                         }
-                        console.log(that.Uperson[1])
+//                        console.log(that.Uperson[1])
                         that.Ushowcar.push(showcar);
 //                      that.allLoaded = false;// 若数据已全部获取完
                         that.allLoaded = len< 9 ? true : false;
@@ -267,13 +269,13 @@
                         that.$refs.loadmore.onTopLoaded();
                       }else{
 //                    //所有请求求求完成，不用myindex==len判断是因为异步不知道当前求求得是第几次
-                        console.log(visterlist);
+//                        console.log(visterlist);
                         for (var i = 0; i < visterlist.length; i++) {
-                          console.log(visterlist[i])
+//                          console.log(visterlist[i])
                           that.list.push(visterlist[i]);
                         }
                         for (var i = 0; i < hasperson.length; i++) {
-                          console.log(hasperson[i])
+//                          console.log(hasperson[i])
                           that.Uhasperson.push(hasperson[i]);
 
                         }
@@ -312,7 +314,10 @@
                     }
                   },
                   function (err) {
-                    alert(err)
+                    Toast({
+                      message:err ,
+                      duration: 1000
+                    });
                   }
                 )
               })(visNo, j)
