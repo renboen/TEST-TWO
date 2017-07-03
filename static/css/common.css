@@ -161,3 +161,6 @@ header{
   background: white;
   color:black
 }
+.mint-tabbar > .mint-tab-item.is-selected{
+  color:#0434B2!important;
+}

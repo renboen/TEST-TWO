@@ -69,6 +69,7 @@
           class=" fa fa-search"
           style="padding-left:8px"
           @click.stop="showSearch"></span>
+
         </mt-field>
       </div>
 
@@ -276,13 +277,25 @@
               <mt-tab-container-item id="1">
                 <mt-field placeholder="输入要搜索的访客姓名关键字" v-model="searchKW" :disableClear="false"></mt-field>
                 <!--<div style="margin-top: 48px;">-->
-                <ul v-for="(item,index) in SearchByNameList ">
+                <ul v-show="!isLongGuestCompany"  v-for="(item,index) in SearchByNameList ">
+                  <!--<div>普通</div>-->
                   <li @click="searchclick(index)">
                     <div>{{item.name}}</div>
                     <div>{{item.tel}}</div>
                     <div>{{item.company}}</div>
                   </li>
                 </ul>
+
+
+                <ul v-show="isLongGuestCompany"  v-for="(item,index) in longguestCompany ">
+                  <li @click="searchclick(index)">
+                    <div>{{item.contactor}}</div>
+                    <div>{{item.user.userName}}</div>
+                    <div>{{item.name}}</div>
+                    <div>{{item.visitReason}}</div>
+                  </li>
+                </ul>
+
                 <!--</div>-->
               </mt-tab-container-item>
 
@@ -472,6 +485,7 @@
 //          console.log(e)
           that.longguestCompany = e.rows;
           window.Wlongguest = that.longguestCompany;
+
         })
       }
 
@@ -483,7 +497,6 @@
       //监听是sgm还是patac
       that.$bus.$on('sgmorpathcchange', function (arg) {
         that.factory = window.factoryanddoor[0];
-//        console.log(window.factoryanddoor)
         if (arg == "SGM") {
 
           that.showCar = arg;
@@ -1003,7 +1016,9 @@
         let that = this;
         let search = [];
         that.SearchByNameList = [];
-        if (that.searchByNameselected == "1") {
+        //7.3修改
+        console.log(that.isLongGuestCompany)
+        if (that.searchByNameselected == "1" && !that.isLongGuestCompany) {
 
           Vue.GetLinkers("up", 1, 100, KW, function (e) {
 //            console.log("pppppppppppppppppppp");
@@ -1024,6 +1039,11 @@
       },
       searchclick(arg){
         let that = this;
+        that.visitername = "";
+        that.guestIdcardNo = "";
+        that.telnum = "";
+        that.visitaddress = "";
+        if (that.searchByNameselected == "1" && !that.isLongGuestCompany) {
 //        console.log(that.SearchByNameList[arg])
         let search = that.SearchByNameList[arg]
         that.visitername = search.name;
@@ -1031,6 +1051,15 @@
         that.telnum = search.tel;
         that.visitaddress = search.company;
         that.showSearchByName = false;
+        }
+        else if(that.searchByNameselected == "1" && that.isLongGuestCompany){
+          let search = that.longguestCompany[arg]
+          that.visitername = search.user.userName;
+//          that.guestIdcardNo = search.idcard;
+          that.telnum = search.phone;
+          that.visitaddress = search.name;
+          that.showSearchByName = false;
+        }
       },
       showSearch(){
 
