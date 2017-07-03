@@ -6,7 +6,7 @@
   </div>
 </template>
 <script>
-  import $ from "jquery";
+//  import $ from "jquery";
   import WaitCheck from "@/components/WaitCheck"
   import HasChecked from "@/components/HasChecked"
   export default{

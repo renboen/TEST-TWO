@@ -2,26 +2,39 @@
   <div id="order">
 
     <div class="test">
-      <mt-cell title="来访时间">
-        <div class="page-datetime " style="width: 100%;height: 100%; ">
-          <div class="page-datetime-wrapper" style="height: 100%;width: 100%; ">
-            <mt-button @click.native.stop="open('picker1')" size="large"
-                       style="text-align: right;background: white;border: none!important;outline: none!important;box-shadow: none;font-size: 16px;">
-              {{youWant}}
-              <strong class=" fa fa-angle-down"></strong>
-            </mt-button>
-          </div>
-        </div>
-      </mt-cell>
-      <mt-datetime-picker
-        ref="picker1"
-        v-model="datetimevalue"
-        yearFormat="{value}"
-        hourFormat="{value} 时"
-        monthFormat="{value} 月"
-        dateFormat="{value} 日"
-        @confirm="handleChange">
-      </mt-datetime-picker>
+
+      <div class="datetime">
+        <mt-field    label="来访时间" placeholder="请选择来访时间" type="text"
+                  v-model="visitdate"  :disabled="true"> <strong class=" fa fa-angle-down"></strong></mt-field>
+      </div>
+
+
+
+
+
+      <!--<mt-cell title="来访时间">-->
+        <!--<div class="page-datetime " style="width: 100%;height: 100%; ">-->
+          <!--<div class="page-datetime-wrapper" style="height: 100%;width: 100%; ">-->
+            <!--<mt-button @click.native.stop="open('picker1')" size="large"-->
+                       <!--style="text-align: right;background: white;border: none!important;outline: none!important;box-shadow: none;font-size: 16px;">-->
+              <!--{{youWant}}-->
+              <!--<strong class=" fa fa-angle-down"></strong>-->
+            <!--</mt-button>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</mt-cell>-->
+      <!--<mt-datetime-picker-->
+        <!--ref="picker1"-->
+        <!--v-model="datetimevalue"-->
+        <!--yearFormat="{value}"-->
+        <!--hourFormat="{value} 时"-->
+        <!--monthFormat="{value} 月"-->
+        <!--dateFormat="{value} 日"-->
+        <!--@confirm="handleChange">-->
+      <!--</mt-datetime-picker>-->
+
+
+
 
 
 
@@ -310,7 +323,7 @@
   </div>
 </template>
 <script>
-  import $ from "jquery"
+//  import $$ from "jquery"
   import Vue from 'vue'
   import {Toast} from 'mint-ui';
   import {Indicator} from 'mint-ui';
@@ -383,9 +396,51 @@
     },
     mounted: function () {
 
-
       window.scrollTo(0, 0);
       let that = this;
+
+      $(function(){
+
+        var nowTime = new Date()
+        $('.datetime').mobiscroll().datetime({
+          defaultValue: new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate() + 1, "8", "00"),
+          dateFormat: 'yy-mm-dd', // 日期格式
+          dateOrder: 'yymmdd', //面板中日期排列格式
+          theme: 'android-holo light', //皮肤样式
+          mode: 'scroller', //日期选择模式
+          lang: 'zh',
+          display: 'modal',
+          stepMinute: 15,
+          minDate: new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate(), "8", "00"),
+          onClose:function(valueText, inst){
+            that.youWant=valueText
+          },
+          onSelect:function(valueText, inst){
+            console.log(valueText);
+            that.youWant = valueText;
+            that.visitdate = that.youWant
+//            setTimeout(function () {
+//                $(".forbottom").css("display", "block")
+//                $(".mint-tabbar").css("display", "flex")
+//                $("#order").css("bottom", "55px")
+//                that.$bus.$emit('isDisableCkick', true);
+//          })
+          },
+
+          onShow:function(valueText, inst){
+//            $(".forbottom").css("display", "none")
+//            $("#order").css("bottom", "0")
+//            that.$bus.$emit('isDisableCkick', false);
+          },
+        });
+      })
+
+
+
+
+
+
+
       //获取门岗信息
       that.ajaxfactoryanddoor();
       that.visiter = localStorage.userName;
@@ -477,12 +532,7 @@
 //      $(".mint-tab-item-label").height($(window).height() * 0.3);
 
     },
-//    updated:function () {
-//
-//      $(".mint-cell").click(function (e) {
-//        $(this).find("input").focus();
-//      })
-//    },
+
 
 
     watch: {
@@ -1093,153 +1143,72 @@
       },
 
 
-      open(picker) {
-
-        let that = this;
-//        alert(that.datetimevalue)
-
-//        that.visitdate="";
-//        $(".picker-slot-wrapper:last").html('<div class="picker-item picker-selected" style="height: 36px; line-height: 36px;">00 分</div>')
-//        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">15 分</div>')
-//        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">30 分</div>')
-//        $(".picker-slot-wrapper:last").append('<div class="picker-item " style="height: 36px; line-height: 36px;">45 分</div>')
-//        $(".picker-slot-wrapper:last").on("touchstart",function (e) {
-//            e.preventDefault()
-//        })
-//        $(".picker-slot-wrapper:last").on("touchmove",function () {
-//          setTimeout(function(){
-//            var str = $(this).attr("style").split("translate(0px,")[1];
-//            var transLateY=str.split("px")[0];
-//            var index= parseInt(Math.abs(transLateY/36-4)-1);
-//            $(".picker-slot-wrapper:last>div").removeClass("picker-selected")
-//            $(".picker-slot-wrapper:last>div").eq(index).addClass("picker-selected")
-//          }.bind(this),100)
-//        })
+//      open(picker) {
 //
-//        $(".picker-slot-wrapper:last").on("touchend",function () {
-//          var str = $(this).attr("style").split("translate(0px,")[1];
-//          var transLateY=str.split("px")[0];
-//          if(transLateY<0){
-//            //height: 252px; transform: translate(0px, 108px) translateZ(0px);
-//            $(this).attr("style","height: 252px; transform: translate(0px, 0px) translateZ(0px);")
-//          }
-//        })
-        var datatime = new Date()
-        let year = datatime.getFullYear();
-        let mounth = datatime.getMonth() + 1 < 10 ? "0" + (datatime.getMonth() + 1) : datatime.getMonth() + 1;
-        let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate() + 1
-//        let hour=datatime.getHours()<10?"0"+datatime.getHours():datatime.getHours();
-        let hour = "09";
-        let intdatetime = year + '-' + mounth + '-' + date + ' ' + hour + ":00";
-//        that.starttime = new Date(year + '-' + mounth + '-' + date + ' ' + hour + ":00")
-//        that.endtime = new Date((year+20) + '-' + mounth + '-' + date + ' ' + hour + ":00")
-//        that.datetimevalue = year + '-' + mounth + '-' + date + ' ' + hour + ":00"
-        that.datetimevalue = new Date(year + '/' + mounth + '/' + date + ' ' + hour + ":00")
-        window.isvalue = that.datetimevalue;
-//        alert(that.datetimevalue)
-        this.$refs[picker].open();
-//解决苹果时间组件遮盖不了底部Tabbar
-        $(".mint-tabbar").css("display", "none")
-        $(".forbottom").css("display", "none")
-        $("#order").css("bottom", "0")
-//        $("#order").css("top","0")
-
-
-//622解决苹果日期不遮罩头
-        that.$bus.$emit('isDisableCkick', false);
-
-        setTimeout(function () {
-          $(".mint-datetime-action.mint-datetime-cancel").click(function (e) {
-
-            $(".forbottom").css("display", "block")
-            $(".mint-tabbar").css("display", "flex")
-            $("#order").css("bottom", "55px")
-//            $("#order").css("top","50px")
-            //622解决苹果日期不遮罩头
-            that.$bus.$emit('isDisableCkick', true);
-          })
-
-          $(".v-modal").click(function () {
-            $(".forbottom").css("display", "block")
-            $(".mint-tabbar").css("display", "flex")
-            $("#order").css("bottom", "55px")
-//            $("#order").css("top","50px")
-
-//622解决苹果日期不遮罩头
-            that.$bus.$emit('isDisableCkick', true);
-
-          })
-        })
-      },
-
-
-      handleChange(value) {
-        let that = this;
-//        value=new Date(value)
-//          alert(value)
-//alert(typeof value.getFullYear=="undefined")
-//        if(typeof value.getFullYear=="undefined"){
-//            alert(1)
-//                  value=new Date(value)
-//        }
-        let year = value.getFullYear();
-        let mounth = value.getMonth() + 1 < 10 ? "0" + (value.getMonth() + 1) : value.getMonth() + 1;
-        let date = value.getDate() < 10 ? "0" + value.getDate() : value.getDate()
-        let hour = value.getHours() < 10 ? "0" + value.getHours() : value.getHours();
-        let minutes = value.getMinutes() < 10 ? "0" + value.getMinutes() : value.getMinutes();
-        let isPrevYouWant = year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
-//        console.log(value, year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes)
-        that.youWant = year + '-' + mounth + '-' + date + '  ' + hour + ':' + minutes;
-        that.visitdate = that.youWant
-
-
-//        let datatime = new Date(value);
+//        let that = this;
+//        var datatime = new Date()
 //        let year = datatime.getFullYear();
 //        let mounth = datatime.getMonth() + 1 < 10 ? "0" + (datatime.getMonth() + 1) : datatime.getMonth() + 1;
-//        let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate()
-//        let hour = datatime.getHours() < 10 ? "0" + datatime.getHours() : datatime.getHours();
-//        let minutes = datatime.getMinutes() < 10 ? "0" + datatime.getMinutes() : datatime.getMinutes();
-//        let isPrevYouWant=year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
-//        alert(that.youWant)
-//        alert(isPrevYouWant)
-//        alert(typeof (that.youWant))
-//        alert(typeof(isPrevYouWant))
-//        alert(isPrevYouWant==that.youWant)
-//        alert(that.datetimevalue==window.isvalue)
-//        alert(window.isvalue)
-//        alert(isPrevYouWant)
-//        alert(isPrevYouWant==window.isvalue)
+//        let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate() + 1
+//        let hour = "09";
+//        let intdatetime = year + '-' + mounth + '-' + date + ' ' + hour + ":00";
+//        that.datetimevalue = new Date(year + '/' + mounth + '/' + date + ' ' + hour + ":00")
+//        window.isvalue = that.datetimevalue;
+//        this.$refs[picker].open();
+////解决苹果时间组件遮盖不了底部Tabbar
+//        $(".mint-tabbar").css("display", "none")
+//        $(".forbottom").css("display", "none")
+//        $("#order").css("bottom", "0")
+////        $("#order").css("top","0")
+////622解决苹果日期不遮罩头
+//        that.$bus.$emit('isDisableCkick', false);
+//        setTimeout(function () {
+//          $(".mint-datetime-action.mint-datetime-cancel").click(function (e) {
+//            $(".forbottom").css("display", "block")
+//            $(".mint-tabbar").css("display", "flex")
+//            $("#order").css("bottom", "55px")
+////            $("#order").css("top","50px")
+//            //622解决苹果日期不遮罩头
+//            that.$bus.$emit('isDisableCkick', true);
+//          })
 //
-//        if(isPrevYouWant==window.isvalue){
-//          alert(2)
-//          return
-//        }else{
-//          console.log(value, year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes)
-//          that.youWant = year + '-' + mounth + '-' + date + '  ' + hour + ':' + minutes;
-//          that.visitdate = that.youWant
-//        }
+//          $(".v-modal").click(function () {
+//            $(".forbottom").css("display", "block")
+//            $(".mint-tabbar").css("display", "flex")
+//            $("#order").css("bottom", "55px")
+////            $("#order").css("top","50px")
+//
+////622解决苹果日期不遮罩头
+//            that.$bus.$emit('isDisableCkick', true);
+//
+//          })
+//        })
+//      },
+
+
+//      handleChange(value) {
+//        let that = this;
+//        let year = value.getFullYear();
+//        let mounth = value.getMonth() + 1 < 10 ? "0" + (value.getMonth() + 1) : value.getMonth() + 1;
+//        let date = value.getDate() < 10 ? "0" + value.getDate() : value.getDate()
+//        let hour = value.getHours() < 10 ? "0" + value.getHours() : value.getHours();
+//        let minutes = value.getMinutes() < 10 ? "0" + value.getMinutes() : value.getMinutes();
+//        let isPrevYouWant = year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
+//        that.youWant = year + '-' + mounth + '-' + date + '  ' + hour + ':' + minutes;
+//        that.visitdate = that.youWant
+//        setTimeout(function () {
+////            $(".mint-tabbar").css("height","55px")
+////            $(".forbottom").css("height","55px")
+//          $(".forbottom").css("display", "block")
+//          $(".mint-tabbar").css("display", "flex")
+//          $("#order").css("bottom", "55px")
+////          $("#order").css("top","50px")
+////622解决苹果日期不遮罩头
+//          that.$bus.$emit('isDisableCkick', true);
+//        })
 //
 //
-//        if(isPrevYouWant.indexOf("NaN")>0){
-//          alert(1)
-//          that.visitdate=window.isvalue
-//        }
-
-
-        setTimeout(function () {
-//            $(".mint-tabbar").css("height","55px")
-//            $(".forbottom").css("height","55px")
-          $(".forbottom").css("display", "block")
-          $(".mint-tabbar").css("display", "flex")
-          $("#order").css("bottom", "55px")
-//          $("#order").css("top","50px")
-//622解决苹果日期不遮罩头
-          that.$bus.$emit('isDisableCkick', true);
-
-        })
-
-
-      }
+//      }
     }
   }
 </script>

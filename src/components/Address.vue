@@ -43,7 +43,7 @@
 </template>
 <script>
   import Vue from 'vue'
-  import $ from "jquery"
+//  import $ from "jquery"
   import {Indicator} from 'mint-ui';
   import {Toast} from 'mint-ui';
   export default {

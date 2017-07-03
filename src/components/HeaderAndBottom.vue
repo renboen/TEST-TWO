@@ -92,7 +92,7 @@
   import Check from "@/components/Check"
   import AboutMe from "@/components/AboutMe"
   import Vue from 'vue'
-  import $ from "jquery"
+//  import $ from "jquery"
   export default {
     name: 'HeaderAndBottom',
     data () {
@@ -115,10 +115,10 @@
       let that = this;
 //      alert(2)
       Vue.PlusReady(function () {
-        var uid = NativeObj.getUserName();
-        Vue.GetLogin(uid);
+//        var uid = NativeObj.getUserName();
+//        Vue.GetLogin(uid);
 //        Vue.GetLogin("apptest01");
-//        Vue.GetLogin("apptest02");
+        Vue.GetLogin("apptest02");
       })
 
       if (localStorage.getItem("isSgmOrPatac") == "PATAC") {

@@ -155,3 +155,9 @@ header{
 .mint-loadmore{
   background: #ededed;
 }
+
+
+.datetime input{
+  background: white;
+  color:black
+}

@@ -15,7 +15,7 @@
 <script>
   import Vue from 'vue'
 
-  import $ from "jquery"
+//  import $ from "jquery"
   export default{
     data(){
       return {
@@ -27,10 +27,10 @@
     mounted(){
 //      alert("登陆默认模块")
       Vue.PlusReady(function () {
-        var uid = NativeObj.getUserName()
-        Vue.GetLogin(uid);
+//        var uid = NativeObj.getUserName()
+//        Vue.GetLogin(uid);
 //         Vue.GetLogin("apptest01");
-//         Vue.GetLogin("apptest02");
+         Vue.GetLogin("apptest02");
       })
       //默认为已审核
 

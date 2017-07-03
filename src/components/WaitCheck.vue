@@ -55,7 +55,8 @@
   </div>
 </template>
 
-<script>  import $ from "jquery";
+<script>
+//  import $ from "jquery";
 
 import Vue from 'vue';
 import {Indicator} from 'mint-ui';

@@ -44,7 +44,7 @@
   </div>
 </template>
 <script>
-  import $ from "jquery"
+//  import $ from "jquery"
   import Vue from 'vue'
   export default{
     data(){
