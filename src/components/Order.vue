@@ -287,7 +287,7 @@
                 </ul>
 
 
-                <ul v-show="isLongGuestCompany"  v-for="(item,index) in longguestCompany ">
+                <ul v-show="isLongGuestCompany"  v-for="(item,index) in SearchLongGuestList ">
                   <li @click="searchclick(index)">
                     <div>{{item.contactor}}</div>
                     <div>{{item.user.userName}}</div>
@@ -399,7 +399,12 @@
 //        minute:"5"
 
         ischangeName:-1,
-        changeNameVal:""
+        changeNameVal:"",
+
+
+
+      SearchLongGuestList:[]
+
       }
 
     },
@@ -1062,9 +1067,24 @@
         }
       },
       showSearch(){
-
         let that = this;
-        that.showSearchByName = true;
+        if(!that.isLongGuestCompany){
+          that.showSearchByName = true;
+        }else{
+            if(that.visitaddress1==""){
+              Toast({
+                message: '请先选择供长期应商的来访单位',
+                duration: 1000
+              })
+            }else{
+              that.showSearchByName = true;
+              Vue.SearchLongGuest(that.visitaddress1,function(e){
+//                  alert("此处应该调用长期供应商通讯录查询接口")
+                console.log(e)
+                that.SearchLongGuestList=e.rows
+              })
+            }
+        }
         setTimeout(function () {
           $(".mint-popup.tab").css("z-index", "3001")
           $(".v-modal").css("z-index", "3000")
@@ -1526,4 +1546,4 @@
     position: absolute !important;
   }
 
-</style scoped>
+</style>

@@ -290,6 +290,22 @@ export default {
         },
         success: success,
       })
+    };
+
+    Vue.SearchLongGuest = function (keyword,success) {
+      $.ajax({
+        type: "get",
+        url: baseUrl + "api/visit/01/querySupplies",
+        async: true,
+        dataType: "json",
+        data: {
+          "token": localStorage.token,
+          "uid": localStorage.id,
+          "name":keyword
+        },
+        success: success,
+      })
     }
+
   }
 }
