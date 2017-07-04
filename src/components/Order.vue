@@ -1261,6 +1261,8 @@
     position: absolute;
     right: 10px;
     z-index: 50;
+    height: 48px;
+    line-height:48px;
   }
 
   option {
