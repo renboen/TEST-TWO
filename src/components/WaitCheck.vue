@@ -390,7 +390,11 @@ export default {
           );
           anycAjax().then(function () {
             setTimeout(() => {
-              that.loadTop()
+              that.loadTop();
+              Vue.getWaitCheckNum(function (e) {
+                let num=e.data
+                that.$bus.$emit('checkNum', num); //Hub触发事件
+              })
             }, 1200);
           })
 

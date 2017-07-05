@@ -4,8 +4,8 @@
     <div class="test">
 
       <div class="datetime">
-        <mt-field    label="来访时间" placeholder="请选择来访时间" type="text"
-                  v-model="visitdate"  :disabled="true"> <strong class=" fa fa-angle-down"></strong></mt-field>
+        <mt-field    label="来访时间" placeholder="请选择来访时间 " type="text"
+                  v-model="visitdate"  :disabled="true"> <strong class=" fa fa-angle-down "></strong></mt-field>
       </div>
 
 
@@ -67,7 +67,7 @@
       <div @click="clickinput($event)" v-show='this.showCar=="PATAC"&& isLongGuestCompany?false:true'>
         <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
           class=" fa fa-search"
-          style="padding-left:8px"
+          style="text-align:right"
           @click.stop="showSearch"></span>
         </mt-field>
       </div>
@@ -92,7 +92,7 @@
       <div @click="clickinput($event)" v-show='this.showCar=="PATAC" && isLongGuestCompany?true:false'>
         <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
           class=" fa fa-search"
-          style="padding-left:8px"
+          style="text-align: right"
           @click.stop="showSearch"></span>
         </mt-field>
       </div>
@@ -1081,8 +1081,6 @@
             return
         }
 
-
-
       },
 
       changeName(arg){
@@ -1259,10 +1257,15 @@
 
   .selectiIcon {
     position: absolute;
-    right: 10px;
+    /*right: 10px;*/
+    right: 8px;
     z-index: 50;
-    height: 48px;
-    line-height:48px;
+    /*height: 48px;*/
+    /*line-height:48px;*/
+    /*background: red;*/
+    top:16px;
+    text-align: right;
+
   }
 
   option {

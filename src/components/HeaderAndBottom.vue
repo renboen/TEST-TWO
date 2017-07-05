@@ -115,10 +115,10 @@
       let that = this;
 //      alert(2)
       Vue.PlusReady(function () {
-//        var uid = NativeObj.getUserName();
-//        Vue.GetLogin(uid);
+        var uid = NativeObj.getUserName();
+        Vue.GetLogin(uid);
 //        Vue.GetLogin("apptest01");
-        Vue.GetLogin("apptest02");
+//        Vue.GetLogin("apptest02");
       })
 
       if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
@@ -161,6 +161,10 @@
       } else {
         this.IscheckingOrChecked = "历史";
       }
+
+
+
+      document.addEventListener("backpressed",function(){
 
 
 //      alert($(window).width())
