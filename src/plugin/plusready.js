@@ -18,7 +18,7 @@ PlusReady.prototype.setReady = function (newValue, cb) {
   }
 };
 // plusready  false 不自动触发plusready true 自动触发
-let plusReady = new PlusReady(false);
+let plusReady = new PlusReady(true);
 export default {
   install(Vue, Opt) {
     Vue.PlusReady = function (cb) {

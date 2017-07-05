@@ -536,6 +536,7 @@
 
 
     watch: {
+
       visitdate(r){
 //        alert(r)
       },
@@ -606,11 +607,25 @@
         if (arg) {
           //在访客姓名里面进行访客赛选
 
+
           that.searchByName(that.searchKW);
           that.searchByNameselected = "1";
-          $(".poupSearch .mint-tab-container-item").eq(0).css("display", "block")
+          $(".poupSearch .mint-tab-container-item").eq(0).css("display", "block");
+
+          mplus.setBackListener({
+            active: '1',
+          })
+          document.addEventListener("backpressed",function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            that.showSearchByName=false;
+          },false)
+
         } else {
-          $(".poupContent").scrollTop(0)
+          $(".poupContent").scrollTop(0);
+          mplus.setBackListener({
+            active: '0',
+          })
 
         }
       },

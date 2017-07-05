@@ -115,9 +115,9 @@
       let that = this;
 //      alert(2)
       Vue.PlusReady(function () {
-        var uid = NativeObj.getUserName();
-        Vue.GetLogin(uid);
-//        Vue.GetLogin("apptest01");
+//        var uid = NativeObj.getUserName();
+//        Vue.GetLogin(uid);
+        Vue.GetLogin("apptest01");
 //        Vue.GetLogin("apptest02");
       })
 
@@ -163,15 +163,14 @@
       }
 
 
-
-      document.addEventListener("backpressed",function(){
-
-
 //      alert($(window).width())
 //      $(".poup").width($(window).width()*0.95);
 //      $(".poup").height($(window).height()*0.35);
     },
     watch: {
+//      "$route":function(data){
+//        console.log(data)
+//      },
       isSgmOrPatac: function (e) {
         let that = this;
         // 监听变化从而改变sgm和pa的不同
@@ -186,27 +185,65 @@
         this.$router.push('/' + data)
       },
       showPoup(e){
+          let that=this;
         //SGM和PATAC的poup是否显示
         if (e) {
           $("body").css({overflow: "hidden"})
+          mplus.setBackListener({
+            active: '1',
+          })
+          document.addEventListener("backpressed",function(e){
+              e.stopPropagation();
+              e.preventDefault();
+              that.showPoup=false;
+
+          },false)
+
         } else {
-          $("body").css({overflow: "auto"})
+          $("body").css({overflow: "auto"});
+          mplus.setBackListener({
+            active: '0',
+          })
         }
       },
       showPoupCheck(e){
         //已审核和历史
         if (e) {
-          $("body").css({overflow: "hidden"})
+          let that=this;
+          $("body").css({overflow: "hidden"});
+          mplus.setBackListener({
+            active: '1',
+          })
+          document.addEventListener("backpressed",function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            that.showPoupCheck=false;
+          },false)
         } else {
-          $("body").css({overflow: "auto"})
+          $("body").css({overflow: "auto"});
+          mplus.setBackListener({
+            active: '0',
+          })
         }
       },
       showLongguest(e){
         //长期和通讯录
         if (e) {
+            let that=this;
           $("body").css({overflow: "hidden"})
+          mplus.setBackListener({
+            active: '1',
+          })
+          document.addEventListener("backpressed",function(e){
+            e.stopPropagation();
+            e.preventDefault();
+            that.showLongguest=false;
+          },false)
         } else {
-          $("body").css({overflow: "auto"})
+          $("body").css({overflow: "auto"});
+          mplus.setBackListener({
+            active: '0',
+          })
         }
       },
 
