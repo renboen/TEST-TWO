@@ -12,7 +12,7 @@
   export default{
     data(){
       return {
-        currentView: "",
+        currentView: "HasChecked",
       }
     },
     components: {
@@ -33,16 +33,19 @@
       $("#check").css({
         height: $(window).height() - 90
       })
-      if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
-        that.currentView = localStorage.getItem("hased")
-      } else {
-        that.currentView = "HasChecked"
-      }
+      that.$bus.$emit('checkHasMounted', true)
+
+
+//      if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
+//        that.currentView = localStorage.getItem("hased")
+//      } else {
+//        that.currentView = "HasChecked"
+//      }
 
 //        that.currentView= "HasChecked"
-
+//
       that.$bus.$on('hubchange', function (data1, data2) {
-        localStorage.setItem("hased", data2)
+//        localStorage.setItem("hased", data2)
         that.currentView = data2;
       })
     }

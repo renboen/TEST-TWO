@@ -115,9 +115,9 @@
       let that = this;
 //      alert(2)
       Vue.PlusReady(function () {
-        var uid = NativeObj.getUserName();
-        Vue.GetLogin(uid);
-//        Vue.GetLogin("apptest01");
+//        var uid = NativeObj.getUserName();
+//        Vue.GetLogin(uid);
+        Vue.GetLogin("apptest01");
 //        Vue.GetLogin("apptest02");
       })
 
@@ -126,12 +126,12 @@
       } else {
         this.IsshowPoupCheck = false
       }
-      if (localStorage.getItem("addressBook") == "AddressList") {
+//      if (localStorage.getItem("addressBook") == "AddressList") {
         this.IsaddressbookOrLongguest = "通讯录"
-      } else {
-        this.IsaddressbookOrLongguest = "长期供应商"
-      }
-      ;
+//      } else {
+//        this.IsaddressbookOrLongguest = "长期供应商"
+//      }
+//      ;
 
 
       that.$bus.$on('checkNum', function (num) {
@@ -154,18 +154,15 @@
       this.$bus.$on('isDisableCkick', function (arg) {
         that.canClickSgm = arg;
       });
+      that.$bus.$on('aboutHasMounted', function(arg){
+        that.IsaddressbookOrLongguest = "通讯录"
+      });
 
-      //619历史和待审核重新等路的问题
-      if (localStorage.getItem("hased") == "WaitCheck") {
-        this.IscheckingOrChecked = "待审核";
-      } else {
+      that.$bus.$on('checkHasMounted', function(arg){
+        that.IscheckingOrChecked = "历史";
+      });
         this.IscheckingOrChecked = "历史";
-      }
 
-
-//      alert($(window).width())
-//      $(".poup").width($(window).width()*0.95);
-//      $(".poup").height($(window).height()*0.35);
     },
     watch: {
 //      "$route":function(data){
@@ -279,6 +276,7 @@
 //        alert(arg1)
 //
 //        localStorage.setItem("hased", arg2)
+
 
         this.IscheckingOrChecked = arg1;
         this.showPoupCheck = false;
