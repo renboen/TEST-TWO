@@ -5,8 +5,11 @@ import {Toast} from 'mint-ui';
 
 //测试环境
 // window.baseUrl = "https://apigatewayqa.sgmlink.com:3223/service/visitormobile/"
+
+// window.baseUrl = "https://apigatewayqa.sgmlink.com:13101/service/visitormobile/"
 // 发布环境
-window.baseUrl = "https://apigatewayqa.sgmlink.com:13101/service/visitormobile/"
+window.baseUrl = "/service/visitormobile/"
+
 function PlusReady(value) {
   this.Ok = Boolean(value);
   return this.Ok;
@@ -18,7 +21,7 @@ PlusReady.prototype.setReady = function (newValue, cb) {
   }
 };
 // plusready  false 不自动触发plusready true 自动触发
-let plusReady = new PlusReady(true);
+let plusReady = new PlusReady(false);
 export default {
   install(Vue, Opt) {
     Vue.PlusReady = function (cb) {

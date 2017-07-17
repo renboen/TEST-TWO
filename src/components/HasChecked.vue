@@ -135,6 +135,8 @@
           }
 
           if(len==0){
+            Indicator.close();
+
             that.allLoaded = true;// 若数据已全部获取完
             that.$refs.loadmore.onBottomLoaded();
           }else{

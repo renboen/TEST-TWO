@@ -115,9 +115,9 @@
       let that = this;
 //      alert(2)
       Vue.PlusReady(function () {
-//        var uid = NativeObj.getUserName();
-//        Vue.GetLogin(uid);
-        Vue.GetLogin("apptest01");
+        var uid = NativeObj.getUserName();
+        Vue.GetLogin(uid);
+//        Vue.GetLogin("apptest01");
 //        Vue.GetLogin("apptest02");
       })
 

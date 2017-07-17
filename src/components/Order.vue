@@ -904,7 +904,7 @@
         } else {
           var SendcheckUserId = that.sendForChecker;
           var jsoncars = [];
-          that.validDay = 1
+          that.validDay = that.validDay
         }
         if (that.supplierType == "普通供应商") {
           guestCompanyType = 1
@@ -953,7 +953,8 @@
           "visitValidDays": that.validDay,
         }
         if (that.showCar == "SGM") {
-          delete senddata.additionInfo
+          delete senddata.additionInfo;
+          delete senddata.visitValidDays;
         }
         console.log(senddata)
 
