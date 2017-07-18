@@ -41,7 +41,9 @@
         </ul>
       </div>
     <!--612-->
-    <div v-show="allLoaded" style="width:100%;height:66px;text-align:center;line-height:50px;box-sizing: border-box;background: #EDEDED">没有更多数据</div>
+    <!--<div v-show="allLoaded" style="width:100%;height:66px;text-align:center;line-height:50px;box-sizing: border-box;background: #EDEDED">没有更多数据</div>-->
+    <!--7.18-->
+    <div v-show="allLoaded" style="width:100%;height:35px;text-align:center;line-height:35px;box-sizing: border-box;background: #EDEDED">没有更多数据</div>
 
 
   </div>

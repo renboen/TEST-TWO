@@ -8,16 +8,16 @@
 <script>
 //  import $ from "jquery";
   import WaitCheck from "@/components/WaitCheck"
-  import HasChecked from "@/components/HasChecked"
+//  import HasChecked from "@/components/HasChecked"
   export default{
     data(){
       return {
-        currentView: "HasChecked",
+        currentView: "WaitCheck",
       }
     },
     components: {
       WaitCheck,
-      HasChecked
+//      HasChecked
     },
     watch: {
       currentView: "currentChange"
@@ -33,7 +33,8 @@
       $("#check").css({
         height: $(window).height() - 90
       })
-      that.$bus.$emit('checkHasMounted', true)
+
+//      that.$bus.$emit('checkHasMounted', true)
 
 
 //      if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
@@ -44,10 +45,10 @@
 
 //        that.currentView= "HasChecked"
 //
-      that.$bus.$on('hubchange', function (data1, data2) {
+//      that.$bus.$on('hubchange', function (data1, data2) {
 //        localStorage.setItem("hased", data2)
-        that.currentView = data2;
-      })
+//        that.currentView = data2;
+//      })
     }
   }
 

@@ -1,29 +1,43 @@
 <template>
   <div>
-    <!--<keep-alive>-->
+    <keep-alive>
       <component :is="currentView"></component>
-    <!--</keep-alive>-->
+    </keep-alive>
   </div>
 </template>
 <script>
 
   import AddressList from "@/components/Address"
   import Longguest from "@/components/Longguest"
+  import HasChecked from "@/components/HasChecked"
+
 
   export default{
       data(){
           return {
-            currentView:"AddressList"
+            currentView:""
           }
       },
     components:{
       AddressList,
-      Longguest
+      Longguest,
+      HasChecked
+
     },
     mounted(){
       let that=this;
-      that.currentView="AddressList";
+      that.$bus.$on('aboutTabListChecked', function(arg){
+        that.currentView=arg;
+      }); //Hub触发事件
+
+
+
+
       that.$bus.$emit('aboutHasMounted', true); //Hub触发事件
+
+
+
+
 //      if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
 //        that.currentView = localStorage.getItem("addressBook")
 //      } else {
