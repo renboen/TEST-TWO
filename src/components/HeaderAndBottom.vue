@@ -24,17 +24,17 @@
     <div class="forbottom" style="height:55px; background:#EDEDED"></div>
     <mt-tabbar v-model="selected" fixed style="z-index:990;height: 55px">
       <div id="order" @click='chang("order")' class="tabActive" style="flex: 1">
-        <span class="fa fa-calendar fa-lg  fa-2x"
-              style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span>预约
+        <span class="fa fa-calendar tabFa"
+             ></span><span style="font-size: .9em">预约</span>
       </div>
       <div id="check" style="flex: 1"  @click='chang("check")' v-show='isSgmOrPatac=="PATAC"?true:false'>
-        <span class="fa fa-book fa-lg  fa-2x"
-              style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span><span>审核</span>
+        <span class="fa fa-book tabFa"
+             ></span><span style="font-size: .9em">审核</span>
       </div>
       <div id="aboutme" style="flex: 1"  @click='chang("aboutme")' class="tabLast"  >
         <div  @click="toggleShowAboutTab">
-        <span class="fa fa-user fa-lg  fa-2x"
-              style="display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 5px;"></span><span>我的</span>
+        <span class="fa fa-user tabFa "
+              ></span><span style="font-size: .9em">我的</span>
         </div>
       </div>
     </mt-tabbar>
@@ -67,40 +67,6 @@
 
 </ul>
 
-    <!--<mt-popup v-model="showPoupCheck" popup-transition="popup-fade">-->
-      <!--<div class="poup">-->
-        <!--<div class="poupHead">-->
-          <!--<h4>请选择分类</h4>-->
-          <!--<span class="fa fa-remove" @click="hidePoupCheck" style="width: 10%;height: 40px;line-height: 40px;"></span>-->
-        <!--</div>-->
-        <!--<div class="poupContent">-->
-          <!--<mt-button type="primary" @click='checkOrchecked("历史","HasChecked")'-->
-                     <!--:class='this.IscheckingOrChecked=="历史"? "btnhaschecked":""'>历史-->
-          <!--</mt-button>-->
-          <!--<mt-button type="primary" @click='checkOrchecked("待审核","WaitCheck")'-->
-                     <!--:class='this.IscheckingOrChecked=="待审核"? "btnhaschecked":""'>待审核-->
-          <!--</mt-button>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</mt-popup>-->
-
-    <!--<mt-popup v-model="showLongguest" popup-transition="popup-fade">-->
-      <!--<div class="poup">-->
-        <!--<div class="poupHead">-->
-          <!--<h4>请选择分类</h4>-->
-          <!--<span class="fa fa-remove" @click="hideLongguest" style="width: 10%;height: 40px;line-height: 40px;"></span>-->
-        <!--</div>-->
-        <!--<div class="poupContent">-->
-          <!--<mt-button type="primary" @click='longguestOrAddress("通讯录","AddressList")'-->
-                     <!--:class='this.IsaddressbookOrLongguest=="通讯录"? "btnhaschecked":""'>通讯录-->
-          <!--</mt-button>-->
-          <!--<mt-button type="primary" @click='longguestOrAddress("长期供应商","Longguest")'-->
-                     <!--:class='this.IsaddressbookOrLongguest=="长期供应商"? "btnhaschecked":""'>长期供应商-->
-          <!--</mt-button>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</mt-popup>-->
-
   </div>
 </template>
 <script>
@@ -131,12 +97,11 @@
     },
     created: function () {
       let that = this;
-//      alert(2)
       Vue.PlusReady(function () {
 //        var uid = NativeObj.getUserName();
 //        Vue.GetLogin(uid);
-        Vue.GetLogin("apptest01");
-//        Vue.GetLogin("apptest02");
+//        Vue.GetLogin("apptest01");
+        Vue.GetLogin("apptest02");
       })
 
       if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
@@ -154,21 +119,17 @@
 
       that.$bus.$on('checkNum', function (num) {
         that.checkingNum = num
-      }); //Hub触发事件
-      //不考虑频繁切换账号
-      //   Vue.PlusReady(function(){
-      //       // var uid = NativeObj.getUserName()
-      //       // var uid = NativeObj.getUserName()
-      //       // alert(uid)
-      //       // Vue.GetLogin(uid);
-      //       Vue.GetLogin("apptest01");
-      //  })
+      });
 
 
     },
     mounted: function () {
       //622解决遮罩不了头，使头(sgm)不能点击
+
       let that = this;
+      this.$bus.$on('isSGM', function (arg) {
+        that.isSgmOrPatac = arg;
+      });
       this.$bus.$on('isDisableCkick', function (arg) {
         that.canClickSgm = arg;
       });
@@ -177,10 +138,10 @@
       });
 
 
-document.getElementById("view").addEventListener("touchstart",function () {
+document.getElementById("view").addEventListener("touchstart",function (e) {
         that.isShowAboutTab=false;
-      },false)
-
+      },true)
+//
       document.getElementsByClassName("hheader")[0].addEventListener("touchstart",function () {
         that.isShowAboutTab=false;
       },false)
@@ -196,6 +157,8 @@ document.getElementById("view").addEventListener("touchstart",function () {
 //      "$route":function(data){
 //        console.log(data)
 //      },
+
+
       isSgmOrPatac: function (e) {
         let that = this;
         // 监听变化从而改变sgm和pa的不同
@@ -239,55 +202,7 @@ document.getElementById("view").addEventListener("touchstart",function () {
       },
 
 
-//      isShowAboutTab(e){
-//          let that=this;
-//          if(e){
-//            document.addEventListener("touchstart",function(e){
-//
-//              that.isShowAboutTab=false
-//          },false)
-//          }
-//      },
-//      showPoupCheck(e){
-//        //已审核和历史
-//        if (e) {
-//          let that=this;
-//          $("body").css({overflow: "hidden"});
-//          mplus.setBackListener({
-//            active: '1',
-//          })
-//          document.addEventListener("backpressed",function(e){
-//            e.stopPropagation();
-//            e.preventDefault();
-//            that.showPoupCheck=false;
-//          },false)
-//        } else {
-//          $("body").css({overflow: "auto"});
-//          mplus.setBackListener({
-//            active: '0',
-//          })
-//        }
-//      },
-//      showLongguest(e){
-//        //长期和通讯录
-//        if (e) {
-//            let that=this;
-//          $("body").css({overflow: "hidden"})
-//          mplus.setBackListener({
-//            active: '1',
-//          })
-//          document.addEventListener("backpressed",function(e){
-//            e.stopPropagation();
-//            e.preventDefault();
-//            that.showLongguest=false;
-//          },false)
-//        } else {
-//          $("body").css({overflow: "auto"});
-//          mplus.setBackListener({
-//            active: '0',
-//          })
-//        }
-//      },
+
 
     },
     components: {
@@ -321,7 +236,7 @@ document.getElementById("view").addEventListener("touchstart",function () {
           if(e!="aboutme"){
 
             that.isShowAboutTab=false;
-            that.$router.replace('/' + e);
+            that.$router.push('/' + e);
           }
       },
 
@@ -362,30 +277,7 @@ document.getElementById("view").addEventListener("touchstart",function () {
         this.$bus.$emit('sgmorpathcchange', arg); //Hub触发事件
         this.showPoup = false;
       },
-//      checkOrchecked(arg1, arg2){
-//        this.$bus.$emit('hubchange', arg1, arg2); //Hub触发事件
-//
-//
-////        alert(arg1)
-////
-////        localStorage.setItem("hased", arg2)
-//
-//
-//        this.IscheckingOrChecked = arg1;
-//        this.showPoupCheck = false;
-//      },
-//      PoupCheckShow(){
-//        this.showPoupCheck = true;
-//      },
-//      hidePoupCheck(){
-//        this.showPoupCheck = false;
-//      },
-//      IsshowLongguest(){
-//        this.showLongguest = true;
-//      },
-//      hideLongguest(){
-//        this.showLongguest = false;
-//      },
+
       longguestOrAddress(arg1, arg2, arg3){
         //向组件About发送消息
         this.IsaddressbookOrLongguest = arg1;
@@ -441,7 +333,7 @@ document.getElementById("view").addEventListener("touchstart",function () {
   }
 
   header {
-    background: #0434B2;
+    background: #26a2ff;
     font-size: 16px
   }
 
@@ -451,7 +343,7 @@ document.getElementById("view").addEventListener("touchstart",function () {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #0434b2;
+    background: #26a2ff;
     color: white;
     box-sizing: border-box;
     border: 8px solid transparent
@@ -469,8 +361,8 @@ document.getElementById("view").addEventListener("touchstart",function () {
 
   .poup > .poupContent > button {
     background: transparent;
-    color: #0434B2;
-    border: 1px solid #0434B2;
+    color: #26a2ff;
+    border: 1px solid #26a2ff;
     font-size: 16px;
     /*margin-top: -10px;*/
   }
@@ -487,7 +379,7 @@ document.getElementById("view").addEventListener("touchstart",function () {
   }
 
   .btnhaschecked {
-    background: #0434B2 !important;
+    background: #26a2ff !important;
     color: white !important;
   }
   .fa.fa-angle-left{
@@ -497,17 +389,17 @@ document.getElementById("view").addEventListener("touchstart",function () {
     width: 100px;
     position: fixed;
     bottom: 55px;
-    right: 8px;
+    right: 0px;
     z-index: 3000;
     list-style: none;
     background: white;
     border: 1px solid #ededed;
-    border-right:none ;
+    /*border-right:none ;*/
 
   }
   .aboutTab>li{
-    height:35px;
-    line-height: 35px;
+    height:45px;
+    line-height: 45px;
     width: 100%;
     text-align: center;
   }
@@ -519,6 +411,11 @@ document.getElementById("view").addEventListener("touchstart",function () {
 
   .tabActive{
     background: #ededed;
-    color: #0434B2;
+    color: #26a2ff;
+  }
+
+
+  .tabFa{
+    display: block;width: 30px;height: 30px;margin: 0 auto;position: relative;top: 8px;font-size: 1.5em
   }
 </style>

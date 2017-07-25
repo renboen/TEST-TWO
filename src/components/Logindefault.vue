@@ -15,7 +15,7 @@
 <script>
   import Vue from 'vue'
 
-//  import $ from "jquery"
+  import $ from "jquery"
   export default{
     data(){
       return {
@@ -25,33 +25,20 @@
       }
     },
     mounted(){
-//      alert("登陆默认模块")
-      Vue.PlusReady(function () {
-//        var uid = NativeObj.getUserName()
-//        Vue.GetLogin(uid);
-         Vue.GetLogin("apptest01");
-//         Vue.GetLogin("apptest02");
-      })
-      //默认为已审核
-
-
-
-
-//      localStorage.setItem("hased", "HasChecked");
-
-//      this.$bus.$on('hubchange', function (data1, data2) {
-//        alert(1)
-//        localStorage.setItem("hased", data2)
-//
-//      })
-
-//      localStorage.setItem("addressBook", "AddressList");
-
 
       let WHeight = $(window).height();
       let SHeight = $("#loginDefault>div").height();
-      let top = (WHeight - SHeight) / 2
+      let top = (WHeight - SHeight) / 2;
       $("#loginDefault").height(WHeight);
+      setTimeout(function () {
+        Vue.PlusReady(function () {
+//        var uid = NativeObj.getUserName()
+//        Vue.GetLogin(uid);
+//          Vue.GetLogin("apptest01");
+         Vue.GetLogin("apptest02");
+        })
+      },50)
+
     },
     props: ["showstart"],
     methods: {

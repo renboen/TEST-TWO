@@ -4,14 +4,15 @@
     <Logindefault v-if="isShow" :showstart="showstart" ></Logindefault>
 
     <!--<keep-alive >-->
-    <router-view v-if="!isShow" ></router-view>
+    <!--<router-view  v-show="!isShow"></router-view>-->
+    <heads v-if="!isShow"></heads>
     <!--</keep-alive>-->
   </div>
 </template>
   <script>
     import Vue from 'vue'
     import $ from "jquery"
-
+    import heads from "@/components/HeaderAndBottom"
     import Logindefault from "@/components/Logindefault";
 
     export default {
@@ -24,7 +25,8 @@
       },
 
       components:{
-        Logindefault
+        Logindefault,
+        heads
       },
       created(){
           $("title").text('访客预约管理系统 Ver.'+this.ver)
@@ -34,7 +36,11 @@
             this.isShow=true;
 
           }
+
+
+
       },
+
 
       methods:{
         showstart(d){

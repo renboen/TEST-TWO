@@ -154,7 +154,7 @@
     width: 100%
   }
   #about .fa-user-circle-o{
-    color:#0434B2
+    color:#26a2ff
   }
   #about .mint-cell-wrapper {
 

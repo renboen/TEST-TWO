@@ -9,36 +9,6 @@
       </div>
 
 
-
-
-
-      <!--<mt-cell title="来访时间">-->
-        <!--<div class="page-datetime " style="width: 100%;height: 100%; ">-->
-          <!--<div class="page-datetime-wrapper" style="height: 100%;width: 100%; ">-->
-            <!--<mt-button @click.native.stop="open('picker1')" size="large"-->
-                       <!--style="text-align: right;background: white;border: none!important;outline: none!important;box-shadow: none;font-size: 16px;">-->
-              <!--{{youWant}}-->
-              <!--<strong class=" fa fa-angle-down"></strong>-->
-            <!--</mt-button>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</mt-cell>-->
-      <!--<mt-datetime-picker-->
-        <!--ref="picker1"-->
-        <!--v-model="datetimevalue"-->
-        <!--yearFormat="{value}"-->
-        <!--hourFormat="{value} 时"-->
-        <!--monthFormat="{value} 月"-->
-        <!--dateFormat="{value} 日"-->
-        <!--@confirm="handleChange">-->
-      <!--</mt-datetime-picker>-->
-
-
-
-
-
-
-
       <mt-cell title="有效天数" v-show='this.showCar=="SGM"?false:true'>
         <select v-model="validDay">
           <option>1</option>
@@ -59,9 +29,6 @@
         </select>
         <strong class="selectiIcon fa fa-angle-down"></strong>
       </mt-cell>
-
-
-
 
 
       <div @click="clickinput($event)" v-show='this.showCar=="PATAC"&& isLongGuestCompany?false:true'>
@@ -128,21 +95,21 @@
 
       <mt-cell title="厂区">
         <select v-model="factoryselected">
-          <option v-for="(item,index) in factory" :value="item[1]">{{item[0]}}</option>
+          <option v-for="(item,index) in factory" :value="item.id">{{item.name}}</option>
         </select>
         <strong class="selectiIcon fa fa-angle-down"></strong>
       </mt-cell>
 
       <mt-cell title="区域">
         <select v-model="areaselected">
-          <option v-for="item in area" :value="item[1]">{{item[0]}}</option>
+          <option v-for="item in area" :value="item.id">{{item.name}}</option>
         </select>
         <strong class="selectiIcon fa fa-angle-down"></strong>
       </mt-cell>
 
       <mt-cell title="门岗">
         <select v-model="gateselected">
-          <option v-for="item in gate" :value="item[1]">{{item[0]}}</option>
+          <option v-for="item in gate" :value="item.id">{{item.name}}</option>
         </select>
         <strong class=" selectiIcon fa fa-angle-down"></strong>
       </mt-cell>
@@ -239,7 +206,6 @@
         </div>
       </div>
 
-      <!--:options="['是否需要访客补充信息']">-->
 
 
       <mt-checklist
@@ -295,9 +261,6 @@
                     <span v-show="ischangeName==index?false:true"  style="width:60%">{{item.historyName}}</span>
                     <span @click.stop="useHistoryClick" v-show="ischangeName==index?true:false"  style="width:60%"><input type="text" v-model="changeNameVal"  style="height:25px;width:100%;padding: 0;outline: none;border: none" autofocus placeholder="请输入备注名称"></span>
 
-
-
-
                     <span v-show="ischangeName==index?false:true" style="width:20%;text-align:center;height: 48px;line-height: 48px;" class="fa fa-pencil "
                           @click.stop="changeName(index)"></span>
 
@@ -323,7 +286,7 @@
   </div>
 </template>
 <script>
-//  import $$ from "jquery"
+
   import Vue from 'vue'
   import {Toast} from 'mint-ui';
   import {Indicator} from 'mint-ui';
@@ -390,17 +353,13 @@
       }
 
     },
-    beforeRouterEnter(to, from, next){
 
-//        next(true)
-    },
     mounted: function () {
 
       window.scrollTo(0, 0);
       let that = this;
 
       $(function(){
-
         var nowTime = new Date()
         $('.datetime').mobiscroll().datetime({
           defaultValue: new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate() + 1, "8", "00"),
@@ -419,19 +378,8 @@
             console.log(valueText);
             that.youWant = valueText;
             that.visitdate = that.youWant
-//            setTimeout(function () {
-//                $(".forbottom").css("display", "block")
-//                $(".mint-tabbar").css("display", "flex")
-//                $("#order").css("bottom", "55px")
-//                that.$bus.$emit('isDisableCkick', true);
-//          })
           },
 
-          onShow:function(valueText, inst){
-//            $(".forbottom").css("display", "none")
-//            $("#order").css("bottom", "0")
-//            that.$bus.$emit('isDisableCkick', false);
-          },
         });
       })
 
@@ -441,8 +389,31 @@
 
 
 
-      //获取门岗信息
-      that.ajaxfactoryanddoor();
+      //获取门岗信息725优化
+      if(!window.ajaxfactoryanddoorHasGet){
+        that.ajaxfactoryanddoor();
+        window.ajaxfactoryanddoorHasGet=true;
+      }else{
+        let e = window.getDoor;
+        that.factory=e.rows;
+
+        let patacId=null;
+        that.factory.forEach(function(item,index){
+          if(item.name=="泛亚"){
+            patacId=item.id;
+          }
+        });
+        if(localStorage.getItem("isSgmOrPatac")=="PATAC"){
+          that.factoryselected=patacId
+        }else{
+          that.factoryselected="1"
+        }
+
+      }
+
+
+
+
       that.visiter = localStorage.userName;
       that.department = localStorage.deptname;
       //获取证件类型
@@ -482,27 +453,11 @@
       }
       //监听是sgm还是patac
       that.$bus.$on('sgmorpathcchange', function (arg) {
-        that.factory = window.factoryanddoor[0];
 //        console.log(window.factoryanddoor)
-        if (arg == "SGM") {
 
+        if (arg == "PATAC") {
           that.showCar = arg;
-          that.isLongGuestCompany = false;
-          that.area = window.factoryanddoor[1][0];
-          that.gate = window.factoryanddoor[2][0];
-          that.factoryselected = that.factory[0][1];
-          that.areaselected = that.area[0][1];
-          that.gateselected = that.gate[0][1];
-          that.visitaddress1 = "";
-          that.addmymesg = ["是否保存为常用联系人"]
-
-        } else {
-          that.showCar = arg;
-
-
           that.visitaddress = ""
-
-
           if (that.supplierType == "长期供应商") {
             that.isLongGuestCompany = true;
             that.visitaddress = ""
@@ -510,16 +465,13 @@
             that.isLongGuestCompany = false;
             that.visitaddress1 = ""
           }
-
-
-          that.area = window.factoryanddoor[1][1];
-          that.gate = window.factoryanddoor[2][1];
-          that.factoryselected = that.factory[1][1];
-          that.areaselected = that.area[0][1];
-          that.gateselected = that.gate[0][1];
-
           that.addmymesg = ['是否需要访客补充信息']
-
+          that.factoryselected="2";
+        } else {
+          that.showCar = arg;
+          that.isLongGuestCompany = false;
+          that.addmymesg = ["是否保存为常用联系人"]
+          that.factoryselected="1";
         }
       })
       //修复BUG
@@ -537,9 +489,6 @@
 
     watch: {
 
-      visitdate(r){
-//        alert(r)
-      },
       youWant(e){
         if (e != "请输入来访日期") {
           $(".page-datetime-wrapper button").addClass("color1")
@@ -547,9 +496,7 @@
           $(".page-datetime-wrapper button").removeClass("color1").addClass("color2")
         }
       },
-      visitaddress(q){
-//          alert(q)
-      },
+
       supplierType(arg){
         let that = this;
         if (arg == "长期供应商" && that.showCar == "PATAC") {
@@ -578,23 +525,35 @@
       },
       factoryselected(selected){
         //监听factory的变化。从而使区域和门岗进行对应变化。
-        let that = this;
-        that.factory = window.factoryanddoor[0];
-//        console.log(window.factoryanddoor)
-        if (selected == "1") {
-          that.area = window.factoryanddoor[1][0];
-          that.gate = window.factoryanddoor[2][0];
-          that.factoryselected = that.factory[0][1];
-          that.areaselected = that.area[0][1];
-          that.gateselected = that.gate[0][1];
-        } else {
-          that.area = window.factoryanddoor[1][1];
-          that.gate = window.factoryanddoor[2][1];
-          that.factoryselected = that.factory[1][1];
-//          console.log("uuuuuuuuuuuuuuuuuu")
-          that.areaselected = that.area[0][1];
-          that.gateselected = that.gate[0][1];
+        let arg = "";
+        let patacId=null;
+        this.factory.forEach(function(item,index){
+          if(item.name=="泛亚"){
+            patacId=item.id;
+          }
+        });
+        if(selected==patacId){
+          arg="PATAC"
+        }else{
+          arg="SGM"
         }
+        //向头部发送消息
+        this.$bus.$emit('isSGM', arg);
+        localStorage.setItem("isSgmOrPatac", arg);
+        this.$bus.$emit('sgmorpathcchange', arg); //Hub触发事件
+        let area=null;
+        let gate=null;
+        this.factory.forEach(function(item){
+            if(item.id==selected){
+              area = item.areas
+              gate = item.doors
+            }
+        });
+        this.area=area
+        this.gate=gate
+//        console.log(area[0].id)
+        this.gateselected=gate[0].id
+        this.areaselected=area[0].id
       },
 
       showSearchByName: function (arg) {
@@ -814,56 +773,21 @@
         let that = this;
         //获取门岗信息
         Vue.GetDoor(function (e) {
-          let visitBranch = [];
-          let visitAreaIdIn = [];
-          let visitDoorIdIn = [];
-          let visitAreaIdInList = [];
-          let visitDoorIdInList = [];
-          //厂区
-          for (var i = 0; i < e.rows.length; i++) {
-            visitBranch.push([e.rows[i].name, e.rows[i].id])
-          }
-          //区域
-          for (var j = 0; j < e.rows.length; j++) {
-            for (var i = 0; i < e.rows[j].areas.length; i++) {
-              visitAreaIdIn.push([e.rows[j].areas[i].name, e.rows[j].areas[i].id])
-            }
-            visitAreaIdInList.push(visitAreaIdIn);
-            visitAreaIdIn = []
-          }
-          //门岗
-          for (var j = 0; j < e.rows.length; j++) {
-            for (var i = 0; i < e.rows[j].doors.length; i++) {
-              visitDoorIdIn.push([e.rows[j].doors[i].name, e.rows[j].doors[i].id])
-            }
-            ;
-            visitDoorIdInList.push(visitDoorIdIn);
-            visitDoorIdIn = [];
-          }
-          window.factoryanddoor = [visitBranch, visitAreaIdInList, visitDoorIdInList];
-          that.factory = visitBranch;
+          console.log(e)
+          window.getDoor=e;
+          that.factory=e.rows;
 
-//          console.log(window.factoryanddoor)
-//          console.log(that.factory)
-          if (localStorage.getItem("isSgmOrPatac") == "SGM") {
-            that.area = visitAreaIdInList[0];
-            that.gate = visitDoorIdInList[0];
-//            console.log(777777777777)
-//            console.log(that.area)
-            that.factoryselected = that.factory[0][1];
-            that.areaselected = that.area[0][1];
-            that.gateselected = that.gate[0][1];
-          } else {
-            that.area = visitAreaIdInList[1];
-            that.gate = visitDoorIdInList[1];
-            that.factoryselected = that.factory[1][0];
-            that.areaselected = that.area[0][1];
-            that.gateselected = that.gate[0][1];
+          let patacId=null;
+          that.factory.forEach(function(item,index){
+            if(item.name=="泛亚"){
+              patacId=item.id;
+            }
+          });
+          if(localStorage.getItem("isSgmOrPatac")=="PATAC"){
+            that.factoryselected=patacId
+          }else{
+            that.factoryselected="1"
           }
-//          console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-//          console.log(that.factory)
-//          console.log(that.area)
-//          console.log(that.gate)
         });
       },
       getChercker(){
@@ -1103,31 +1027,6 @@
         let that = this;
         that.ischangeName=arg;
 
-//        setTimeout(function () {
-//          $(".mint-msgbox-wrapper").css("z-index", "3004")
-//          $(".v-modal").css("z-index", "3003")
-//        })
-////        let zindex = $(".v-modal").attr("style")
-////
-//        $(".v-modal").click(function () {
-//          setTimeout(function () {
-//            $(".v-modal").css("z-index", "3000")
-//          })
-//        })
-//        MessageBox.prompt('请输入备注名称').then(({value, action}) => {
-//          that.frequentlyUsedHistory[arg].historyName = value;
-//          console.log(that.frequentlyUsedHistory[arg].historyName)
-//          localStorage.setItem("frequentlyUsedHistory", JSON.stringify(that.frequentlyUsedHistory))
-//          setTimeout(function () {
-//            $(".v-modal").css("z-index", "3000")
-//          })
-//        }, function (arg) {
-//          setTimeout(function () {
-//            $(".v-modal").css("z-index", "3000")
-//          })
-//
-//
-//        });
       },
       deleteThisHistory(arg){
         let that = this;
@@ -1157,72 +1056,7 @@
       },
 
 
-//      open(picker) {
-//
-//        let that = this;
-//        var datatime = new Date()
-//        let year = datatime.getFullYear();
-//        let mounth = datatime.getMonth() + 1 < 10 ? "0" + (datatime.getMonth() + 1) : datatime.getMonth() + 1;
-//        let date = datatime.getDate() < 10 ? "0" + datatime.getDate() : datatime.getDate() + 1
-//        let hour = "09";
-//        let intdatetime = year + '-' + mounth + '-' + date + ' ' + hour + ":00";
-//        that.datetimevalue = new Date(year + '/' + mounth + '/' + date + ' ' + hour + ":00")
-//        window.isvalue = that.datetimevalue;
-//        this.$refs[picker].open();
-////解决苹果时间组件遮盖不了底部Tabbar
-//        $(".mint-tabbar").css("display", "none")
-//        $(".forbottom").css("display", "none")
-//        $("#order").css("bottom", "0")
-////        $("#order").css("top","0")
-////622解决苹果日期不遮罩头
-//        that.$bus.$emit('isDisableCkick', false);
-//        setTimeout(function () {
-//          $(".mint-datetime-action.mint-datetime-cancel").click(function (e) {
-//            $(".forbottom").css("display", "block")
-//            $(".mint-tabbar").css("display", "flex")
-//            $("#order").css("bottom", "55px")
-////            $("#order").css("top","50px")
-//            //622解决苹果日期不遮罩头
-//            that.$bus.$emit('isDisableCkick', true);
-//          })
-//
-//          $(".v-modal").click(function () {
-//            $(".forbottom").css("display", "block")
-//            $(".mint-tabbar").css("display", "flex")
-//            $("#order").css("bottom", "55px")
-////            $("#order").css("top","50px")
-//
-////622解决苹果日期不遮罩头
-//            that.$bus.$emit('isDisableCkick', true);
-//
-//          })
-//        })
-//      },
 
-
-//      handleChange(value) {
-//        let that = this;
-//        let year = value.getFullYear();
-//        let mounth = value.getMonth() + 1 < 10 ? "0" + (value.getMonth() + 1) : value.getMonth() + 1;
-//        let date = value.getDate() < 10 ? "0" + value.getDate() : value.getDate()
-//        let hour = value.getHours() < 10 ? "0" + value.getHours() : value.getHours();
-//        let minutes = value.getMinutes() < 10 ? "0" + value.getMinutes() : value.getMinutes();
-//        let isPrevYouWant = year + '-' + mounth + '-' + date + ' ' + hour + ':' + minutes;
-//        that.youWant = year + '-' + mounth + '-' + date + '  ' + hour + ':' + minutes;
-//        that.visitdate = that.youWant
-//        setTimeout(function () {
-////            $(".mint-tabbar").css("height","55px")
-////            $(".forbottom").css("height","55px")
-//          $(".forbottom").css("display", "block")
-//          $(".mint-tabbar").css("display", "flex")
-//          $("#order").css("bottom", "55px")
-////          $("#order").css("top","50px")
-////622解决苹果日期不遮罩头
-//          that.$bus.$emit('isDisableCkick', true);
-//        })
-//
-//
-//      }
     }
   }
 </script>
@@ -1297,7 +1131,7 @@
     width: 100%;
     height: 48px;
     display: inline-flex;
-    background: #0434B2;
+    background: #26a2ff;
     color: white;
     justify-content: space-between;
     align-items: center
@@ -1363,13 +1197,13 @@
   }
 
   .buttongroup > button:nth-child(1) {
-    background: #0434B2
+    background: #26a2ff
   }
 
   .buttongroup > button:nth-child(2) {
     background: transparent;
-    color: #0434B2;
-    border: 1px solid #0434B2
+    color: #26a2ff;
+    border: 1px solid #26a2ff
   }
 
   .poup > .poupHead {
@@ -1378,7 +1212,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #0434b2;
+    background: #26a2ff;
     color: white;
     box-sizing: border-box;
     border: 8px solid transparent
@@ -1395,8 +1229,8 @@
 
   .poup > .poupContent > button {
     background: transparent;
-    color: #0434B2;
-    border: 1px solid #0434B2;
+    color: #26a2ff;
+    border: 1px solid #26a2ff;
     /*margin-top: -60px!important;*/
   }
 
@@ -1421,7 +1255,7 @@
 
   .poupSearch .mint-navbar {
     width: 100%;
-    background: #0434b2
+    background: #26a2ff
 
   }
 

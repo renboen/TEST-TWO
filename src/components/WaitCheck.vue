@@ -515,12 +515,12 @@ let that=this;
   }
 
   .btnGroup > button:nth-child(1) {
-    background: #0434B2
+    background: #26a2ff
   }
 
   .btnGroup > button:nth-child(2) {
     background: transparent;
-    color: #0434B2;
-    border: 1px solid #0434B2
+    color: #26a2ff;
+    border: 1px solid #26a2ff
   }
 </style>

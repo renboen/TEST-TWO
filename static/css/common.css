@@ -37,7 +37,7 @@ header{
   /*top:0px;*/
   height:50px !important;
   z-index:1500;
-  background: #0434B2;
+  background: #26a2ff;
 }
 
 
@@ -162,5 +162,5 @@ header{
   color:black
 }
 .mint-tabbar > .mint-tab-item.is-selected{
-  color:#0434B2!important;
+  color:#26a2ff!important;
 }

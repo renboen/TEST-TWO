@@ -25,7 +25,9 @@ let plusReady = new PlusReady(true);
 export default {
   install(Vue, Opt) {
     Vue.PlusReady = function (cb) {
+
       if (!plusReady.Ok) {
+        // alert("plusReady")
         document.addEventListener("plusready", function () {
           plusReady.setReady(true, function (newValue) {
             console.log(plusReady.Ok);
@@ -118,7 +120,7 @@ export default {
           localStorage.userName = e.data.userName;
           localStorage.deptname = e.data.deptname;
 
-
+          // alert(localStorage.account)
           console.log(localStorage.token + "uuuu")
           console.log(localStorage.id)
           console.log(localStorage.account)
