@@ -54,6 +54,7 @@ header{
     padding: 0 0px!important;
     width: calc(100% - 16px)!important;
     margin-left:8px!important;
+  /*border-bottom: 1px solid #ededed;*/
 }
 
 /*615*/
@@ -153,10 +154,14 @@ header{
   color:#656b79
 }
 .mint-loadmore{
+  background: #ededed!important;
+}
+.mint-loadmore-top{
   background: #ededed;
 }
-
-
+.mint-loadmore-bottom{
+  background: #ededed;
+}
 .datetime input{
   background: white;
   color:black
@@ -164,3 +169,16 @@ header{
 .mint-tabbar > .mint-tab-item.is-selected{
   color:#26a2ff!important;
 }
+
+
+
+.poupHead .mint-navbar .mint-tab-item.is-selected{
+  border-color: #0c7bcf;
+}
+
+
+
+/*.datetime input:disabled{*/
+  /*color:red;*/
+  /*opacity: 1;*/
+/*}*/

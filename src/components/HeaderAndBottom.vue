@@ -5,20 +5,15 @@
       <header>访客预约管理系统</header>
       <!--<i class="fa fa-angle-left " aria-hidden="true"></i>-->
       <span class="fa fa-angle-left fa-2x " @click.stop="close"></span>
-      <div class="orderSelect" v-show='isSgmOrPatacShow' @click="showpoup">{{isSgmOrPatac}} <span
+      <div v-if="false" class="orderSelect" v-show='isSgmOrPatacShow' @click="showpoup">{{isSgmOrPatac}} <span
         class=" fa fa-angle-down"></span></div>
 
 
-      <!--<div class="aboutmeSelect" v-show='selected=="check"' @click="PoupCheckShow"><span v-show="IsshowPoupCheck">{{IscheckingOrChecked}} <span-->
-        <!--v-show='IscheckingOrChecked=="待审核"'>({{checkingNum}})</span></span>-->
-        <!--<span v-show="IsshowPoupCheck" class=" fa fa-angle-down"></span></div>-->
 
-      <!--<div class="addressSelect" v-show='selected=="aboutme"' @click="IsshowLongguest"><span v-show="IsshowPoupCheck">{{IsaddressbookOrLongguest}}</span>-->
-        <!--<span v-show="IsshowPoupCheck" class=" fa fa-angle-down"></span></div>-->
     </div>
     <div style="height:50px;background:#EDEDED" class="nouse"></div>
     <div id="view">
-    <router-view>
+    <router-view >
     </router-view>
     </div>
     <div class="forbottom" style="height:55px; background:#EDEDED"></div>
@@ -63,8 +58,6 @@
   <li  @click='aboutTabShow("AddressList")'>通讯录</li>
   <li v-show='isSgmOrPatac=="PATAC"?true:false'  @click='aboutTabShow("Longguest")'>长期供应商</li>
 
-
-
 </ul>
 
   </div>
@@ -97,13 +90,6 @@
     },
     created: function () {
       let that = this;
-      Vue.PlusReady(function () {
-//        var uid = NativeObj.getUserName();
-//        Vue.GetLogin(uid);
-//        Vue.GetLogin("apptest01");
-        Vue.GetLogin("apptest02");
-      })
-
       if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
         this.IsshowPoupCheck = true
       } else {
@@ -114,7 +100,6 @@
 //      } else {
 //        this.IsaddressbookOrLongguest = "长期供应商"
 //      }
-//      ;
 
 
       that.$bus.$on('checkNum', function (num) {

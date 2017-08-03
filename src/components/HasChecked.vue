@@ -21,6 +21,9 @@
           <li><span>单位名称</span><span>{{item[2]}}</span></li>
           <li><span>手机号码</span><span>{{item[3]}}</span></li>
           <li><span>来访时间</span><span>{{item[4]}}</span></li>
+
+          <li><span>有效天数</span><span>{{item[7]}}天</span></li>
+
           <li><span>随访人员</span><span>{{Uhasperson[index]}}</span></li>
           <li class="visiterper" v-for="pe in Uperson[index] ">
             <div><span>{{pe[0]}}</span><span>{{pe[1]}}</span></div>
@@ -118,6 +121,7 @@
 
         Vue.GetMyReservation(that.pagNO, function (e) {
           let visit = e.rows;
+
 //          console.log("长度为" + e.rows.length)
 //          console.log("yyyyyymmmmmm" + that.pagNO);
           let nextajax = [];//循环ajax所需参数
@@ -218,7 +222,7 @@
                     }
 
 
-                    visterlist[myindex] = [visit[myindex].visitNo, visit[myindex].mainGuest.guestName, visit[myindex].mainGuest.guestCompanyName, visit[myindex].mainGuest.guestPhone, visit[myindex].visitPlanTime, checker, visitStatus]
+                    visterlist[myindex] = [visit[myindex].visitNo, visit[myindex].mainGuest.guestName, visit[myindex].mainGuest.guestCompanyName, visit[myindex].mainGuest.guestPhone, visit[myindex].visitPlanTime, checker, visitStatus,visit[myindex].visitValidDays]
 
 
                     if (currenti == len) {
@@ -237,6 +241,9 @@
 //                          console.log(visterlist[i])
                           that.list.push(visterlist[i]);
                         }
+//                        console.log(that.list)
+
+
                         for (var i = 0; i < hasperson.length; i++) {
 //                          console.log(hasperson[i])
                           that.Uhasperson.push(hasperson[i]);
@@ -265,7 +272,6 @@
                           //  console.log(hasthing[i])
                           that.Uthing.push(thing[i]);
                         }
-//                        console.log(that.Uperson[1])
                         that.Ushowcar.push(showcar);
 //                      that.allLoaded = false;// 若数据已全部获取完
                         that.allLoaded = len< 9 ? true : false;
@@ -278,6 +284,8 @@
 //                          console.log(visterlist[i])
                           that.list.push(visterlist[i]);
                         }
+//                        console.log(that.list)
+
                         for (var i = 0; i < hasperson.length; i++) {
 //                          console.log(hasperson[i])
                           that.Uhasperson.push(hasperson[i]);

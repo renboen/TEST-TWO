@@ -25,7 +25,6 @@ let plusReady = new PlusReady(true);
 export default {
   install(Vue, Opt) {
     Vue.PlusReady = function (cb) {
-
       if (!plusReady.Ok) {
         // alert("plusReady")
         document.addEventListener("plusready", function () {
@@ -41,6 +40,8 @@ export default {
       }
 
     };
+
+
 
     Vue.getWaitCheckNum=function (success) {
       $.ajax({
@@ -99,16 +100,11 @@ export default {
 
     };
     Vue.GetLogin = function (account) {
-      //登录接口
-      // let workTime = 19 * 3600 * 1000;
-      // let nowTime = new Date().getTime();
-      // let oldTime = localStorage.getItem(account + "oldTime") || new Date().getTime();
-      // localStorage.setItem(account + "oldTime", oldTime);
-      // if (nowTime - oldTime > workTime) {
+
       $.ajax({
         type: "post",
         url: baseUrl + "api/admin/01/login",
-        async: true,
+        async: false,
         dataType: "json",
         data: {
           "account": account
@@ -126,7 +122,7 @@ export default {
           console.log(localStorage.account)
           console.log(localStorage.userName)
           console.log(localStorage.deptname)
-
+          window.hasLogin=true;
         },
         error: function (e, err) {
           if (e.status != "success") {
@@ -140,6 +136,18 @@ export default {
 
       // }
     };
+
+
+
+
+
+
+
+
+
+
+
+
     Vue.GetLinkers = function (updown, pageNumber, pagsize, searchKeyWord, success) {
 
       //获得通讯录借口

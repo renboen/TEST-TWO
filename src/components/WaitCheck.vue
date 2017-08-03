@@ -17,6 +17,9 @@
           <div class="hd"><h3><span>预约单号</span><span>{{item.visitNo}}</span></h3></div>
           <ul>
             <li><span>来访时间</span><span>{{item.visitPlanTime}}</span></li>
+
+            <li><span>有效时间</span><span>{{item.visitValidDays}}天</span></li>
+
             <li><span>申请人</span><span>{{item.userName}}</span></li>
             <li><span>访客姓名</span><span>{{item.mainGuest.guestName}}</span></li>
             <li><span>来访单位</span><span>{{item.mainGuest.guestCompanyName}}</span></li>
@@ -217,6 +220,11 @@ export default {
     getWaitCheck(updown){
       let that = this;
       Vue.GetVisitReplies(function (e) {
+        console.log("daishenhe")
+
+
+        console.log(e.rows[0].visitValidDays)
+
         that.orderid = [];
         var vist = e.rows;
         var forList = [];
@@ -333,6 +341,7 @@ export default {
           Indicator.close();
           if (updown == "up") {
             that.list = vist;
+//            console.log(that.list)
             that.visitPersonlist = aboutpersonList;
             that.hasPerson = ishasPerson;
             that.hasThing = ishasthing;
@@ -411,7 +420,8 @@ export default {
 let that=this;
 
     Vue.getWaitCheckNum(function (e) {
-//        console.log(e.data);
+      console.log("待审核条数接口");
+      console.log(e.data);
        let num=e.data
       that.$bus.$emit('checkNum', num); //Hub触发事件
     })
