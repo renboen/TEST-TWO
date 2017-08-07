@@ -14,6 +14,7 @@
   import $ from "jquery"
   import heads from "@/components/HeaderAndBottom"
   import Logindefault from "@/components/Logindefault";
+  import {Indicator} from 'mint-ui';
 
   export default {
     name: 'app',
@@ -42,13 +43,22 @@
       console.log(frequentlyUsedHistory)
       localStorage.setItem("frequentlyUsedHistory", frequentlyUsedHistory)
 
-        Vue.PlusReady(function () {
-//        var uid = NativeObj.getUserName();
-//        Vue.GetLogin(uid);
-//        console.log("token"+uid)
-        Vue.GetLogin("apptest01");
-//          Vue.GetLogin("apptest02");
-        })
+      var timer=setInterval(function(){
+
+        if (window.hasLogin && window.ajaxfactoryanddoorHasGet && window.WCardTypeList != undefined && window.WcheckerList != undefined) {
+          Indicator.close()
+          clearInterval(timer)
+
+        } else {
+          Indicator.open({
+            text: '加载中...',
+            spinnerType: 'fading-circle'
+          })
+        }
+
+
+
+      },100)
 
     },
 

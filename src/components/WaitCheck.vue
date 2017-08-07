@@ -223,7 +223,6 @@ export default {
         console.log("daishenhe")
 
 
-        console.log(e.rows[0].visitValidDays)
 
         that.orderid = [];
         var vist = e.rows;

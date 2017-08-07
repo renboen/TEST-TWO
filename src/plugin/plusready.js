@@ -48,8 +48,8 @@ export default {
         type:"get",
         url:baseUrl + "api/visit/01/getVerifyNumber",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id
+          "token": window.token,
+          "uid": window.id
         },
         success: success
       })
@@ -76,8 +76,8 @@ export default {
         async: true,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id
+          "token": window.token,
+          "uid": window.id
         },
         success: success
       });
@@ -90,8 +90,8 @@ export default {
         async: true,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id,
+          "token": window.token,
+          "uid": window.id,
           "pageNumber": 1,
           "pageSize": 999
         },
@@ -99,30 +99,33 @@ export default {
       });
 
     };
-    Vue.GetLogin = function (account) {
+    Vue.GetLogin = function (account,callback) {
 
       $.ajax({
         type: "post",
         url: baseUrl + "api/admin/01/login",
-        async: false,
+        async: true,
         dataType: "json",
         data: {
           "account": account
         },
         success: function (e) {
-          localStorage.token = e.data.token;
-          localStorage.id = e.data.id;
-          localStorage.account = account;
-          localStorage.userName = e.data.userName;
-          localStorage.deptname = e.data.deptname;
+          window.token = e.data.token;
+          window.id = e.data.id;
+          window.account = account;
+          window.userName = e.data.userName;
+          window.deptname = e.data.deptname;
+          console.log(e)
 
-          // alert(localStorage.account)
-          console.log(localStorage.token + "uuuu")
-          console.log(localStorage.id)
-          console.log(localStorage.account)
-          console.log(localStorage.userName)
-          console.log(localStorage.deptname)
+          console.log(window.token + "uuuu")
+
+
+          console.log(window.id)
+          console.log(window.account)
+          console.log(window.userName)
+          console.log(window.deptname)
           window.hasLogin=true;
+          callback()
         },
         error: function (e, err) {
           if (e.status != "success") {
@@ -139,6 +142,21 @@ export default {
 
 
 
+    Vue.CheckUserIsChecker =function(success){
+      $.ajax({
+        type: "post",
+        url: baseUrl + "api/admin/01/isDeptSecurityChecker",
+        async: true,
+        dataType: "json",
+        data: {
+          "token": window.token,
+          "uid": window.id,
+          'pageSize':1,
+         'pageNumber':1
+        },
+        success:success
+      });
+    }
 
 
 
@@ -157,8 +175,8 @@ export default {
         async: true,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id,
+          "token": window.token,
+          "uid": window.id,
           "name": searchKeyWord,
           "pageSize": pagsize,
           "pageNumber": pageNumber
@@ -174,8 +192,8 @@ export default {
         async: true,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id,
+          "token": window.token,
+          "uid": window.id,
           "users": id
         },
         success: success,
@@ -189,8 +207,8 @@ export default {
         async: true,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id,
+          "token": window.token,
+          "uid": window.id,
           "pageSize": 999
         },
         success: success,
@@ -212,8 +230,8 @@ export default {
         async: true,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id,
+          "token": window.token,
+          "uid": window.id,
           "id": id,
           "checkStatus": status
         },
@@ -231,8 +249,8 @@ export default {
         async: false,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id,
+          "token": window.token,
+          "uid": window.id,
           "visitNo": visitNo
         },
         success: success,
@@ -247,7 +265,7 @@ export default {
           async: true,
           dataType: "json",
           data: {
-            "token": localStorage.token,
+            "token": window.token,
           },
         success:success
       })
@@ -260,11 +278,11 @@ export default {
         async: true,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id,
+          "token": window.token,
+          "uid": window.id,
           "pageSize": 9,
           "pageNumber": pagNum,
-          "userId": localStorage.id,
+          "userId": window.id,
           "monthBefore": 3
         },
         success: success,
@@ -281,8 +299,8 @@ export default {
         async: true,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id,
+          "token": window.token,
+          "uid": window.id,
           "visitNo": visitNo
         },
         success: success,
@@ -291,15 +309,16 @@ export default {
 
     };
 
-    Vue.GetLongGuest = function (success) {
+    Vue.GetLongGuest = function (longGuestName,success) {
       $.ajax({
         type: "get",
         url: baseUrl + "api/visit/01/querySupplies",
         async: true,
         dataType: "json",
         data: {
-          "token": localStorage.token,
-          "uid": localStorage.id,
+          "token": window.token,
+          "uid": window.id,
+          "name":longGuestName
         },
         success: success,
       })

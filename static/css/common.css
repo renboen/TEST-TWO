@@ -143,6 +143,9 @@ header{
 .mint-cell-value .fa.fa-angle-down{
   color:black
 }
+.mint-cell-value input{
+  color:black
+}
 .mint-button-text .fa.fa-angle-down{
   color:black!important;
   opacity: .9;
@@ -176,7 +179,10 @@ header{
   border-color: #0c7bcf;
 }
 
-
+input[type="text"]:disabled
+{
+  background-color: white!important;
+}
 
 /*.datetime input:disabled{*/
   /*color:red;*/

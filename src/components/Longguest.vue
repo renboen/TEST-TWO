@@ -80,7 +80,7 @@
       $(".longguest").css({
         minHeight: $(window).height() - 105
       })
-      Vue.GetLongGuest(function (e) {
+      Vue.GetLongGuest("",function (e) {
         console.log("长期供应商")
         console.log(e)
         that.list = e.rows;

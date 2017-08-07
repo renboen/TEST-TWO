@@ -1,5 +1,7 @@
 <template>
   <div id="headBot">
+    <div @click="hidetablist" class="zhezhao" v-show="isShowAboutTab" ></div>
+
     <div class="hheader">
       <!--<mt-header fixed title="访客预约管理系统" ></mt-header>-->
       <header>访客预约管理系统</header>
@@ -53,12 +55,13 @@
 
 
 
-<ul class="aboutTab"  v-show="isShowAboutTab">
+<ul class="aboutTab"  v-if="isShowAboutTab" ref="tablist">
   <li  @click='aboutTabShow("HasChecked")'>历史</li>
   <li  @click='aboutTabShow("AddressList")'>通讯录</li>
   <li v-show='isSgmOrPatac=="PATAC"?true:false'  @click='aboutTabShow("Longguest")'>长期供应商</li>
 
 </ul>
+
 
   </div>
 </template>
@@ -112,6 +115,7 @@
       //622解决遮罩不了头，使头(sgm)不能点击
 
       let that = this;
+
       this.$bus.$on('isSGM', function (arg) {
         that.isSgmOrPatac = arg;
       });
@@ -121,15 +125,6 @@
       that.$bus.$on('aboutHasMounted', function(arg){
         that.IsaddressbookOrLongguest = "通讯录"
       });
-
-
-document.getElementById("view").addEventListener("touchstart",function (e) {
-        that.isShowAboutTab=false;
-      },true)
-//
-      document.getElementsByClassName("hheader")[0].addEventListener("touchstart",function () {
-        that.isShowAboutTab=false;
-      },false)
 
 
 //      that.$bus.$on('checkHasMounted', function(arg){
@@ -196,6 +191,9 @@ document.getElementById("view").addEventListener("touchstart",function (e) {
       AboutMe
     },
     methods: {
+      hidetablist(){
+        this.isShowAboutTab=false;
+      },
       showpoup(){
         if (this.canClickSgm) {
           this.showPoup = true;
@@ -288,6 +286,9 @@ document.getElementById("view").addEventListener("touchstart",function (e) {
   }
 </script>
 <style scoped>
+  .zhezhao{
+    height: 100%;width: 100%;position: absolute;z-index: 9998;background: white;opacity: 0;
+  }
   #headBot {
     background: white
   }
@@ -375,7 +376,7 @@ document.getElementById("view").addEventListener("touchstart",function (e) {
     position: fixed;
     bottom: 55px;
     right: 0px;
-    z-index: 3000;
+    z-index: 9999;
     list-style: none;
     background: white;
     border: 1px solid #ededed;
