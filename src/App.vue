@@ -44,25 +44,18 @@
       localStorage.setItem("frequentlyUsedHistory", frequentlyUsedHistory)
 
       var timer=setInterval(function(){
-
         if (window.hasLogin && window.ajaxfactoryanddoorHasGet && window.WCardTypeList != undefined && window.WcheckerList != undefined) {
           Indicator.close()
           clearInterval(timer)
-
         } else {
           Indicator.open({
             text: '加载中...',
             spinnerType: 'fading-circle'
           })
         }
-
-
-
-      },100)
+      },50)
 
     },
-
-
     methods: {
       showstart(d){
         console.log(d)

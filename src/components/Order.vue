@@ -420,25 +420,15 @@
       }
 
     },
-//    created: function () {
-//      if (window.hasLogin && window.ajaxfactoryanddoorHasGet && window.WCardTypeList != undefined && window.WcheckerList != undefined) {
-//        Indicator.close()
-//      } else {
-//        Indicator.open({
-//          text: '加载中...',
-//          spinnerType: 'fading-circle'
-//        })
-//      }
-//
-//    },
     mounted: function () {
       window.scrollTo(0, 0);
       let that = this;
-
-
       if (!window.hasLogin) {
         Vue.PlusReady(function () {
-          Vue.GetLogin("apptest01", function () {
+//          var currentUser = NativeObj.getUserName();
+          var currentUser ="apptest01";
+
+          Vue.GetLogin(currentUser, function () {
             that.visiter = window.userName;
             that.department = window.deptname;
 //判断用户是否是审核用户
@@ -453,9 +443,6 @@
                   window.Wuserofchecker = 0
                 }
             })
-
-
-
             //获取门岗
             that.ajaxfactoryanddoor();
             window.ajaxfactoryanddoorHasGet = true;
@@ -480,8 +467,6 @@
               }
             })
           })
-
-
         })
       } else {
         that.visiter = window.userName;
