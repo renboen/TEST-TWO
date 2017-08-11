@@ -21,7 +21,7 @@ PlusReady.prototype.setReady = function (newValue, cb) {
   }
 };
 // plusready  false 不自动触发plusready true 自动触发
-let plusReady = new PlusReady(true);
+let plusReady = new PlusReady(false);
 export default {
   install(Vue, Opt) {
     Vue.PlusReady = function (cb) {
@@ -209,7 +209,8 @@ export default {
         data: {
           "token": window.token,
           "uid": window.id,
-          "pageSize": 999
+          "pageSize": 999,
+          'pageNumber':1
         },
         success: success,
         error: function (err) {
@@ -318,10 +319,29 @@ export default {
         data: {
           "token": window.token,
           "uid": window.id,
-          "name":longGuestName
+          "name":longGuestName,
+          'pageSize':1000,
+          'pageNumber':1
         },
         success: success,
       })
-    }
+    };
+
+    Vue.GetLongGuestPage = function (pgnum,success) {
+      $.ajax({
+        type: "get",
+        url: baseUrl + "api/visit/01/querySupplies",
+        async: true,
+        dataType: "json",
+        data: {
+          "token": window.token,
+          "uid": window.id,
+          'pageSize':10,
+          'pageNumber':pgnum
+        },
+        success: success,
+      })
+    };
+
   }
 }

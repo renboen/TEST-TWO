@@ -51,16 +51,12 @@
       </mt-cell>
 
       <div v-show="isLongGuestCompany" id="longguester">
-
-
         <mt-field class="uu" label="来访单位" type="text" placeholder="请选择长期供应商" v-model="visitaddress1"
                   :disableClear="true" :disabled="true"><span
           class=" fa fa-search"
           style="text-align:right"
           @click.stop="longguestclick"></span>
         </mt-field>
-
-
         <!--<mt-cell title="来访单位" v-show="isLongGuestCompany">-->
         <!--<select id="longguester" v-model="visitaddress1" v-show="!longguesterdisabled">-->
         <!--&lt;!&ndash;<option v-show="longguesterdisabled" value="未配置相关数据不能选择"></option>&ndash;&gt;-->
@@ -74,10 +70,7 @@
       </div>
 
 
-      <div @click="clickinput($event)">
-        <mt-field v-show="!isLongGuestCompany" label="来访单位" placeholder="请输入来访单位" type="text"
-                  v-model="visitaddress"></mt-field>
-      </div>
+
 
 
       <div @click="clickinput($event)" v-show='this.showCar=="PATAC"&& isLongGuestCompany?false:true'>
@@ -88,6 +81,10 @@
         </mt-field>
       </div>
 
+      <div @click="clickinput($event)">
+        <mt-field v-show="!isLongGuestCompany" label="来访单位" placeholder="请输入来访单位" type="text"
+                  v-model="visitaddress"></mt-field>
+      </div>
 
       <div @click="clickinput($event)" v-show='this.showCar=="PATAC" && isLongGuestCompany?true:false'>
         <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
@@ -106,7 +103,7 @@
       </mt-cell>
 
       <div @click="clickinput($event)">
-        <mt-field label="证件号" placeholder="请输入证件号" v-model="guestIdcardNo" :disableClear="true"></mt-field>
+        <mt-field label="证件号" placeholder="请输入证件号" v-model="guestIdcardNo" :disableClear="true" :attr="{maxlength:18}"></mt-field>
       </div>
 
       <div @click="clickinput($event)">
@@ -149,7 +146,7 @@
             </div>
             <div @click="clickinput($event)">
 
-              <mt-field label="身份证" placeholder="请输入身份证号" v-model="item.idNo" type="tel"></mt-field>
+              <mt-field label="身份证" placeholder="请输入身份证号" v-model="item.idNo" type="tel" :attr="{maxlength:18}"></mt-field>
             </div>
 
           </div>
@@ -232,7 +229,7 @@
       </mt-popup>
 
       <mt-popup v-model="showSearchByName" popup-transition="popup-fade" class="tab">
-        <div class="poup poupSearch ">
+        <div class="poup poupSearch namePoup ">
           <div class="poupHead">
             <mt-navbar v-model="searchByNameselected">
               <mt-tab-item id="1">搜索</mt-tab-item>
@@ -253,7 +250,8 @@
                     <li @click="searchclick(index)">
                       <div>{{item.name}}</div>
                       <div>{{item.tel}}</div>
-                      <div>{{item.company}}</div>
+                      <div style="flex: 100%;">{{item.company}}</div>
+                      <div style="flex: 100%;">{{item.idcard}}</div>
                     </li>
                   </ul>
                 </div>
@@ -321,7 +319,7 @@
                   <mt-field placeholder="输入要搜索的长期供应商" v-model="searchKW" :disableClear="false"></mt-field>
                   <ul v-for="(item,index) in SearchByNameListForLongguest ">
                     <li @click="searchlongclick(index)">
-                      <div style="line-height: 50px;height: 50px;">长期供应商公司名称:</div>
+                      <!--<div style="line-height: 50px;height: 50px;">长期供应商公司名称:</div>-->
 
                       <div style="line-height: 50px;height: 50px;">{{item.name}}</div>
 
@@ -425,9 +423,8 @@
       let that = this;
       if (!window.hasLogin) {
         Vue.PlusReady(function () {
-//          var currentUser = NativeObj.getUserName();
-          var currentUser ="apptest01";
-
+          var currentUser = NativeObj.getUserName();
+//          var currentUser ="apptest01";
           Vue.GetLogin(currentUser, function () {
             that.visiter = window.userName;
             that.department = window.deptname;
@@ -768,9 +765,9 @@
 
         }
       },
-      searchKW(){
+      searchKW(e){
         let that = this;
-        if (window.islongorvisiter = "long") {
+        if (window.islongorvisiter == "long") {
           that.searchLong(that.searchKW);
         } else {
           that.searchByName(that.searchKW);
@@ -1176,7 +1173,7 @@
         if (that.searchByNameselected == "1") {
           Vue.GetLinkers("up", 1, 100, KW, function (e) {
 //            console.log("pppppppppppppppppppp");
-            // console.log(e.rows);
+             console.log(e.rows);
             e.rows.map(function (item) {
               search.push({
                 name: item.name,
@@ -1217,10 +1214,9 @@
 
       },
       showSearch(){
-
         let that = this;
         that.showSearchByName = true;
-        window.islongorvisiter = "visiter"
+        window.islongorvisiter = "visiter";
         setTimeout(function () {
           $(".mint-popup.tab").css("z-index", "3001")
           $(".v-modal").css("z-index", "3000")
@@ -1569,7 +1565,14 @@
     border-bottom: 1px solid #c8c8cd;
     height: 48px;
   }
-
+  .poupSearch.namePoup ul {
+    border-bottom: 1px solid #c8c8cd;
+    height: 72px;
+  }
+  .poupSearch.namePoup .useHistory{
+    border-bottom: 1px solid #c8c8cd;
+    height: 48px;
+  }
   .poupSearch .mint-tab-container li {
     display: flex;
     flex-wrap: wrap;

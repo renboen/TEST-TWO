@@ -11,14 +11,18 @@
         class=" fa fa-angle-down"></span></div>
 
 
+      <div  class="orderSelect checkNum" style="display: none" >待审核数量:{{checkingNum}}</div>
 
     </div>
+
+
+
     <div style="height:50px;background:#EDEDED" class="nouse"></div>
     <div id="view">
     <router-view >
     </router-view>
     </div>
-    <div class="forbottom" style="height:55px; background:#EDEDED"></div>
+    <div class="forbottom" style="height:55px; background:white"></div>
     <mt-tabbar v-model="selected" fixed style="z-index:990;height: 55px">
       <div id="order" @click='chang("order")' class="tabActive" style="flex: 1">
         <span class="fa fa-calendar tabFa"
@@ -87,8 +91,8 @@
         IsaddressbookOrLongguest: "",
         checkingNum: "",
         canClickSgm: true,
-        isShowAboutTab:false
-
+        isShowAboutTab:false,
+        isShowcheckingNum:true
       }
     },
     created: function () {
@@ -170,7 +174,6 @@
               e.stopPropagation();
               e.preventDefault();
               that.showPoup=false;
-
           },false)
 
         } else {
@@ -208,16 +211,19 @@
 
           if(e=="check"){
             that.isSgmOrPatacShow=false;
-            $(".mint-tabbar.is-fixed>div:nth-child(2)").addClass("tabActive").siblings().removeClass("tabActive")
+            $(".mint-tabbar.is-fixed>div:nth-child(2)").addClass("tabActive").siblings().removeClass("tabActive");
+            that.isShowcheckingNum=true;
+            $(".orderSelect.checkNum").show()
           }
           if(e=="order"){
             that.isSgmOrPatacShow=true;
             $(".mint-tabbar.is-fixed>div:nth-child(1)").addClass("tabActive").siblings().removeClass("tabActive")
-
+            that.isShowcheckingNum=false
+            $(".orderSelect.checkNum").hide()
           }
 
           if(e!="aboutme"){
-
+            that.isShowcheckingNum=false
             that.isShowAboutTab=false;
             that.$router.push('/' + e);
           }
@@ -227,6 +233,7 @@
         let that=this;
         that.isShowAboutTab=false;
         that.isSgmOrPatacShow=false;
+        $(".orderSelect.checkNum").hide()
         $(".mint-tabbar.is-fixed>div:nth-child(3)").addClass("tabActive").siblings().removeClass("tabActive");
         that.$router.push("/aboutme");
 
@@ -309,7 +316,7 @@
     font-size: 12px;
     height: 50px;
     line-height: 50px;
-    /*padding-right: 10px;*/
+    padding-right: 10px;
     color: white;
     position: fixed;
     top: 0;

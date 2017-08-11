@@ -1,7 +1,16 @@
 <template>
   <div style="background: #EDEDED">
+
+    <mt-loadmore
+      :autoFill=false
+      :top-method="loadTop"
+      :bottom-all-loaded="allLoaded"
+      ref="loadmore"
+      :bottom-method="loadbottom"
+    >
+
     <div class="longguest" style="background: #EDEDED">
-      <ul v-for="item in list" style="background: white">
+      <ul v-for="item in aloneList" style="background: white">
         <li>
           <div>供应商公司名称</div>
           <div>{{item.name}}</div>
@@ -35,12 +44,11 @@
           <div>{{item.status | changeStatus}}</div>
         </li>
       </ul>
-      <div v-show="nodata" style="width:100%;height:35px;text-align:center;line-height:35px; background: #EDEDED;">
+      <div v-show="allLoaded" style="width:100%;height:35px;text-align:center;line-height:35px;background: #EDEDED;">
         没有更多数据
       </div>
-
-
     </div>
+    </mt-loadmore>
   </div>
 </template>
 <script>
@@ -50,7 +58,10 @@
     data(){
       return {
         list: [],
-        nodata:false
+        nodata:false,
+        allLoaded:false,
+        pageNum:0,
+        aloneList:[]
       }
     },
     filters: {
@@ -79,16 +90,60 @@
       let that = this;
       $(".longguest").css({
         minHeight: $(window).height() - 105
-      })
-      Vue.GetLongGuest("",function (e) {
-        console.log("长期供应商")
-        console.log(e)
-        that.list = e.rows;
-        if(that.list.length==0){
-          that.nodata=true
+      });
+      that.loadTop()
+    },
+    methods:{
+      loadTop() {
+        let that = this;
+        that.pageNum=1
+        Vue.GetLongGuestPage(that.pageNum,function (e) {
+          that.list=[];
+//          console.log("长期供应商")
+            console.log(e)
+            that.aloneList=[]
+            that.list.push( e.rows);
+//           console.log(that.list)
+          that.doubArrToAloneArr(that.list);
+//          console.log(that.aloneList)
+            window.Wlongguest=that.list;
+          that.allLoaded = e.rows.length < 10 ? true : false;
+          that.$refs.loadmore.onTopLoaded();
+        })
+
+      },
+      loadbottom(){
+        let that = this;
+        that.pageNum++
+        console.log(that.pageNum)
+        Vue.GetLongGuestPage(that.pageNum,function (e) {
+          console.log("长期供应商")
+          console.log(e)
+
+//          that.list = e.rows;
+          that.aloneList=[]
+          that.list.push(e.rows);
+//          console.log("wwwwwwwwwww")
+//          console.log(that.list)
+          that.doubArrToAloneArr(that.list);
+//          console.log(that.aloneList)
+          window.Wlongguest=that.list;
+          that.allLoaded = e.rows.length < 10 ? true : false;
+          that.$refs.loadmore.onBottomLoaded();
+        })
+
+      },
+      doubArrToAloneArr(arr){
+        let that = this;
+        for(var i=0;i<arr.length;i++){
+          if(Array.isArray(arr[i])){
+            that.doubArrToAloneArr(arr[i]);
+          }else{
+            that.aloneList.push(arr[i]);
+          }
         }
-        window.Wlongguest=that.list;
-      })
+      }
+
     }
   }
 </script>
@@ -119,7 +174,9 @@
     box-sizing: border-box;
     padding: 5px;
   }
-
+  div > div > ul:nth-child(1) {
+    border-top: 0;
+  }
   ul:nth-child(1) {
     margin-top: 8px;
   }

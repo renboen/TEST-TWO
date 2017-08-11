@@ -64,6 +64,7 @@
 import Vue from 'vue';
 import {Indicator} from 'mint-ui';
 import {Toast} from 'mint-ui';
+import {MessageBox} from 'mint-ui';
 export default {
   data() {
     name:"aboutme"
@@ -207,23 +208,27 @@ export default {
     },
     loadTop() {
       let that = this;
+      console.log("下拉");
       that.getWaitCheck("down")
+      Vue.getWaitCheckNum(function (e) {
+        console.log("待审核条数接口");
+        console.log(e.data);
+        let num=e.data
+        that.$bus.$emit('checkNum', num); //Hub触发事件
+      })
     },
     handlebottomChange(status) {
       this.bottomStatus = status;
     },
     loadbottom() {
       let that = this;
-//      console.log("上拉加载");
+      console.log("上拉加载");
       that.getWaitCheck("up")
     },
     getWaitCheck(updown){
       let that = this;
       Vue.GetVisitReplies(function (e) {
         console.log("daishenhe")
-
-
-
         that.orderid = [];
         var vist = e.rows;
         var forList = [];
@@ -279,7 +284,6 @@ export default {
             } else {
               showcar.push(true)
             }
-
             if (val.data.cars.length ==0) {
               hascar.push("无");
             } else {
@@ -336,11 +340,10 @@ export default {
 //            console.log(ishascar);//是否有物品
 //            console.log(aboutcarList);//是否有物品
 //            console.log(showcar);//是否有物品
-
           Indicator.close();
           if (updown == "up") {
             that.list = vist;
-//            console.log(that.list)
+            console.log(that.list)
             that.visitPersonlist = aboutpersonList;
             that.hasPerson = ishasPerson;
             that.hasThing = ishasthing;
@@ -356,17 +359,27 @@ export default {
               window.scrollTo(0,0)
             },10);
           } else {
-//            console.log("下拉刷新");
-            that.list = [];//待审核
-            that.visitPersonlist = [];//随访人员
-            that.hasPerson = [];//是否有随访人员
-            that.visitThinglist = [];//是否有随访物品
-            that.hasThing = [];//是否有物品
+            console.log("下拉刷新");
             that.list = vist;
+            console.log(that.list)
             that.visitPersonlist = aboutpersonList;
             that.hasPerson = ishasPerson;
-            that.hasThing = ishasthing;
             that.visitThinglist = aboutthingList;
+            that.hasThing = ishasthing;
+            that.Ucar = aboutcarList;
+            that.Uhascar = ishascar;
+            that.Ushowcar = showcar;
+
+//            that.list = [];//待审核
+//            that.visitPersonlist = [];//随访人员
+//            that.hasPerson = [];//是否有随访人员
+//            that.visitThinglist = [];//是否有随访物品
+//            that.hasThing = [];//是否有物品
+//            that.list = vist;
+//            that.visitPersonlist = aboutpersonList;
+//            that.hasPerson = ishasPerson;
+//            that.hasThing = ishasthing;
+//            that.visitThinglist = aboutthingList;
             that.allLoaded = true;// 若数据已全部获取完
             that.$refs.loadmore.onTopLoaded();
           }
@@ -378,38 +391,55 @@ export default {
     },
     yesorno(index, id, checkstatus){
       let that = this;
-//      console.log("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-//      console.log(index, id, checkstatus)
-//      console.log("调用" + "Vue.UpdateStatus病弹框")
-      Vue.UpdateStatus(index, id, checkstatus, function (e) {
-//        console.log(e)
-        if (e.description == "该预约信息已被审核过") {
-          Toast("该预约信息已被审核过")
-        } else {
-          let anycAjax = () => new Promise((resolve) => {
-              setTimeout(() => {
-                Toast({
-                  message: '操作成功',
-                  duration: 1000
-                });
-                resolve()
-              });
-            }
-          );
-          anycAjax().then(function () {
-            setTimeout(() => {
+      MessageBox.confirm('是否确定审批').then(action => {
+        Vue.UpdateStatus(index, id, checkstatus, function (e) {
+          if (e.description == "该预约信息已被审核过") {
+            MessageBox('提示', "该预约信息已被审核过");
+          } else {
+            MessageBox.alert('审核成功').then(action => {
               that.loadTop();
-              Vue.getWaitCheckNum(function (e) {
-                let num=e.data
-                that.$bus.$emit('checkNum', num); //Hub触发事件
-              })
-            }, 1200);
-          })
+//              Vue.getWaitCheckNum(function (e) {
+//                let num=e.data
+//                that.$bus.$emit('checkNum', num); //Hub触发事件
+//              })
+            });
 
+          }
+        })
 
-        }
+      });
 
-      })
+//      Vue.UpdateStatus(index, id, checkstatus, function (e) {
+////        console.log(e)
+//        if (e.description == "该预约信息已被审核过") {
+//          Toast("该预约信息已被审核过")
+//        } else {
+//          let anycAjax = () => new Promise((resolve) => {
+//              setTimeout(() => {
+//                Toast({
+//                  message: '操作成功',
+//                  duration: 1000
+//                });
+////                that.$router.push('/order');
+////                $("#order").addClass("tabActive").siblings().removeClass("tabActive")
+//                resolve();
+//              });
+//            }
+//          );
+//          anycAjax().then(function () {
+//            setTimeout(() => {
+//              that.loadTop();
+//              Vue.getWaitCheckNum(function (e) {
+//                let num=e.data
+//                that.$bus.$emit('checkNum', num); //Hub触发事件
+//              })
+//            }, 1200);
+//          })
+//
+//
+//        }
+//
+//      })
 
     }
 
@@ -418,12 +448,12 @@ export default {
 //        alert(2)
 let that=this;
 
-    Vue.getWaitCheckNum(function (e) {
-      console.log("待审核条数接口");
-      console.log(e.data);
-       let num=e.data
-      that.$bus.$emit('checkNum', num); //Hub触发事件
-    })
+//    Vue.getWaitCheckNum(function (e) {
+//      console.log("待审核条数接口");
+//      console.log(e.data);
+//       let num=e.data
+//      that.$bus.$emit('checkNum', num); //Hub触发事件
+//    })
     Indicator.open({
       text: '加载中...',
       spinnerType: 'fading-circle'
@@ -432,9 +462,11 @@ let that=this;
     $("#waiting").css({
       minHeight: $(window).height() - 113
     })
-    that.getWaitCheck("up")
+//    that.getWaitCheck("down")
+    that.loadTop()
 
-}
+
+  }
 };
 </script>
 <style scoped>

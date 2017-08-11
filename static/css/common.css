@@ -188,3 +188,11 @@ input[type="text"]:disabled
   /*color:red;*/
   /*opacity: 1;*/
 /*}*/
+
+.mint-msgbox-header{
+  padding: 10px 0!important;
+  background: #26a2ff;
+}
+.mint-msgbox-title{
+  color:white!important
+}

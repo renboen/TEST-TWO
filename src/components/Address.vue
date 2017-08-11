@@ -28,7 +28,9 @@
               <div class="fa fa-user-circle-o fa-3x"></div>
               <ul>
                 <li><span>{{item.name}}</span><span>{{item.phone}}</span></li>
-                <li><span>{{item.companyName}}</span></li>
+                <li><span style="flex:100%">{{item.companyName}}</span></li>
+                <li><span style="flex:100%">{{item.description}}</span></li>
+
               </ul>
             </mt-cell-swipe>
           </div>
@@ -83,6 +85,7 @@
         }
         Vue.GetLinkers(updown,that.directioryNumber, 10, "", function (e) {
           let Tlist = [];
+
           Indicator.close();
 //          console.log(that.directioryNumber);
 //          console.log("wwwwwwww" + e.rows.length);
