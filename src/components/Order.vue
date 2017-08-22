@@ -70,9 +70,6 @@
       </div>
 
 
-
-
-
       <div @click="clickinput($event)" v-show='this.showCar=="PATAC"&& isLongGuestCompany?false:true'>
         <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
           class=" fa fa-search"
@@ -103,7 +100,8 @@
       </mt-cell>
 
       <div @click="clickinput($event)">
-        <mt-field label="证件号" placeholder="请输入证件号" v-model="guestIdcardNo" :disableClear="true" :attr="{maxlength:18}"></mt-field>
+        <mt-field label="证件号" placeholder="请输入证件号" v-model="guestIdcardNo" :disableClear="true"
+                  :attr="{maxlength:18}"></mt-field>
       </div>
 
       <div @click="clickinput($event)">
@@ -146,7 +144,8 @@
             </div>
             <div @click="clickinput($event)">
 
-              <mt-field label="身份证" placeholder="请输入身份证号" v-model="item.idNo" type="tel" :attr="{maxlength:18}"></mt-field>
+              <mt-field label="身份证" placeholder="请输入身份证号" v-model="item.idNo" type="tel"
+                        :attr="{maxlength:18}"></mt-field>
             </div>
 
           </div>
@@ -424,21 +423,21 @@
       if (!window.hasLogin) {
         Vue.PlusReady(function () {
           var currentUser = NativeObj.getUserName();
-//          var currentUser ="apptest01";
+//          var currentUser = "apptest01";
           Vue.GetLogin(currentUser, function () {
             that.visiter = window.userName;
             that.department = window.deptname;
 //判断用户是否是审核用户
-            Vue.CheckUserIsChecker(function(e){
+            Vue.CheckUserIsChecker(function (e) {
               console.log("是否是审核人")
-                console.log(e.result);
-                if (e.result=="00") {
-                  that.userIsChecker = true;
-                  window.Wuserofchecker = 1
-                } else {
-                  that.userIsChecker = false;
-                  window.Wuserofchecker = 0
-                }
+              console.log(e.result);
+              if (e.result == "00") {
+                that.userIsChecker = true;
+                window.Wuserofchecker = 1
+              } else {
+                that.userIsChecker = false;
+                window.Wuserofchecker = 0
+              }
             })
             //获取门岗
             that.ajaxfactoryanddoor();
@@ -662,7 +661,14 @@
 
 
     watch: {
-
+//      cardType(e){
+//          console.log(e.indexOf("居民身份证")>-1)
+//      },
+//      guestIdcardNo(){
+//        let that = this;
+//        that.identityCodeValid(that.guestIdcardNo)
+//        console.log(that.identityCodeValid(that.guestIdcardNo))
+//      },
       youWant(e){
         if (e != "请输入来访日期") {
           $(".page-datetime-wrapper button").addClass("color1")
@@ -786,7 +792,86 @@
       },
     },
     methods: {
-      longguestclick(){
+
+      identityCodeValid(code)
+      {
+        var city = {
+          11: "北京",
+          12: "天津",
+          13: "河北",
+          14: "山西",
+          15: "内蒙古",
+          21: "辽宁",
+          22: "吉林",
+          23: "黑龙江 ",
+          31: "上海",
+          32: "江苏",
+          33: "浙江",
+          34: "安徽",
+          35: "福建",
+          36: "江西",
+          37: "山东",
+          41: "河南",
+          42: "湖北 ",
+          43: "湖南",
+          44: "广东",
+          45: "广西",
+          46: "海南",
+          50: "重庆",
+          51: "四川",
+          52: "贵州",
+          53: "云南",
+          54: "西藏 ",
+          61: "陕西",
+          62: "甘肃",
+          63: "青海",
+          64: "宁夏",
+          65: "新疆",
+          71: "台湾",
+          81: "香港",
+          82: "澳门",
+          91: "国外 "
+        };
+        var tip = "";
+        var pass = true;
+
+        if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
+          tip = "身份证号格式错误";
+          pass = false;
+        } else if (!city[code.substr(0, 2)]) {
+          tip = "地址编码错误";
+          pass = false;
+        }
+        else {
+          //18位身份证需要验证最后一位校验位
+          if (code.length == 18) {
+            code = code.split('');
+            //∑(ai×Wi)(mod 11)
+            //加权因子
+            var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+            //校验位
+            var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
+            var sum = 0;
+            var ai = 0;
+            var wi = 0;
+            for (var i = 0; i < 17; i++) {
+              ai = code[i];
+              wi = factor[i];
+              sum += ai * wi;
+            }
+            var last = parity[sum % 11];
+            if (parity[sum % 11] != code[17]) {
+              tip = " 校验位错误";
+              pass = false;
+            }
+          }
+        }
+        return pass
+      },
+
+
+      longguestclick()
+      {
         let that = this;
         that.searchByNameselected = "1";
         that.searchLong(that.searchKW)
@@ -794,65 +879,93 @@
         that.searchKW = '';
         //判断是点击长期供应商出现的poup还是访客姓名出现的poup
         window.islongorvisiter = "long"
-      },
-      clickinput(e){
+      }
+      ,
+      clickinput(e)
+      {
         $(e.currentTarget).find("input").focus()
-      },
-      deleteiconShow(){
+      }
+      ,
+      deleteiconShow()
+      {
 //        console.log(this.personContent)
         if (this.personContent.length == 0) return;
         this.deleteicon = !this.deleteicon
-      },
-      deleteiconShowForThing(){
+      }
+      ,
+      deleteiconShowForThing()
+      {
         if (this.personContentForThing.length == 0) return;
         this.deleteiconForThing = !this.deleteiconForThing
-      },
-      deleteiconShowForCar(){
+      }
+      ,
+      deleteiconShowForCar()
+      {
         if (this.personContentForCar.length == 0) return;
         this.deleteiconForCar = !this.deleteiconForCar
-      },
-      addData(){
+      }
+      ,
+      addData()
+      {
         if (this.deleteicon && this.personContent.length != 0) return;
         this.personContent.push({"name": "", "idNo": ""});
-      },
-      addDataForThing(){
+      }
+      ,
+      addDataForThing()
+      {
         if (this.deleteiconForThing && this.personContentForThing.length != 0) return;
         this.personContentForThing.push({"name": "", "number": "", "type": "", "desc": ""});
-      },
-      addDataForCar(){
+      }
+      ,
+      addDataForCar()
+      {
         if (this.deleteiconForCar && this.personContentForCar.length != 0) return;
         this.personContentForCar.push({"carNo": ""});
-      },
-      deleteData(index){
+      }
+      ,
+      deleteData(index)
+      {
         this.personContent.splice(index, 1);
-      },
-      deleteDataForThing(index){
+      }
+      ,
+      deleteDataForThing(index)
+      {
         this.personContentForThing.splice(index, 1)
-      },
-      deleteDataForCar(index){
+      }
+      ,
+      deleteDataForCar(index)
+      {
         this.personContentForCar.splice(index, 1)
-      },
-      isShowPerson(){
+      }
+      ,
+      isShowPerson()
+      {
         if (this.personContent.length == 0) return;
         this.showOrHideForPerson = !this.showOrHideForPerson
-      },
-      isShowThing(){
+      }
+      ,
+      isShowThing()
+      {
         if (this.personContentForThing.length == 0) return;
         this.showOrHideForThing = !this.showOrHideForThing
-      },
-      isShowCar(){
+      }
+      ,
+      isShowCar()
+      {
 //        console.log(this.personContentForCar)
 
         if (this.personContentForCar.length == 0) return;
         this.showOrHideForCar = !this.showOrHideForCar
-      },
-      hideAlert(){
+      }
+      ,
+      hideAlert()
+      {
         this.showAlert = false
-      },
-      ShowAlert(){
+      }
+      ,
+      ShowAlert()
+      {
         let that = this;
-
-
         //验证表单
         if (that.isLongGuestCompany) {
           var company = that.visitaddress1
@@ -870,7 +983,13 @@
             message: '证件号不能为空',
             duration: 1000
           });
-        } else if (!that.telnum) {
+        } else if (that.cardType.indexOf("居民身份证")>-1 && !that.identityCodeValid(that.guestIdcardNo)) {
+          Toast({
+            message: '请输入正确的身份证号码',
+            duration: 1000
+          });
+        }
+        else if (!that.telnum) {
           Toast({
             message: '手机号码不能为空',
             duration: 1000
@@ -957,8 +1076,10 @@
           that.showAlert = true
         }
 
-      },
-      ajaxfactoryanddoor(){
+      }
+      ,
+      ajaxfactoryanddoor()
+      {
         let that = this;
         //获取门岗信息
         Vue.GetDoor(function (e) {
@@ -985,8 +1106,10 @@
 
         })
 
-      },
-      getChercker(){
+      }
+      ,
+      getChercker()
+      {
         //获取审核人
         let that = this;
 //        if (!window.WcheckerList) {
@@ -1009,9 +1132,11 @@
           }
         });
 //        }
-      },
+      }
+      ,
 
-      isSure(){
+      isSure()
+      {
         let that = this;
 //        console.log("ajax请求");
 
@@ -1142,10 +1267,12 @@
           }
         )
         this.showAlert = false;
-      },
+      }
+      ,
 
 
-      searchLong(KW){
+      searchLong(KW)
+      {
         let that = this;
         let search = [];
         that.SearchByNameListForLongguest = [];
@@ -1165,15 +1292,17 @@
 
         })
 
-      },
-      searchByName(KW){
+      }
+      ,
+      searchByName(KW)
+      {
         let that = this;
         let search = [];
         that.SearchByNameList = [];
         if (that.searchByNameselected == "1") {
           Vue.GetLinkers("up", 1, 100, KW, function (e) {
 //            console.log("pppppppppppppppppppp");
-             console.log(e.rows);
+            console.log(e.rows);
             e.rows.map(function (item) {
               search.push({
                 name: item.name,
@@ -1188,10 +1317,12 @@
           })
 
         }
-      },
+      }
+      ,
 
 
-      searchclick(arg){
+      searchclick(arg)
+      {
         let that = this;
         let search = that.SearchByNameList[arg]
         that.visitername = search.name;
@@ -1200,9 +1331,11 @@
         that.visitaddress = search.company;
         that.showSearchByName = false;
 
-      },
+      }
+      ,
 
-      searchlongclick(arg){
+      searchlongclick(arg)
+      {
         let that = this;
         let search = that.SearchByNameListForLongguest[arg];
         console.log(that.SearchByNameListForLongguest[arg])
@@ -1212,8 +1345,10 @@
         that.showSearchByName = false;
         that.longguestpoup = false
 
-      },
-      showSearch(){
+      }
+      ,
+      showSearch()
+      {
         let that = this;
         that.showSearchByName = true;
         window.islongorvisiter = "visiter";
@@ -1222,13 +1357,17 @@
           $(".v-modal").css("z-index", "3000")
         })
 
-      },
-      hideSearchByName(){
+      }
+      ,
+      hideSearchByName()
+      {
         let that = this;
         that.showSearchByName = false;
         that.longguestpoup = false
-      },
-      addInput(arg){
+      }
+      ,
+      addInput(arg)
+      {
         let that = this;
         let thisItenm = that.frequentlyUsedHistory[arg].historyItem;
 //        console.log(thisItenm)
@@ -1244,15 +1383,19 @@
         that.sendForChecker = thisItenm.checkUserId;
 
         that.showSearchByName = false;
-      },
+      }
+      ,
 
 
-      useHistoryClick(e){
+      useHistoryClick(e)
+      {
         e.stopPropagation()
         e.preventDefault()
 
-      },
-      save(arg, oldval){
+      }
+      ,
+      save(arg, oldval)
+      {
         this.ischangeName = -1
         if (this.changeNameVal != "") {
           this.frequentlyUsedHistory[arg].historyName = this.changeNameVal
@@ -1263,14 +1406,18 @@
           return
         }
 
-      },
+      }
+      ,
 
-      changeName(arg){
+      changeName(arg)
+      {
         let that = this;
         that.ischangeName = arg;
 
-      },
-      deleteThisHistory(arg){
+      }
+      ,
+      deleteThisHistory(arg)
+      {
         let that = this;
         // frequentlyUsedHistory:
         that.frequentlyUsedHistory.splice(arg, 1);
@@ -1279,8 +1426,10 @@
         // });
         localStorage.setItem("frequentlyUsedHistory", JSON.stringify(that.frequentlyUsedHistory))
 //        console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
-      },
-      clearInput(){
+      }
+      ,
+      clearInput()
+      {
 //        console.log("清空input")
         let that = this;
         that.visitername = "";
@@ -1324,7 +1473,8 @@
 
           });
         })
-      },
+      }
+      ,
 
 
     }
@@ -1565,14 +1715,17 @@
     border-bottom: 1px solid #c8c8cd;
     height: 48px;
   }
+
   .poupSearch.namePoup ul {
     border-bottom: 1px solid #c8c8cd;
     height: 72px;
   }
-  .poupSearch.namePoup .useHistory{
+
+  .poupSearch.namePoup .useHistory {
     border-bottom: 1px solid #c8c8cd;
     height: 48px;
   }
+
   .poupSearch .mint-tab-container li {
     display: flex;
     flex-wrap: wrap;
