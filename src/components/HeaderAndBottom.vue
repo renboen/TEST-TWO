@@ -28,7 +28,7 @@
         <span class="fa fa-calendar tabFa"
              ></span><span style="font-size: .9em">预约</span>
       </div>
-      <div id="check" style="flex: 1"  @click='chang("check")' v-show='isSgmOrPatac=="PATAC"?true:false'>
+      <div id="check" style="flex: 1"  @click='chang("check")' >
         <span class="fa fa-book tabFa"
              ></span><span style="font-size: .9em">审核</span>
       </div>
@@ -62,7 +62,9 @@
 <ul class="aboutTab"  v-if="isShowAboutTab" ref="tablist">
   <li  @click='aboutTabShow("HasChecked")'>历史</li>
   <li  @click='aboutTabShow("AddressList")'>通讯录</li>
-  <li v-show='isSgmOrPatac=="PATAC"?true:false'  @click='aboutTabShow("Longguest")'>长期供应商</li>
+  <!--<li v-show='isSgmOrPatac=="PATAC"?true:false'  @click='aboutTabShow("Longguest")'>长期供应商</li>-->
+  <li  @click='aboutTabShow("Longguest")'>长期供应商</li>
+
 
 </ul>
 
