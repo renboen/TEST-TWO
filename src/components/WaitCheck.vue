@@ -454,10 +454,11 @@ let that=this;
 //       let num=e.data
 //      that.$bus.$emit('checkNum', num); //Hub触发事件
 //    })
+if(window.Wuserid){
     Indicator.open({
       text: '加载中...',
       spinnerType: 'fading-circle'
-    });
+    });}
 //612
     $("#waiting").css({
       minHeight: $(window).height() - 113

@@ -54,6 +54,8 @@
 <script>
 //  import $ from "jquery"
   import Vue from 'vue'
+  import { Indicator } from 'mint-ui';
+
   export default{
     data(){
       return {
@@ -88,6 +90,11 @@
     },
     mounted(){
       let that = this;
+      if(window.Wuserid){
+    Indicator.open({
+      text: '加载中...',
+      spinnerType: 'fading-circle'
+    });}
       $(".longguest").css({
         minHeight: $(window).height() - 105
       });
@@ -107,6 +114,7 @@
           that.doubArrToAloneArr(that.list);
 //          console.log(that.aloneList)
             window.Wlongguest=that.list;
+            Indicator.close()
           that.allLoaded = e.rows.length < 10 ? true : false;
           that.$refs.loadmore.onTopLoaded();
         })

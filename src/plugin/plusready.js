@@ -5,10 +5,11 @@ import {Toast} from 'mint-ui';
 
 //测试环境
 // window.baseUrl = "https://apigatewayqa.sgmlink.com:3223/service/visitormobile/"
-
 // window.baseUrl = "https://apigatewayqa.sgmlink.com:13101/service/visitormobile/"
 // 发布环境
+// window.baseUrl = "https://b2eapi.saic-gm.com:13101/service/visitormobile/"
 window.baseUrl = "/service/visitormobile/"
+
 
 function PlusReady(value) {
   this.Ok = Boolean(value);
@@ -116,10 +117,7 @@ export default {
           window.userName = e.data.userName;
           window.deptname = e.data.deptname;
           console.log(e)
-
           console.log(window.token + "uuuu")
-
-
           console.log(window.id)
           console.log(window.account)
           console.log(window.userName)
@@ -127,12 +125,15 @@ export default {
           window.hasLogin=true;
           callback()
         },
-        error: function (e, err) {
+        error: function (e, err,errdes) {
           if (e.status != "success") {
-            Toast({
-              message: JSON.stringify(e) + err,
-              duration: 1000
-            });
+            console.log(e)
+            console.log(err)
+            console.log(errdes)
+            // Toast({
+            //   message: JSON.stringify(e) + err,
+            //   duration: 1000
+            // });
           }
         }
       });
@@ -145,14 +146,14 @@ export default {
     Vue.CheckUserIsChecker =function(success){
       $.ajax({
         type: "post",
-        url: baseUrl + "api/admin/01/isDeptSecurityChecker",
+        url: baseUrl + "api/admin/01/isChecker",
         async: true,
         dataType: "json",
         data: {
           "token": window.token,
           "uid": window.id,
           'pageSize':1,
-         'pageNumber':1
+          'pageNumber':1
         },
         success:success
       });
@@ -214,10 +215,11 @@ export default {
         },
         success: success,
         error: function (err) {
-          Toast({
-            message:  err,
-            duration: 1000
-          });
+          console.log(err)
+          // Toast({
+          //   message:  err,
+          //   duration: 1000
+          // });
         }
       })
     };

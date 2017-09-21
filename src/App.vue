@@ -43,17 +43,17 @@
       console.log(frequentlyUsedHistory)
       localStorage.setItem("frequentlyUsedHistory", frequentlyUsedHistory)
 
-      var timer=setInterval(function(){
-        if (window.hasLogin && window.ajaxfactoryanddoorHasGet && window.WCardTypeList != undefined && window.WcheckerList != undefined) {
-          Indicator.close()
-          clearInterval(timer)
-        } else {
-          Indicator.open({
-            text: '加载中...',
-            spinnerType: 'fading-circle'
-          })
-        }
-      },50)
+      // var timer=setInterval(function(){
+      //   if (window.hasLogin && window.ajaxfactoryanddoorHasGet && window.WCardTypeList != undefined && window.WcheckerList != undefined) {
+      //     Indicator.close()
+      //     clearInterval(timer)
+      //   } else {
+      //     Indicator.open({
+      //       text: '加载中...',
+      //       spinnerType: 'fading-circle'
+      //     })
+      //   }
+      // },50)
 
     },
     methods: {

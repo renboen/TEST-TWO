@@ -23,12 +23,11 @@
         <strong class=" selectiIcon fa fa-angle-down"></strong>
       </mt-cell>
 
-
       <div class="datetime">
-        <mt-field label="来访时间" placeholder="请选择来访时间 " type="text"
-                  v-model="visitdate" :disabled="true"><strong class=" fa fa-angle-down "></strong></mt-field>
+        <mt-field label="来访时间" placeholder="请选择来访时间 " type="text" v-model="visitdate" :disabled="true">
+          <strong class=" fa fa-angle-down "></strong>
+        </mt-field>
       </div>
-
 
       <mt-cell title="有效天数" v-show='this.showCar=="SGM"?false:true'>
         <select v-model="validDay">
@@ -41,7 +40,6 @@
         <strong class="selectiIcon fa fa-angle-down"></strong>
       </mt-cell>
 
-
       <mt-cell class="current" title="供应商类型" v-show='this.showCar=="SGM"?false:true'>
         <select v-model="supplierType" class="sel">
           <option>普通供应商</option>
@@ -51,11 +49,8 @@
       </mt-cell>
 
       <div v-show="isLongGuestCompany" id="longguester">
-        <mt-field class="uu" label="来访单位" type="text" placeholder="请选择长期供应商" v-model="visitaddress1"
-                  :disableClear="true" :disabled="true"><span
-          class=" fa fa-search"
-          style="text-align:right"
-          @click.stop="longguestclick"></span>
+        <mt-field class="uu" label="来访单位" type="text" placeholder="请选择长期供应商" v-model="visitaddress1" :disableClear="true" :disabled="true">
+          <span class=" fa fa-search" style="text-align:right" @click.stop="longguestclick"></span>
         </mt-field>
         <!--<mt-cell title="来访单位" v-show="isLongGuestCompany">-->
         <!--<select id="longguester" v-model="visitaddress1" v-show="!longguesterdisabled">-->
@@ -69,28 +64,21 @@
         <!--</mt-cell>-->
       </div>
 
-
       <div @click="clickinput($event)" v-show='this.showCar=="PATAC"&& isLongGuestCompany?false:true'>
-        <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
-          class=" fa fa-search"
-          style="text-align:right"
-          @click.stop="showSearch"></span>
+        <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true">
+          <span class=" fa fa-search" style="text-align:right" @click.stop="showSearch"></span>
         </mt-field>
       </div>
 
       <div @click="clickinput($event)">
-        <mt-field v-show="!isLongGuestCompany" label="来访单位" placeholder="请输入来访单位" type="text"
-                  v-model="visitaddress"></mt-field>
+        <mt-field v-show="!isLongGuestCompany" label="来访单位" placeholder="请输入来访单位" type="text" v-model="visitaddress"></mt-field>
       </div>
 
       <div @click="clickinput($event)" v-show='this.showCar=="PATAC" && isLongGuestCompany?true:false'>
-        <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true"><span
-          class=" fa fa-search"
-          style="text-align: right"
-          @click.stop="showSearch"></span>
+        <mt-field class="uu" label="访客姓名" placeholder="请输入用户名" v-model="visitername" :disableClear="true">
+          <span class=" fa fa-search" style="text-align: right" @click.stop="showSearch"></span>
         </mt-field>
       </div>
-
 
       <mt-cell title="证件类型">
         <select v-model="cardType">
@@ -100,19 +88,16 @@
       </mt-cell>
 
       <div @click="clickinput($event)">
-        <mt-field label="证件号" placeholder="请输入证件号" v-model="guestIdcardNo" :disableClear="true"
-                  :attr="{maxlength:18}"></mt-field>
+        <mt-field label="证件号" placeholder="请输入证件号" v-model="guestIdcardNo" :disableClear="true" :attr="{maxlength:18}"></mt-field>
       </div>
 
       <div @click="clickinput($event)">
         <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="telnum"></mt-field>
       </div>
 
-
       <div @click="clickinput($event)">
         <mt-field label="来访事由" placeholder="请输入来访事由" type="text" v-model="visitmatter"></mt-field>
       </div>
-
 
       <mt-field label="被访人" type="text" v-model="visiter" :readonly="true" :disableClear="true"></mt-field>
       <mt-field label="部门" type="text" v-model="department" :readonly="true" :disableClear="true"></mt-field>
@@ -126,15 +111,16 @@
         <strong class="selectiIcon fa fa-angle-down"></strong>
       </mt-cell>
 
-
       <div class="addformation">
         <div class="head">
-          <div>随访人员信息<span style="padding-left: 15px"> ({{personContent.length}})</span></div>
+          <div>随访人员信息
+            <span style="padding-left: 15px"> ({{personContent.length}})</span>
+          </div>
           <div class="icongroup">
-            <span class="fa fa-plus" @click="addData"></span>　　　　　　
-            <span class="fa fa-minus" @click="deleteiconShow"></span>　　　　　　
-            <span class=" fa " :class='showOrHideForPerson?"fa-chevron-down":"fa-chevron-up"'
-                  @click="isShowPerson"></span></div>
+            <span class="fa fa-plus" @click="addData"></span>
+            <span class="fa fa-minus" @click="deleteiconShow"></span>
+            <span class=" fa " :class='showOrHideForPerson?"fa-chevron-down":"fa-chevron-up"' @click="isShowPerson"></span>
+          </div>
         </div>
         <div class="content" v-for="(item,index) in personContent" v-show="showOrHideForPerson">
           <div style="width:100%">
@@ -144,8 +130,7 @@
             </div>
             <div @click="clickinput($event)">
 
-              <mt-field label="身份证" placeholder="请输入身份证号" v-model="item.idNo" type="tel"
-                        :attr="{maxlength:18}"></mt-field>
+              <mt-field label="身份证" placeholder="请输入身份证号" v-model="item.idNo" type="tel" :attr="{maxlength:18}"></mt-field>
             </div>
 
           </div>
@@ -155,13 +140,14 @@
         </div>
       </div>
 
-
       <div class="addthingformation car " v-show='this.showCar=="SGM"?true:false'>
         <div class="head">
-          <div>随访车辆信息<span style="padding-left: 15px"> ({{personContentForCar.length}})</span></div>
+          <div>随访车辆信息
+            <span style="padding-left: 15px"> ({{personContentForCar.length}})</span>
+          </div>
           <div class="icongroup">
-            <span class="fa fa-plus" @click="addDataForCar"></span>　　　　　　
-            <span class="fa fa-minus" @click="deleteiconShowForCar"></span>　　　　　　
+            <span class="fa fa-plus" @click="addDataForCar"></span>
+            <span class="fa fa-minus" @click="deleteiconShowForCar"></span>
             <span class=" fa " :class='showOrHideForCar?"fa-chevron-down":"fa-chevron-up"' @click="isShowCar"></span>
           </div>
         </div>
@@ -177,13 +163,14 @@
 
       <div class="addthingformation ">
         <div class="head">
-          <div>随访物品信息<span style="padding-left: 15px"> ({{personContentForThing.length}})</span></div>
+          <div>随访物品信息
+            <span style="padding-left: 15px"> ({{personContentForThing.length}})</span>
+          </div>
           <!--<div>随访物品信息<span style="padding-left:15px">({{personContentForThing.length}})</span></div>-->
           <div class="icongroup">
-            <span class="fa fa-plus" @click="addDataForThing"></span>　　　　　　
-            <span class="fa fa-minus" @click="deleteiconShowForThing"></span>　　　　　　
-            <span class=" fa " :class='showOrHideForThing?"fa-chevron-down":"fa-chevron-up"'
-                  @click="isShowThing"></span>
+            <span class="fa fa-plus" @click="addDataForThing"></span>
+            <span class="fa fa-minus" @click="deleteiconShowForThing"></span>
+            <span class=" fa " :class='showOrHideForThing?"fa-chevron-down":"fa-chevron-up"' @click="isShowThing"></span>
           </div>
         </div>
         <div class="content" v-for="(item,index) in personContentForThing" v-show="showOrHideForThing">
@@ -207,11 +194,7 @@
         </div>
       </div>
 
-
-      <mt-checklist
-        class="AddVisiterchecklist"
-        v-model="isAddVisiterInfor"
-        :options="addmymesg">
+      <mt-checklist class="AddVisiterchecklist" v-model="isAddVisiterInfor" :options="addmymesg">
       </mt-checklist>
 
       <mt-popup v-model="showAlert" popup-transition="popup-fade">
@@ -234,12 +217,10 @@
               <mt-tab-item id="1">搜索</mt-tab-item>
               <mt-tab-item id="2" v-show='this.showCar=="SGM"?true:false'>常用记录</mt-tab-item>
             </mt-navbar>
-            <span class="fa fa-remove" @click="hideSearchByName"
-                  style="width: 10%;height: 36px;line-height: 36px;"></span>
+            <span class="fa fa-remove" @click="hideSearchByName" style="width: 10%;height: 36px;line-height: 36px;"></span>
           </div>
           <div class="poupContent">
             <mt-tab-container v-model="searchByNameselected">
-
 
               <mt-tab-container-item id="1">
                 <div>
@@ -268,28 +249,19 @@
 
               </mt-tab-container-item>
 
-
               <mt-tab-container-item id="2">
                 <!--<div>记录名</div>-->
                 <ul class="useHistory" v-for="(item,index) in frequentlyUsedHistory" @click="addInput(index)">
                   <!--<li v-for="(item,index) in frequentlyUsedHistory" @click="addInput(index)">-->
                   <li>
                     <span v-show="ischangeName==index?false:true" style="width:60%">{{item.historyName}}</span>
-                    <span @click.stop="useHistoryClick" v-show="ischangeName==index?true:false" style="width:60%"><input
-                      type="text" v-model="changeNameVal"
-                      style="height:25px;width:100%;padding: 0;outline: none;border: none" autofocus
-                      placeholder="请输入备注名称"></span>
+                    <span @click.stop="useHistoryClick" v-show="ischangeName==index?true:false" style="width:60%"><input type="text" v-model="changeNameVal" style="height:25px;width:100%;padding: 0;outline: none;border: none" autofocus placeholder="请输入备注名称"></span>
 
-                    <span v-show="ischangeName==index?false:true"
-                          style="width:20%;text-align:center;height: 48px;line-height: 48px;" class="fa fa-pencil "
-                          @click.stop="changeName(index)"></span>
+                    <span v-show="ischangeName==index?false:true" style="width:20%;text-align:center;height: 48px;line-height: 48px;" class="fa fa-pencil " @click.stop="changeName(index)"></span>
 
-                    <span v-show="ischangeName==index?true:false"
-                          style="width:20%;text-align:center;height: 48px;line-height: 48px"
-                          @click.stop="save(index,item.historyName)">保存</span>
+                    <span v-show="ischangeName==index?true:false" style="width:20%;text-align:center;height: 48px;line-height: 48px" @click.stop="save(index,item.historyName)">保存</span>
 
-                    <span style="width:20%;text-align:right;height: 48px;line-height: 48px" class="fa fa-remove"
-                          @click.stop="deleteThisHistory(index)"></span>
+                    <span style="width:20%;text-align:right;height: 48px;line-height: 48px" class="fa fa-remove" @click.stop="deleteThisHistory(index)"></span>
                   </li>
                 </ul>
               </mt-tab-container-item>
@@ -298,19 +270,16 @@
         </div>
       </mt-popup>
 
-
       <mt-popup v-model="longguestpoup" popup-transition="popup-fade" class="tab">
         <div class="poup poupSearch ">
           <div class="poupHead">
             <mt-navbar v-model="searchByNameselected">
               <mt-tab-item id="1">搜索</mt-tab-item>
             </mt-navbar>
-            <span class="fa fa-remove" @click="hideSearchByName"
-                  style="width: 10%;height: 36px;line-height: 36px;"></span>
+            <span class="fa fa-remove" @click="hideSearchByName" style="width: 10%;height: 36px;line-height: 36px;"></span>
           </div>
           <div class="poupContent">
             <mt-tab-container v-model="searchByNameselected">
-
 
               <mt-tab-container-item id="1">
 
@@ -328,150 +297,792 @@
 
               </mt-tab-container-item>
 
-
             </mt-tab-container>
           </div>
         </div>
       </mt-popup>
-
 
       <div class="buttongroup ">
         <mt-button type="primary" @click="ShowAlert">预约</mt-button>
         <mt-button type="primary" @click="clearInput">取消</mt-button>
       </div>
 
-
     </div>
   </div>
 </template>
 <script>
 
-  import Vue from 'vue'
-  import {Toast} from 'mint-ui';
-  import {Indicator} from 'mint-ui';
-  import {MessageBox} from 'mint-ui';
-  export default{
-    data(){
-      return {
-        visitername: "",
-        guestIdcardNo: "",
-        telnum: "",
-        visitdate: "",
-        visitaddress: "",
-        visitaddress1: "",
-        visitmatter: "",
-        visiter: "",
-        department: "",
-        factory: [],
-        factoryselected: "",
-        area: [],
-        areaselected: "",
-        gate: [],
-        gateselected: "",
-        checkerInfo: [],
-        sendForChecker: "",
-        deleteicon: false,
-        deleteiconForThing: false,
-        deleteiconForCar: false,
-        personContent: [],
-        personContentForThing: [],
-        personContentForCar: [],
-        showOrHideForPerson: true,
-        showOrHideForThing: true,
-        showOrHideForCar: true,
-        showAlert: false,
-        showCar: localStorage.getItem("isSgmOrPatac"),
-        isAddVisiterInfor: [],
-        showSearchByName: false,
-        searchByNameselected: "",
-        SearchByNameList: [1, 2],
-        SearchByNameListForLongguest: [],
-        searchKW: "",
-        frequentlyUsedHistory: JSON.parse(localStorage.getItem("frequentlyUsedHistory")),
+import Vue from 'vue'
+import { Toast } from 'mint-ui';
+import { Indicator } from 'mint-ui';
+import { MessageBox } from 'mint-ui';
+export default {
+  data() {
+    return {
+      visitername: "",
+      guestIdcardNo: "",
+      telnum: "",
+      visitdate: "",
+      visitaddress: "",
+      visitaddress1: "",
+      visitmatter: "",
+      visiter: "",
+      department: "",
+      factory: [],
+      factoryselected: "",
+      area: [],
+      areaselected: "",
+      gate: [],
+      gateselected: "",
+      checkerInfo: [],
+      sendForChecker: "",
+      deleteicon: false,
+      deleteiconForThing: false,
+      deleteiconForCar: false,
+      personContent: [],
+      personContentForThing: [],
+      personContentForCar: [],
+      showOrHideForPerson: true,
+      showOrHideForThing: true,
+      showOrHideForCar: true,
+      showAlert: false,
+      showCar: localStorage.getItem("isSgmOrPatac"),
+      isAddVisiterInfor: [],
+      showSearchByName: false,
+      searchByNameselected: "",
+      SearchByNameList: [1, 2],
+      SearchByNameListForLongguest: [],
+      searchKW: "",
+      frequentlyUsedHistory: JSON.parse(localStorage.getItem("frequentlyUsedHistory")),
 
-        cardType: "",
-        cardTypeList: [],
-        supplierType: "普通供应商",
-        validDay: 1,
-        longguestCompany: [],
-        isLongGuestCompany: false,
+      cardType: "",
+      cardTypeList: [],
+      supplierType: "普通供应商",
+      validDay: 1,
+      longguestCompany: [],
+      isLongGuestCompany: false,
 
 
-        datetimevalue: null,
-        starttime: null,
-        endtime: null,
-        youWant: "请选择来访日期",
+      datetimevalue: null,
+      starttime: null,
+      endtime: null,
+      youWant: "请选择来访日期",
 
-        addmymesg: ['是否需要访客补充信息'],
-//        mindate:null
-//        minute:"5"
+      addmymesg: ['是否需要访客补充信息'],
+      //        mindate:null
+      //        minute:"5"
 
-        ischangeName: -1,
-        changeNameVal: "",
-        //长期供应商下的来访单位为空禁止选中
-        longguesterdisabled: false,
-        longguestpoup: false,
-        // 判断用户是否是审核人
-        userIsChecker: Boolean(window.Wuserofchecker)
+      ischangeName: -1,
+      changeNameVal: "",
+      //长期供应商下的来访单位为空禁止选中
+      longguesterdisabled: false,
+      longguestpoup: false,
+      // 判断用户是否是审核人
+      userIsChecker: Boolean(window.Wuserofchecker)
+
+    }
+
+  },
+  mounted: function() {
+    window.scrollTo(0, 0);
+    let that = this;
+    var timer = setInterval(function() {
+      if (window.hasLogin && window.ajaxfactoryanddoorHasGet && window.WCardTypeList != undefined && window.WcheckerList != undefined) {
+        Indicator.close()
+        clearInterval(timer)
+      } else {
+        Indicator.open({
+          text: '加载中...',
+          spinnerType: 'fading-circle'
+        })
+      }
+    }, 50)
+
+
+    if (!window.hasLogin) {
+      Vue.PlusReady(function() {
+        try {
+            var currentUser = NativeObj.getUserName();
+        // var currentUser = "srz7lw";
+        // var currentUser = "apptest01";
+        // var currentUser = "s5j74n";
+        // var currentUser = "";
+        // var currentUser = undefined;
+        // var currentUser = 'null';
+        }
+        catch (err) {
+          //浏览器打开报错
+         Indicator.close()
+          clearInterval(timer)
+          window.Wuserid = false;
+          Toast({
+            message: '访客预约初始化失败,请重新打开该应用',
+            duration: 2000
+          });
+          return
+        }
+        if (currentUser == undefined || currentUser == '' || currentUser == null || currentUser == 'null') {
+          window.Wuserid = false;
+          Indicator.close()
+          clearInterval(timer)
+          Toast({
+            message: '账号获取失败',
+            duration: 1000
+          });
+          return
+        } else {
+          window.Wuserid = true;
+        }
+        Vue.GetLogin(currentUser, function() {
+          that.visiter = window.userName;
+          that.department = window.deptname;
+          //判断用户是否是审核用户
+          Vue.CheckUserIsChecker(function(e) {
+            console.log("是否是审核人")
+            console.log(e);
+            if (e.result == "00") {
+              that.userIsChecker = true;
+              window.Wuserofchecker = 1
+            } else {
+              that.userIsChecker = false;
+              window.Wuserofchecker = 0
+            }
+          })
+          //获取门岗
+          that.ajaxfactoryanddoor();
+          window.ajaxfactoryanddoorHasGet = true;
+          //获取证件类型
+          Vue.GetCardType(function(e) {
+            that.cardTypeList = e.data;
+            console.log(e)
+
+            that.cardType = that.cardTypeList[0].value;
+            window.WCardTypeList = e.data;
+          })
+          //获取审核人
+          that.getChercker()
+          //获取长期供应供应商
+          Vue.GetLongGuest(that.searchKW, function(e) {
+            that.longguestCompany = e.rows;
+            console.log(that.longguestCompany)
+            window.Wlongguest = that.longguestCompany;
+            //          console.log(window.Wlongguest.length)
+            if (window.Wlongguest.length == 0) {
+              that.longguesterdisabled = true;
+            }
+          })
+        })
+      })
+    } else {
+      that.visiter = window.userName;
+      that.department = window.deptname;
+      //门岗优化
+      let doorandfac = window.getDoor;
+      that.factory = doorandfac.rows;
+      let patacId = null;
+      that.factory.forEach(function(item, index) {
+        if (item.name == "泛亚") {
+          patacId = item.id;
+        }
+      });
+      if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
+        that.factoryselected = patacId
+      } else {
+        //          that.factoryselected = "1";
+        that.factoryselected = localStorage.getItem("selectedfactory") || "1";
+      }
+      //证件优化
+      that.cardTypeList = window.WCardTypeList;
+      that.cardType = window.WCardTypeList[0].value;
+      //审核人优化
+      that.checkerInfo = window.WcheckerList;
+      that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
+      //长期供应商优化
+
+      that.longguestCompany = window.Wlongguest;
+      //        console.log(window.Wlongguest.length)
+      if (window.Wlongguest.length == 0) {
+        that.longguesterdisabled = true;
 
       }
 
-    },
-    mounted: function () {
-      window.scrollTo(0, 0);
-      let that = this;
-      if (!window.hasLogin) {
-        Vue.PlusReady(function () {
-          var currentUser = NativeObj.getUserName();
-//          var currentUser = "apptest01";
-          Vue.GetLogin(currentUser, function () {
-            that.visiter = window.userName;
-            that.department = window.deptname;
-//判断用户是否是审核用户
-            Vue.CheckUserIsChecker(function (e) {
-              console.log("是否是审核人")
-              console.log(e.result);
-              if (e.result == "00") {
-                that.userIsChecker = true;
-                window.Wuserofchecker = 1
-              } else {
-                that.userIsChecker = false;
-                window.Wuserofchecker = 0
-              }
-            })
-            //获取门岗
-            that.ajaxfactoryanddoor();
-            window.ajaxfactoryanddoorHasGet = true;
-            //获取证件类型
-            Vue.GetCardType(function (e) {
-              that.cardTypeList = e.data;
-              console.log(e)
+    }
 
-              that.cardType = that.cardTypeList[0].value;
-              window.WCardTypeList = e.data;
-            })
-            //获取审核人
-            that.getChercker()
-            //获取长期供应供应商
-            Vue.GetLongGuest(that.searchKW, function (e) {
-              that.longguestCompany = e.rows;
-              console.log(that.longguestCompany)
-              window.Wlongguest = that.longguestCompany;
-//          console.log(window.Wlongguest.length)
-              if (window.Wlongguest.length == 0) {
-                that.longguesterdisabled = true;
-              }
-            })
-          })
-        })
+
+    //
+    //      Vue.PlusReady(function () {
+    ////          alert(2)
+    ////        var uid = NativeObj.getUserName();
+    ////        Vue.GetLogin(uid);
+    ////        console.log("token"+uid)
+    //        //          Vue.GetLogin("apptest02");
+    //
+    //        Vue.GetLogin("apptest02",function(){
+    //        that.visiter = window.userName;
+    //        that.department = window.deptname;
+    //      //获取门岗信息725优化
+    //      if (!window.ajaxfactoryanddoorHasGet) {
+    //        that.ajaxfactoryanddoor();
+    //        window.ajaxfactoryanddoorHasGet = true;
+    //      } else {
+    //        let e = window.getDoor;
+    //        that.factory = e.rows;
+    //
+    //        let patacId = null;
+    //        that.factory.forEach(function (item, index) {
+    //          if (item.name == "泛亚") {
+    //            patacId = item.id;
+    //          }
+    //        });
+    //        if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
+    //          that.factoryselected = patacId
+    //        } else {
+    ////          that.factoryselected = "1";
+    //          that.factoryselected = localStorage.getItem("selectedfactory")||"1";
+    //
+    //        }
+    //
+    //      }
+    //
+    //
+    //
+    //      //获取证件类型
+    //      if (window.WCardTypeList == undefined) {
+    //        Vue.GetCardType(function (e) {
+    //          that.cardTypeList = e.data;
+    //          console.log(e)
+    //          that.cardType = that.cardTypeList[0].value;
+    //          window.WCardTypeList = e.data;
+    //        })
+    //      } else {
+    //        that.cardTypeList = window.WCardTypeList;
+    //        that.cardType = window.WCardTypeList[0].value;
+    //      }
+    //      //审核人
+    //      if (window.WcheckerList != undefined) {
+    ////        console.log(window.WcheckerList)
+    //        that.checkerInfo = window.WcheckerList;
+    //        that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
+    //      } else {
+    //        that.getChercker()
+    //      }
+    //
+    //      if (window.Wlongguest != undefined) {
+    //        that.longguestCompany = window.Wlongguest;
+    ////        console.log(window.Wlongguest.length)
+    //        if (window.Wlongguest.length == 0) {
+    //          that.longguesterdisabled = true;
+    //
+    //        }
+    //      } else {
+    //        Vue.GetLongGuest(that.searchKW, function (e) {
+    //          that.longguestCompany = e.rows;
+    //          console.log(that.longguestCompany)
+    //          window.Wlongguest = that.longguestCompany;
+    ////          console.log(window.Wlongguest.length)
+    //
+    //          if (window.Wlongguest.length == 0) {
+    //            that.longguesterdisabled = true;
+    //
+    //          }
+    //
+    //        })
+    //      }
+    //
+    //
+    //        })
+    //      })
+
+
+    $(function() {
+      var nowTime = new Date()
+      $('.datetime').mobiscroll().datetime({
+        defaultValue: new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate() + 1, "8", "00"),
+        dateFormat: 'yy-mm-dd', // 日期格式
+        dateOrder: 'yymmdd', //面板中日期排列格式
+        theme: 'android-holo light', //皮肤样式
+        mode: 'scroller', //日期选择模式
+        lang: 'zh',
+        display: 'modal',
+        stepMinute: 15,
+        minDate: new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate(), "8", "00"),
+        onShow: function(inst) {
+          setTimeout(function() {
+            $("input").removeClass("dwtd").removeAttr("disabled")
+          }, 30)
+
+
+        },
+        onClose: function(valueText, inst) {
+          that.youWant = valueText;
+          console.log(valueText)
+          setTimeout(function() {
+            $(".datetime").find("input").attr("disabled", "disabled")
+            $("#longguester").find("input").attr("disabled", "disabled")
+            //              console.log($(this).find("input").attr("class"))
+          }, 20)
+        },
+        onSelect: function(valueText, inst) {
+          console.log(valueText);
+          that.youWant = valueText;
+          that.visitdate = that.youWant
+        },
+
+      });
+    })
+    if (that.showCar == "SGM") {
+      that.addmymesg = ["是否保存为常用联系人"]
+    } else {
+      that.addmymesg = ['是否需要访客补充信息']
+    }
+    //监听是sgm还是patac
+    that.$bus.$on('sgmorpathcchange', function(arg) {
+      //        console.log(window.factoryanddoor)
+      if (arg == "PATAC") {
+        that.showCar = arg;
+        that.visitaddress = ""
+        if (that.supplierType == "长期供应商") {
+          that.isLongGuestCompany = true;
+          that.visitaddress = ""
+        } else {
+          that.isLongGuestCompany = false;
+          that.visitaddress1 = ""
+        }
+        that.addmymesg = ['是否需要访客补充信息']
+        //726
+        //      that.factoryselected="2";
       } else {
-        that.visiter = window.userName;
-        that.department = window.deptname;
-        //门岗优化
-        let doorandfac = window.getDoor;
-        that.factory = doorandfac.rows;
+        that.showCar = arg;
+        that.isLongGuestCompany = false;
+        that.addmymesg = ["是否保存为常用联系人"]
+        //726
+        //      that.factoryselected="1";
+      }
+    })
+    //修复BUG
+    document.querySelector(".poup").addEventListener('touchmove', function(event) {
+      event.preventDefault();
+    }, false);
+    $(".poup").width($(window).width() * 0.95);
+    $(".poup").height($(window).height() * 0.35);
+    $(".poupSearch").height($(window).height() * 0.55);
+  },
+
+
+  watch: {
+    //      cardType(e){
+    //          console.log(e.indexOf("居民身份证")>-1)
+    //      },
+    //      guestIdcardNo(){
+    //        let that = this;
+    //        that.identityCodeValid(that.guestIdcardNo)
+    //        console.log(that.identityCodeValid(that.guestIdcardNo))
+    //      },
+    youWant(e) {
+      if (e != "请输入来访日期") {
+        $(".page-datetime-wrapper button").addClass("color1")
+      } else {
+        $(".page-datetime-wrapper button").removeClass("color1").addClass("color2")
+      }
+    },
+
+    supplierType(arg) {
+      let that = this;
+      if (arg == "长期供应商" && that.showCar == "PATAC") {
+        that.isLongGuestCompany = true;
+        that.visitaddress = ""
+        //            that.visitaddress1=that.longguestCompany[0].name
+        that.visitaddress1 = ""
+      } else {
+        that.isLongGuestCompany = false;
+        that.visitaddress = ""
+        that.visitaddress1 = ""
+      }
+
+    },
+    searchByNameselected(arg) {
+      let that = this;
+      let gg = false;
+      if (arg == 2) {
+        $(".poupSearch .mint-tab-container-item").eq(1).css("display", "block")
+        that.searchKW = ""
+        that.ischangeName = -1;
+        that.changeNameVal = "";
+      } else {
+        that.searchByName("")
+      }
+    },
+    factoryselected(selected) {
+      //          alert(selected)
+
+      localStorage.setItem("selectedfactory", selected);
+      //监听factory的变化。从而使区域和门岗进行对应变化。
+      let arg = "";
+      let patacId = null;
+      this.factory.forEach(function(item, index) {
+        if (item.name == "泛亚") {
+          patacId = item.id;
+        }
+      });
+      if (selected == patacId) {
+        arg = "PATAC";
+        this.supplierType = "普通供应商"
+      } else {
+        arg = "SGM"
+      }
+
+
+      //向头部发送消息
+      this.$bus.$emit('isSGM', arg);
+      localStorage.setItem("isSgmOrPatac", arg);
+      this.$bus.$emit('sgmorpathcchange', arg); //Hub触发事件
+      let area = null;
+      let gate = null;
+      this.factory.forEach(function(item) {
+        if (item.id == selected) {
+
+          area = item.areas
+          gate = item.doors
+        }
+      });
+      this.area = area
+      this.gate = gate
+
+      this.gateselected = gate[0].id
+      this.areaselected = area[0].id
+    },
+    //      longguestpoup(e){alert(e)},
+    showSearchByName: function(arg) {
+      let that = this;
+      let flag = !arg
+      that.$bus.$emit('isDisableCkick', flag);
+      if (arg) {
+        //在访客姓名里面进行访客赛选
+        that.searchKW = ""
+        that.searchByName(that.searchKW);
+        that.searchByNameselected = "1";
+        $(".poupSearch .mint-tab-container-item").eq(0).css("display", "block");
+
+        mplus.setBackListener({
+          active: '1',
+        })
+        document.addEventListener("backpressed", function(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          that.showSearchByName = false;
+        }, false)
+
+      } else {
+        $(".poupContent").scrollTop(0);
+        mplus.setBackListener({
+          active: '0',
+        })
+
+      }
+    },
+    searchKW(e) {
+      let that = this;
+      if (window.islongorvisiter == "long") {
+        that.searchLong(that.searchKW);
+      } else {
+        that.searchByName(that.searchKW);
+      }
+      //        that.searchByNameselected = "1";
+    },
+    personContent: function() {
+      if (this.personContent.length == 0) {
+        this.deleteicon = false
+      }
+    },
+    personContentForThing: function() {
+      if (this.personContentForThing.length == 0) {
+        this.deleteiconForThing = false
+      }
+    },
+  },
+  methods: {
+
+    identityCodeValid(code) {
+      var city = {
+        11: "北京",
+        12: "天津",
+        13: "河北",
+        14: "山西",
+        15: "内蒙古",
+        21: "辽宁",
+        22: "吉林",
+        23: "黑龙江 ",
+        31: "上海",
+        32: "江苏",
+        33: "浙江",
+        34: "安徽",
+        35: "福建",
+        36: "江西",
+        37: "山东",
+        41: "河南",
+        42: "湖北 ",
+        43: "湖南",
+        44: "广东",
+        45: "广西",
+        46: "海南",
+        50: "重庆",
+        51: "四川",
+        52: "贵州",
+        53: "云南",
+        54: "西藏 ",
+        61: "陕西",
+        62: "甘肃",
+        63: "青海",
+        64: "宁夏",
+        65: "新疆",
+        71: "台湾",
+        81: "香港",
+        82: "澳门",
+        91: "国外 "
+      };
+      var tip = "";
+      var pass = true;
+
+      if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
+        tip = "身份证号格式错误";
+        pass = false;
+      } else if (!city[code.substr(0, 2)]) {
+        tip = "地址编码错误";
+        pass = false;
+      }
+      else {
+        //18位身份证需要验证最后一位校验位
+        if (code.length == 18) {
+          code = code.split('');
+          //∑(ai×Wi)(mod 11)
+          //加权因子
+          var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
+          //校验位
+          var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
+          var sum = 0;
+          var ai = 0;
+          var wi = 0;
+          for (var i = 0; i < 17; i++) {
+            ai = code[i];
+            wi = factor[i];
+            sum += ai * wi;
+          }
+          var last = parity[sum % 11];
+          if (parity[sum % 11] != code[17]) {
+            tip = " 校验位错误";
+            pass = false;
+          }
+        }
+      }
+      return pass
+    },
+
+
+    longguestclick() {
+      let that = this;
+      that.searchByNameselected = "1";
+      that.searchLong(that.searchKW)
+      that.longguestpoup = true;
+      that.searchKW = '';
+      //判断是点击长期供应商出现的poup还是访客姓名出现的poup
+      window.islongorvisiter = "long"
+    }
+    ,
+    clickinput(e) {
+      $(e.currentTarget).find("input").focus()
+    }
+    ,
+    deleteiconShow() {
+      //        console.log(this.personContent)
+      if (this.personContent.length == 0) return;
+      this.deleteicon = !this.deleteicon
+    }
+    ,
+    deleteiconShowForThing() {
+      if (this.personContentForThing.length == 0) return;
+      this.deleteiconForThing = !this.deleteiconForThing
+    }
+    ,
+    deleteiconShowForCar() {
+      if (this.personContentForCar.length == 0) return;
+      this.deleteiconForCar = !this.deleteiconForCar
+    }
+    ,
+    addData() {
+      if (this.deleteicon && this.personContent.length != 0) return;
+      this.personContent.push({ "name": "", "idNo": "" });
+    }
+    ,
+    addDataForThing() {
+      if (this.deleteiconForThing && this.personContentForThing.length != 0) return;
+      this.personContentForThing.push({ "name": "", "number": "", "type": "", "desc": "" });
+    }
+    ,
+    addDataForCar() {
+      if (this.deleteiconForCar && this.personContentForCar.length != 0) return;
+      this.personContentForCar.push({ "carNo": "" });
+    }
+    ,
+    deleteData(index) {
+      this.personContent.splice(index, 1);
+    }
+    ,
+    deleteDataForThing(index) {
+      this.personContentForThing.splice(index, 1)
+    }
+    ,
+    deleteDataForCar(index) {
+      this.personContentForCar.splice(index, 1)
+    }
+    ,
+    isShowPerson() {
+      if (this.personContent.length == 0) return;
+      this.showOrHideForPerson = !this.showOrHideForPerson
+    }
+    ,
+    isShowThing() {
+      if (this.personContentForThing.length == 0) return;
+      this.showOrHideForThing = !this.showOrHideForThing
+    }
+    ,
+    isShowCar() {
+      //        console.log(this.personContentForCar)
+
+      if (this.personContentForCar.length == 0) return;
+      this.showOrHideForCar = !this.showOrHideForCar
+    }
+    ,
+    hideAlert() {
+      this.showAlert = false
+    }
+    ,
+    ShowAlert() {
+      let that = this;
+      //验证表单
+      if (that.isLongGuestCompany) {
+        var company = that.visitaddress1
+      } else {
+        var company = that.visitaddress
+      }
+
+      if (!that.visitername) {
+        Toast({
+          message: '访客姓名不能为空',
+          duration: 1000
+        });
+      } else if (!that.guestIdcardNo) {
+        Toast({
+          message: '证件号不能为空',
+          duration: 1000
+        });
+      } else if (that.cardType.indexOf("居民身份证") > -1 && !that.identityCodeValid(that.guestIdcardNo)) {
+        Toast({
+          message: '请输入正确的身份证号码',
+          duration: 1000
+        });
+      }
+      else if (!that.telnum) {
+        Toast({
+          message: '手机号码不能为空',
+          duration: 1000
+        });
+      } else if (!that.visitdate) {
+        Toast({
+          message: '来访日期不能为空',
+          duration: 1000
+        });
+      } else if (!company) {
+        Toast({
+          message: '来访单位不能为空',
+          duration: 1000
+        });
+      } else if (!that.visitmatter) {
+        Toast({
+          message: '来访事由不能为空',
+          duration: 1000
+        });
+      } else if (that.personContent.length != 0 || that.personContentForThing.length != 0 || that.personContentForCar.length != 0) {
+        var personFlag = true;
+        var ThingFlag = true;
+        var CarFlag = true;
+        //          console.log(that.personContentForThing)
+
+
+        if (that.personContent.length != 0) {
+          personFlag = that.personContent.every(function(item, index) {
+            return item.idNo != "" && item.name != ""
+          });
+        }
+        //          console.log(personFlag)
+
+
+        if (that.personContentForThing.length != 0) {
+          ThingFlag = that.personContentForThing.every(function(item, index) {
+            return item.number != "" && item.name != ""
+          });
+        }
+        //          console.log(ThingFlag)
+
+        if (that.personContentForCar.length != 0) {
+          CarFlag = that.personContentForCar.every(function(item) {
+            return item.carNo != ""
+          });
+        }
+        //          console.log(CarFlag)
+
+        if (that.showCar == "SGM") {
+          if (!personFlag) {
+            Toast({
+              message: '随访人员信息不能为空',
+              duration: 1000
+            });
+          } else if (!CarFlag) {
+            Toast({
+              message: '随访车辆信息不能为空',
+              duration: 1000
+            });
+          } else if (!ThingFlag) {
+            Toast({
+              message: '随访物品名称和数量不能为空',
+              duration: 1000
+            });
+          } else {
+            that.showAlert = true
+          }
+        } else {
+          if (!personFlag) {
+            Toast({
+              message: '随访人员信息不能为空',
+              duration: 1000
+            });
+          } else if (!ThingFlag) {
+            Toast({
+              message: '随访物品名称和数量不能为空',
+              duration: 1000
+            });
+          } else {
+            that.showAlert = true
+          }
+        }
+      } else {
+        that.showAlert = true
+      }
+
+    }
+    ,
+    ajaxfactoryanddoor() {
+      let that = this;
+      //获取门岗信息
+      Vue.GetDoor(function(e) {
+        console.log("厂区")
+        console.log(e)
+
+        //            Indicator.close()
+        window.getDoor = e;
+        that.factory = e.rows;
+
         let patacId = null;
-        that.factory.forEach(function (item, index) {
+        that.factory.forEach(function(item, index) {
           if (item.name == "泛亚") {
             patacId = item.id;
           }
@@ -479,113 +1090,344 @@
         if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
           that.factoryselected = patacId
         } else {
-//          that.factoryselected = "1";
+          //            that.factoryselected = "1"
           that.factoryselected = localStorage.getItem("selectedfactory") || "1";
-        }
-        //证件优化
-        that.cardTypeList = window.WCardTypeList;
-        that.cardType = window.WCardTypeList[0].value;
-//审核人优化
-        that.checkerInfo = window.WcheckerList;
-        that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
-        //长期供应商优化
-
-        that.longguestCompany = window.Wlongguest;
-//        console.log(window.Wlongguest.length)
-        if (window.Wlongguest.length == 0) {
-          that.longguesterdisabled = true;
 
         }
 
+      })
+
+    }
+    ,
+    getChercker() {
+      //获取审核人
+      let that = this;
+      //        if (!window.WcheckerList) {
+      //          console.log("第一次请求待审核人")
+      Vue.GetSearchId(function(e) {
+        let checkerList = [];
+        if (e.rows.length == 0) {
+        } else {
+          var length = e.rows.length;
+          for (var i = 0; i < length; i++) {
+            checkerList.push({
+              "checkerNameForSend": e.rows[i].id,
+              "checkerNameForShow": e.rows[i].userName.split("(")[0]
+            })
+          }
+          that.checkerInfo = checkerList;
+          that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
+          window.WcheckerList = checkerList;
+          //              console.log(that.checkerInfo)
+        }
+      });
+      //        }
+    }
+    ,
+
+    isSure() {
+      let that = this;
+      //        console.log("ajax请求");
+
+
+      if (that.showCar == "SGM") {
+        var SendcheckUserId = "";//审核人
+        var jsoncars = that.personContentForCar;//随访车辆
+        var guestCompanyType = "";//供应商类型
+        that.validDay = "";//有效天数
+      } else {
+        var SendcheckUserId = that.sendForChecker;
+        var jsoncars = [];
+        that.validDay = that.validDay
+      }
+      if (that.supplierType == "普通供应商") {
+        guestCompanyType = 1
+      } else {
+        guestCompanyType = 2
+      }
+      if (that.isAddVisiterInfor[0]) {
+        var yesNo = "1";
+      } else {
+        var yesNo = "0";
+      }
+
+      if (that.isLongGuestCompany) {
+        var company = that.visitaddress1
+      } else {
+        var company = that.visitaddress
       }
 
 
-//
-//      Vue.PlusReady(function () {
-////          alert(2)
-////        var uid = NativeObj.getUserName();
-////        Vue.GetLogin(uid);
-////        console.log("token"+uid)
-//        //          Vue.GetLogin("apptest02");
-//
-//        Vue.GetLogin("apptest02",function(){
-//        that.visiter = window.userName;
-//        that.department = window.deptname;
-//      //获取门岗信息725优化
-//      if (!window.ajaxfactoryanddoorHasGet) {
-//        that.ajaxfactoryanddoor();
-//        window.ajaxfactoryanddoorHasGet = true;
-//      } else {
-//        let e = window.getDoor;
-//        that.factory = e.rows;
-//
-//        let patacId = null;
-//        that.factory.forEach(function (item, index) {
-//          if (item.name == "泛亚") {
-//            patacId = item.id;
-//          }
-//        });
-//        if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
-//          that.factoryselected = patacId
-//        } else {
-////          that.factoryselected = "1";
-//          that.factoryselected = localStorage.getItem("selectedfactory")||"1";
-//
-//        }
-//
-//      }
-//
-//
-//
-//      //获取证件类型
-//      if (window.WCardTypeList == undefined) {
-//        Vue.GetCardType(function (e) {
-//          that.cardTypeList = e.data;
-//          console.log(e)
-//          that.cardType = that.cardTypeList[0].value;
-//          window.WCardTypeList = e.data;
-//        })
-//      } else {
-//        that.cardTypeList = window.WCardTypeList;
-//        that.cardType = window.WCardTypeList[0].value;
-//      }
-//      //审核人
-//      if (window.WcheckerList != undefined) {
-////        console.log(window.WcheckerList)
-//        that.checkerInfo = window.WcheckerList;
-//        that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
-//      } else {
-//        that.getChercker()
-//      }
-//
-//      if (window.Wlongguest != undefined) {
-//        that.longguestCompany = window.Wlongguest;
-////        console.log(window.Wlongguest.length)
-//        if (window.Wlongguest.length == 0) {
-//          that.longguesterdisabled = true;
-//
-//        }
-//      } else {
-//        Vue.GetLongGuest(that.searchKW, function (e) {
-//          that.longguestCompany = e.rows;
-//          console.log(that.longguestCompany)
-//          window.Wlongguest = that.longguestCompany;
-////          console.log(window.Wlongguest.length)
-//
-//          if (window.Wlongguest.length == 0) {
-//            that.longguesterdisabled = true;
-//
-//          }
-//
-//        })
-//      }
-//
-//
-//        })
-//      })
+      var senddata = {
+        "token": window.token,
+        "uid": window.id,
+        "guestName": that.visitername,
+        "guestCompanyName": company,
+        "guestIdcardNo": that.guestIdcardNo,
+        "guestPhone": that.telnum,
+        "guestVisitDesc": that.visitmatter,
+
+        "visitPlanTime": that.visitdate,
+        "userName": window.userName,
+        "userDeptName": window.deptname,
+
+        "visitBranchIdIn": that.factoryselected,
+        "visitAreaIdIn": that.areaselected,
+        "visitDoorIdIn": that.gateselected,
+
+        "checkUserId": SendcheckUserId,
+        "additionInfo": yesNo,
 
 
-      $(function () {
+        "json_otherGuests": JSON.stringify(that.personContent),
+        "json_carries": JSON.stringify(that.personContentForThing),
+        "json_cars": JSON.stringify(jsoncars),
+
+        "guestCompanyType": guestCompanyType,
+        "visitValidDays": that.validDay,
+      }
+      if (that.showCar == "SGM") {
+        delete senddata.additionInfo;
+        delete senddata.visitValidDays;
+        delete senddata.checkUserId;
+      }
+      if (that.isLongGuestCompany) {
+        delete senddata.checkUserId;
+      }
+      if (that.userIsChecker) {
+        delete senddata.checkUserId;
+      }
+      console.log(senddata)
+
+
+      //预约验证
+
+
+      //预约发起接口
+      Vue.AddInvite(senddata,
+        function() {
+          if (window.token == undefined || window.id == undefined) {
+            Toast("登录账号异常");
+            return false;
+          }
+        },
+        function(e) {
+          console.log(e)
+          Toast("预约成功");
+          //预约成功则添加常用记录
+          if (yesNo == 1 && that.showCar == "SGM") {
+            //              console.log("Order", localStorage.getItem("frequentlyUsedHistory"))
+            var oldHistory = JSON.parse(localStorage.getItem("frequentlyUsedHistory"));
+            var Len = oldHistory.length + 1;
+            var historyName = "记录" + Len;
+            var historyItem = {
+              "token": window.token,
+              "uid": window.id,
+              "guestName": that.visitername,
+              "guestPhone": that.telnum,
+              //                "visitPlanTime": that.visitdate,
+              "visitPlanTime": "",
+              "guestCompanyName": that.visitaddress,
+              "guestVisitDesc": that.visitmatter,
+              "userName": window.userName,
+              "userDeptName": window.deptname,
+              "visitBranchIdIn": that.factoryselected,
+              "visitAreaIdIn": that.areaselected,
+              "visitDoorIdIn": that.gateselected,
+              "guestIdcardNo": that.guestIdcardNo,
+              "checkUserId": SendcheckUserId,
+              "additionInfo": yesNo
+            };
+            var newHistoryItem = {
+              "historyName": historyName,
+              "historyItem": historyItem
+            };
+            //              console.log(oldHistory.constructor === Array)
+            // console.log(newHistoryItem)
+            oldHistory.push(newHistoryItem)
+            //              console.log(oldHistory)
+            that.frequentlyUsedHistory = oldHistory;
+            localStorage.setItem("frequentlyUsedHistory", JSON.stringify(oldHistory))
+            //              console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
+            //              console.log(that.frequentlyUsedHistory);
+          }
+          //清空
+          that.clearInput()
+        }
+      )
+      this.showAlert = false;
+    }
+    ,
+
+
+    searchLong(KW) {
+      let that = this;
+      let search = [];
+      that.SearchByNameListForLongguest = [];
+      Vue.GetLongGuest(KW, function(e) {
+        console.log("pppppppppppppppppppp");
+        console.log(e);
+        e.rows.map(function(item) {
+          search.push({
+            name: item.name,
+            tel: item.contactor,
+            company: item.companyName,
+            idcard: item.description
+          });
+        })
+        that.SearchByNameListForLongguest = search;
+        ////            console.log(that.SearchByNameList);
+
+      })
+
+    }
+    ,
+    searchByName(KW) {
+      let that = this;
+      let search = [];
+      that.SearchByNameList = [];
+      if (that.searchByNameselected == "1") {
+        Vue.GetLinkers("up", 1, 100, KW, function(e) {
+          //            console.log("pppppppppppppppppppp");
+          console.log(e.rows);
+          e.rows.map(function(item) {
+            search.push({
+              name: item.name,
+              tel: item.phone,
+              company: item.companyName,
+              idcard: item.description
+            });
+          })
+          that.SearchByNameList = search;
+          //            console.log(that.SearchByNameList);
+
+        })
+
+      }
+    }
+    ,
+
+
+    searchclick(arg) {
+      let that = this;
+      let search = that.SearchByNameList[arg]
+      that.visitername = search.name;
+      that.guestIdcardNo = search.idcard;
+      that.telnum = search.tel;
+      that.visitaddress = search.company;
+      that.showSearchByName = false;
+
+    }
+    ,
+
+    searchlongclick(arg) {
+      let that = this;
+      let search = that.SearchByNameListForLongguest[arg];
+      console.log(that.SearchByNameListForLongguest[arg])
+      that.visitaddress1 = search.name;
+      that.visitaddress = "";
+
+      that.showSearchByName = false;
+      that.longguestpoup = false
+
+    }
+    ,
+    showSearch() {
+      let that = this;
+      that.showSearchByName = true;
+      window.islongorvisiter = "visiter";
+      setTimeout(function() {
+        $(".mint-popup.tab").css("z-index", "3001")
+        $(".v-modal").css("z-index", "3000")
+      })
+
+    }
+    ,
+    hideSearchByName() {
+      let that = this;
+      that.showSearchByName = false;
+      that.longguestpoup = false
+    }
+    ,
+    addInput(arg) {
+      let that = this;
+      let thisItenm = that.frequentlyUsedHistory[arg].historyItem;
+      //        console.log(thisItenm)
+      that.visitername = thisItenm.guestName;
+      that.guestIdcardNo = thisItenm.guestIdcardNo;
+      that.telnum = thisItenm.guestPhone;
+      that.visitdate = thisItenm.visitPlanTime;
+      that.visitaddress = thisItenm.guestCompanyName;
+      that.department = thisItenm.userDeptName;
+      that.factoryselected = thisItenm.visitBranchIdIn;
+      that.areaselected = thisItenm.visitAreaIdIn;
+      that.gateselected = thisItenm.visitDoorIdIn;
+      that.sendForChecker = thisItenm.checkUserId;
+
+      that.showSearchByName = false;
+    }
+    ,
+
+
+    useHistoryClick(e) {
+      e.stopPropagation()
+      e.preventDefault()
+
+    }
+    ,
+    save(arg, oldval) {
+      this.ischangeName = -1
+      if (this.changeNameVal != "") {
+        this.frequentlyUsedHistory[arg].historyName = this.changeNameVal
+        //          console.log(this.frequentlyUsedHistory[arg].historyName)
+        localStorage.setItem("frequentlyUsedHistory", JSON.stringify(this.frequentlyUsedHistory))
+        this.changeNameVal = ""
+      } else {
+        return
+      }
+
+    }
+    ,
+
+    changeName(arg) {
+      let that = this;
+      that.ischangeName = arg;
+
+    }
+    ,
+    deleteThisHistory(arg) {
+      let that = this;
+      // frequentlyUsedHistory:
+      that.frequentlyUsedHistory.splice(arg, 1);
+      // that.frequentlyUsedHistory.map(function(item,index){
+      //   item.historyName="记录"+(index+1)
+      // });
+      localStorage.setItem("frequentlyUsedHistory", JSON.stringify(that.frequentlyUsedHistory))
+      //        console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
+    }
+    ,
+    clearInput() {
+      //        console.log("清空input")
+      let that = this;
+      that.visitername = "";
+      that.guestIdcardNo = "";
+      that.telnum = "";
+      that.visitdate = "";
+      that.visitaddress = "";
+      that.visitmatter = "";
+      that.personContent = [];
+      that.personContentForThing = [];
+      that.personContentForCar = [];
+      that.isAddVisiterInfor = []
+      that.datetimevalue = null,
+        that.validDay = "1",
+        that.youWant = "请输入来访日期"
+      that.cardType = that.cardTypeList[0].value,
+        that.supplierType = "普通供应商",
+        that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
+      that.gateselected = that.gate[0].id
+      that.areaselected = that.area[0].id
+      $(function() {
         var nowTime = new Date()
         $('.datetime').mobiscroll().datetime({
           defaultValue: new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate() + 1, "8", "00"),
@@ -597,23 +1439,10 @@
           display: 'modal',
           stepMinute: 15,
           minDate: new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate(), "8", "00"),
-          onShow: function (inst) {
-            setTimeout(function () {
-              $("input").removeClass("dwtd").removeAttr("disabled")
-            }, 30)
-
-
-          },
-          onClose: function (valueText, inst) {
+          onClose: function(valueText, inst) {
             that.youWant = valueText;
-            console.log(valueText)
-            setTimeout(function () {
-              $(".datetime").find("input").attr("disabled", "disabled")
-              $("#longguester").find("input").attr("disabled", "disabled")
-//              console.log($(this).find("input").attr("class"))
-            }, 20)
           },
-          onSelect: function (valueText, inst) {
+          onSelect: function(valueText, inst) {
             console.log(valueText);
             that.youWant = valueText;
             that.visitdate = that.youWant
@@ -621,1165 +1450,307 @@
 
         });
       })
-      if (that.showCar == "SGM") {
-        that.addmymesg = ["是否保存为常用联系人"]
-      } else {
-        that.addmymesg = ['是否需要访客补充信息']
-      }
-      //监听是sgm还是patac
-      that.$bus.$on('sgmorpathcchange', function (arg) {
-//        console.log(window.factoryanddoor)
-        if (arg == "PATAC") {
-          that.showCar = arg;
-          that.visitaddress = ""
-          if (that.supplierType == "长期供应商") {
-            that.isLongGuestCompany = true;
-            that.visitaddress = ""
-          } else {
-            that.isLongGuestCompany = false;
-            that.visitaddress1 = ""
-          }
-          that.addmymesg = ['是否需要访客补充信息']
-          //726
-//      that.factoryselected="2";
-        } else {
-          that.showCar = arg;
-          that.isLongGuestCompany = false;
-          that.addmymesg = ["是否保存为常用联系人"]
-          //726
-//      that.factoryselected="1";
-        }
-      })
-      //修复BUG
-      document.querySelector(".poup").addEventListener('touchmove', function (event) {
-        event.preventDefault();
-      }, false);
-      $(".poup").width($(window).width() * 0.95);
-      $(".poup").height($(window).height() * 0.35);
-      $(".poupSearch").height($(window).height() * 0.55);
-    },
-
-
-    watch: {
-//      cardType(e){
-//          console.log(e.indexOf("居民身份证")>-1)
-//      },
-//      guestIdcardNo(){
-//        let that = this;
-//        that.identityCodeValid(that.guestIdcardNo)
-//        console.log(that.identityCodeValid(that.guestIdcardNo))
-//      },
-      youWant(e){
-        if (e != "请输入来访日期") {
-          $(".page-datetime-wrapper button").addClass("color1")
-        } else {
-          $(".page-datetime-wrapper button").removeClass("color1").addClass("color2")
-        }
-      },
-
-      supplierType(arg){
-        let that = this;
-        if (arg == "长期供应商" && that.showCar == "PATAC") {
-          that.isLongGuestCompany = true;
-          that.visitaddress = ""
-//            that.visitaddress1=that.longguestCompany[0].name
-          that.visitaddress1 = ""
-        } else {
-          that.isLongGuestCompany = false;
-          that.visitaddress = ""
-          that.visitaddress1 = ""
-        }
-
-      },
-      searchByNameselected(arg){
-        let that = this;
-        let gg = false;
-        if (arg == 2) {
-          $(".poupSearch .mint-tab-container-item").eq(1).css("display", "block")
-          that.searchKW = ""
-          that.ischangeName = -1;
-          that.changeNameVal = "";
-        } else {
-          that.searchByName("")
-        }
-      },
-      factoryselected(selected){
-//          alert(selected)
-
-        localStorage.setItem("selectedfactory", selected);
-        //监听factory的变化。从而使区域和门岗进行对应变化。
-        let arg = "";
-        let patacId = null;
-        this.factory.forEach(function (item, index) {
-          if (item.name == "泛亚") {
-            patacId = item.id;
-          }
-        });
-        if (selected == patacId) {
-          arg = "PATAC";
-          this.supplierType = "普通供应商"
-        } else {
-          arg = "SGM"
-        }
-
-
-        //向头部发送消息
-        this.$bus.$emit('isSGM', arg);
-        localStorage.setItem("isSgmOrPatac", arg);
-        this.$bus.$emit('sgmorpathcchange', arg); //Hub触发事件
-        let area = null;
-        let gate = null;
-        this.factory.forEach(function (item) {
-          if (item.id == selected) {
-
-            area = item.areas
-            gate = item.doors
-          }
-        });
-        this.area = area
-        this.gate = gate
-
-        this.gateselected = gate[0].id
-        this.areaselected = area[0].id
-      },
-//      longguestpoup(e){alert(e)},
-      showSearchByName: function (arg) {
-        let that = this;
-        let flag = !arg
-        that.$bus.$emit('isDisableCkick', flag);
-        if (arg) {
-          //在访客姓名里面进行访客赛选
-          that.searchKW = ""
-          that.searchByName(that.searchKW);
-          that.searchByNameselected = "1";
-          $(".poupSearch .mint-tab-container-item").eq(0).css("display", "block");
-
-          mplus.setBackListener({
-            active: '1',
-          })
-          document.addEventListener("backpressed", function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-            that.showSearchByName = false;
-          }, false)
-
-        } else {
-          $(".poupContent").scrollTop(0);
-          mplus.setBackListener({
-            active: '0',
-          })
-
-        }
-      },
-      searchKW(e){
-        let that = this;
-        if (window.islongorvisiter == "long") {
-          that.searchLong(that.searchKW);
-        } else {
-          that.searchByName(that.searchKW);
-        }
-//        that.searchByNameselected = "1";
-      },
-      personContent: function () {
-        if (this.personContent.length == 0) {
-          this.deleteicon = false
-        }
-      },
-      personContentForThing: function () {
-        if (this.personContentForThing.length == 0) {
-          this.deleteiconForThing = false
-        }
-      },
-    },
-    methods: {
-
-      identityCodeValid(code)
-      {
-        var city = {
-          11: "北京",
-          12: "天津",
-          13: "河北",
-          14: "山西",
-          15: "内蒙古",
-          21: "辽宁",
-          22: "吉林",
-          23: "黑龙江 ",
-          31: "上海",
-          32: "江苏",
-          33: "浙江",
-          34: "安徽",
-          35: "福建",
-          36: "江西",
-          37: "山东",
-          41: "河南",
-          42: "湖北 ",
-          43: "湖南",
-          44: "广东",
-          45: "广西",
-          46: "海南",
-          50: "重庆",
-          51: "四川",
-          52: "贵州",
-          53: "云南",
-          54: "西藏 ",
-          61: "陕西",
-          62: "甘肃",
-          63: "青海",
-          64: "宁夏",
-          65: "新疆",
-          71: "台湾",
-          81: "香港",
-          82: "澳门",
-          91: "国外 "
-        };
-        var tip = "";
-        var pass = true;
-
-        if (!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)) {
-          tip = "身份证号格式错误";
-          pass = false;
-        } else if (!city[code.substr(0, 2)]) {
-          tip = "地址编码错误";
-          pass = false;
-        }
-        else {
-          //18位身份证需要验证最后一位校验位
-          if (code.length == 18) {
-            code = code.split('');
-            //∑(ai×Wi)(mod 11)
-            //加权因子
-            var factor = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2];
-            //校验位
-            var parity = [1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2];
-            var sum = 0;
-            var ai = 0;
-            var wi = 0;
-            for (var i = 0; i < 17; i++) {
-              ai = code[i];
-              wi = factor[i];
-              sum += ai * wi;
-            }
-            var last = parity[sum % 11];
-            if (parity[sum % 11] != code[17]) {
-              tip = " 校验位错误";
-              pass = false;
-            }
-          }
-        }
-        return pass
-      },
-
-
-      longguestclick()
-      {
-        let that = this;
-        that.searchByNameselected = "1";
-        that.searchLong(that.searchKW)
-        that.longguestpoup = true;
-        that.searchKW = '';
-        //判断是点击长期供应商出现的poup还是访客姓名出现的poup
-        window.islongorvisiter = "long"
-      }
-      ,
-      clickinput(e)
-      {
-        $(e.currentTarget).find("input").focus()
-      }
-      ,
-      deleteiconShow()
-      {
-//        console.log(this.personContent)
-        if (this.personContent.length == 0) return;
-        this.deleteicon = !this.deleteicon
-      }
-      ,
-      deleteiconShowForThing()
-      {
-        if (this.personContentForThing.length == 0) return;
-        this.deleteiconForThing = !this.deleteiconForThing
-      }
-      ,
-      deleteiconShowForCar()
-      {
-        if (this.personContentForCar.length == 0) return;
-        this.deleteiconForCar = !this.deleteiconForCar
-      }
-      ,
-      addData()
-      {
-        if (this.deleteicon && this.personContent.length != 0) return;
-        this.personContent.push({"name": "", "idNo": ""});
-      }
-      ,
-      addDataForThing()
-      {
-        if (this.deleteiconForThing && this.personContentForThing.length != 0) return;
-        this.personContentForThing.push({"name": "", "number": "", "type": "", "desc": ""});
-      }
-      ,
-      addDataForCar()
-      {
-        if (this.deleteiconForCar && this.personContentForCar.length != 0) return;
-        this.personContentForCar.push({"carNo": ""});
-      }
-      ,
-      deleteData(index)
-      {
-        this.personContent.splice(index, 1);
-      }
-      ,
-      deleteDataForThing(index)
-      {
-        this.personContentForThing.splice(index, 1)
-      }
-      ,
-      deleteDataForCar(index)
-      {
-        this.personContentForCar.splice(index, 1)
-      }
-      ,
-      isShowPerson()
-      {
-        if (this.personContent.length == 0) return;
-        this.showOrHideForPerson = !this.showOrHideForPerson
-      }
-      ,
-      isShowThing()
-      {
-        if (this.personContentForThing.length == 0) return;
-        this.showOrHideForThing = !this.showOrHideForThing
-      }
-      ,
-      isShowCar()
-      {
-//        console.log(this.personContentForCar)
-
-        if (this.personContentForCar.length == 0) return;
-        this.showOrHideForCar = !this.showOrHideForCar
-      }
-      ,
-      hideAlert()
-      {
-        this.showAlert = false
-      }
-      ,
-      ShowAlert()
-      {
-        let that = this;
-        //验证表单
-        if (that.isLongGuestCompany) {
-          var company = that.visitaddress1
-        } else {
-          var company = that.visitaddress
-        }
-
-        if (!that.visitername) {
-          Toast({
-            message: '访客姓名不能为空',
-            duration: 1000
-          });
-        } else if (!that.guestIdcardNo) {
-          Toast({
-            message: '证件号不能为空',
-            duration: 1000
-          });
-        } else if (that.cardType.indexOf("居民身份证")>-1 && !that.identityCodeValid(that.guestIdcardNo)) {
-          Toast({
-            message: '请输入正确的身份证号码',
-            duration: 1000
-          });
-        }
-        else if (!that.telnum) {
-          Toast({
-            message: '手机号码不能为空',
-            duration: 1000
-          });
-        } else if (!that.visitdate) {
-          Toast({
-            message: '来访日期不能为空',
-            duration: 1000
-          });
-        } else if (!company) {
-          Toast({
-            message: '来访单位不能为空',
-            duration: 1000
-          });
-        } else if (!that.visitmatter) {
-          Toast({
-            message: '来访事由不能为空',
-            duration: 1000
-          });
-        } else if (that.personContent.length != 0 || that.personContentForThing.length != 0 || that.personContentForCar.length != 0) {
-          var personFlag = true;
-          var ThingFlag = true;
-          var CarFlag = true;
-//          console.log(that.personContentForThing)
-
-
-          if (that.personContent.length != 0) {
-            personFlag = that.personContent.every(function (item, index) {
-              return item.idNo != "" && item.name != ""
-            });
-          }
-//          console.log(personFlag)
-
-
-          if (that.personContentForThing.length != 0) {
-            ThingFlag = that.personContentForThing.every(function (item, index) {
-              return item.number != "" && item.name != ""
-            });
-          }
-//          console.log(ThingFlag)
-
-          if (that.personContentForCar.length != 0) {
-            CarFlag = that.personContentForCar.every(function (item) {
-              return item.carNo != ""
-            });
-          }
-//          console.log(CarFlag)
-
-          if (that.showCar == "SGM") {
-            if (!personFlag) {
-              Toast({
-                message: '随访人员信息不能为空',
-                duration: 1000
-              });
-            } else if (!CarFlag) {
-              Toast({
-                message: '随访车辆信息不能为空',
-                duration: 1000
-              });
-            } else if (!ThingFlag) {
-              Toast({
-                message: '随访物品名称和数量不能为空',
-                duration: 1000
-              });
-            } else {
-              that.showAlert = true
-            }
-          } else {
-            if (!personFlag) {
-              Toast({
-                message: '随访人员信息不能为空',
-                duration: 1000
-              });
-            } else if (!ThingFlag) {
-              Toast({
-                message: '随访物品名称和数量不能为空',
-                duration: 1000
-              });
-            } else {
-              that.showAlert = true
-            }
-          }
-        } else {
-          that.showAlert = true
-        }
-
-      }
-      ,
-      ajaxfactoryanddoor()
-      {
-        let that = this;
-        //获取门岗信息
-        Vue.GetDoor(function (e) {
-          console.log("厂区")
-          console.log(e)
-
-//            Indicator.close()
-          window.getDoor = e;
-          that.factory = e.rows;
-
-          let patacId = null;
-          that.factory.forEach(function (item, index) {
-            if (item.name == "泛亚") {
-              patacId = item.id;
-            }
-          });
-          if (localStorage.getItem("isSgmOrPatac") == "PATAC") {
-            that.factoryselected = patacId
-          } else {
-//            that.factoryselected = "1"
-            that.factoryselected = localStorage.getItem("selectedfactory") || "1";
-
-          }
-
-        })
-
-      }
-      ,
-      getChercker()
-      {
-        //获取审核人
-        let that = this;
-//        if (!window.WcheckerList) {
-//          console.log("第一次请求待审核人")
-        Vue.GetSearchId(function (e) {
-          let checkerList = [];
-          if (e.rows.length == 0) {
-          } else {
-            var length = e.rows.length;
-            for (var i = 0; i < length; i++) {
-              checkerList.push({
-                "checkerNameForSend": e.rows[i].id,
-                "checkerNameForShow": e.rows[i].userName.split("(")[0]
-              })
-            }
-            that.checkerInfo = checkerList;
-            that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
-            window.WcheckerList = checkerList;
-//              console.log(that.checkerInfo)
-          }
-        });
-//        }
-      }
-      ,
-
-      isSure()
-      {
-        let that = this;
-//        console.log("ajax请求");
-
-
-        if (that.showCar == "SGM") {
-          var SendcheckUserId = "";//审核人
-          var jsoncars = that.personContentForCar;//随访车辆
-          var guestCompanyType = "";//供应商类型
-          that.validDay = "";//有效天数
-        } else {
-          var SendcheckUserId = that.sendForChecker;
-          var jsoncars = [];
-          that.validDay = that.validDay
-        }
-        if (that.supplierType == "普通供应商") {
-          guestCompanyType = 1
-        } else {
-          guestCompanyType = 2
-        }
-        if (that.isAddVisiterInfor[0]) {
-          var yesNo = "1";
-        } else {
-          var yesNo = "0";
-        }
-
-        if (that.isLongGuestCompany) {
-          var company = that.visitaddress1
-        } else {
-          var company = that.visitaddress
-        }
-
-
-        var senddata = {
-          "token": window.token,
-          "uid": window.id,
-          "guestName": that.visitername,
-          "guestCompanyName": company,
-          "guestIdcardNo": that.guestIdcardNo,
-          "guestPhone": that.telnum,
-          "guestVisitDesc": that.visitmatter,
-
-          "visitPlanTime": that.visitdate,
-          "userName": window.userName,
-          "userDeptName": window.deptname,
-
-          "visitBranchIdIn": that.factoryselected,
-          "visitAreaIdIn": that.areaselected,
-          "visitDoorIdIn": that.gateselected,
-
-          "checkUserId": SendcheckUserId,
-          "additionInfo": yesNo,
-
-
-          "json_otherGuests": JSON.stringify(that.personContent),
-          "json_carries": JSON.stringify(that.personContentForThing),
-          "json_cars": JSON.stringify(jsoncars),
-
-          "guestCompanyType": guestCompanyType,
-          "visitValidDays": that.validDay,
-        }
-        if (that.showCar == "SGM") {
-          delete senddata.additionInfo;
-          delete senddata.visitValidDays;
-          delete senddata.checkUserId;
-        }
-        if (that.isLongGuestCompany) {
-          delete senddata.checkUserId;
-        }
-        if (that.userIsChecker) {
-          delete senddata.checkUserId;
-        }
-        console.log(senddata)
-
-
-        //预约验证
-
-
-        //预约发起接口
-        Vue.AddInvite(senddata,
-          function () {
-            if (window.token == undefined || window.id == undefined) {
-              Toast("登录账号异常");
-              return false;
-            }
-          },
-          function (e) {
-            console.log(e)
-            Toast("预约成功");
-            //预约成功则添加常用记录
-            if (yesNo == 1 && that.showCar == "SGM") {
-//              console.log("Order", localStorage.getItem("frequentlyUsedHistory"))
-              var oldHistory = JSON.parse(localStorage.getItem("frequentlyUsedHistory"));
-              var Len = oldHistory.length + 1;
-              var historyName = "记录" + Len;
-              var historyItem = {
-                "token": window.token,
-                "uid": window.id,
-                "guestName": that.visitername,
-                "guestPhone": that.telnum,
-//                "visitPlanTime": that.visitdate,
-                "visitPlanTime": "",
-                "guestCompanyName": that.visitaddress,
-                "guestVisitDesc": that.visitmatter,
-                "userName": window.userName,
-                "userDeptName": window.deptname,
-                "visitBranchIdIn": that.factoryselected,
-                "visitAreaIdIn": that.areaselected,
-                "visitDoorIdIn": that.gateselected,
-                "guestIdcardNo": that.guestIdcardNo,
-                "checkUserId": SendcheckUserId,
-                "additionInfo": yesNo
-              };
-              var newHistoryItem = {
-                "historyName": historyName,
-                "historyItem": historyItem
-              };
-//              console.log(oldHistory.constructor === Array)
-              // console.log(newHistoryItem)
-              oldHistory.push(newHistoryItem)
-//              console.log(oldHistory)
-              that.frequentlyUsedHistory = oldHistory;
-              localStorage.setItem("frequentlyUsedHistory", JSON.stringify(oldHistory))
-//              console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
-//              console.log(that.frequentlyUsedHistory);
-            }
-            //清空
-            that.clearInput()
-          }
-        )
-        this.showAlert = false;
-      }
-      ,
-
-
-      searchLong(KW)
-      {
-        let that = this;
-        let search = [];
-        that.SearchByNameListForLongguest = [];
-        Vue.GetLongGuest(KW, function (e) {
-          console.log("pppppppppppppppppppp");
-          console.log(e);
-          e.rows.map(function (item) {
-            search.push({
-              name: item.name,
-              tel: item.contactor,
-              company: item.companyName,
-              idcard: item.description
-            });
-          })
-          that.SearchByNameListForLongguest = search;
-////            console.log(that.SearchByNameList);
-
-        })
-
-      }
-      ,
-      searchByName(KW)
-      {
-        let that = this;
-        let search = [];
-        that.SearchByNameList = [];
-        if (that.searchByNameselected == "1") {
-          Vue.GetLinkers("up", 1, 100, KW, function (e) {
-//            console.log("pppppppppppppppppppp");
-            console.log(e.rows);
-            e.rows.map(function (item) {
-              search.push({
-                name: item.name,
-                tel: item.phone,
-                company: item.companyName,
-                idcard: item.description
-              });
-            })
-            that.SearchByNameList = search;
-//            console.log(that.SearchByNameList);
-
-          })
-
-        }
-      }
-      ,
-
-
-      searchclick(arg)
-      {
-        let that = this;
-        let search = that.SearchByNameList[arg]
-        that.visitername = search.name;
-        that.guestIdcardNo = search.idcard;
-        that.telnum = search.tel;
-        that.visitaddress = search.company;
-        that.showSearchByName = false;
-
-      }
-      ,
-
-      searchlongclick(arg)
-      {
-        let that = this;
-        let search = that.SearchByNameListForLongguest[arg];
-        console.log(that.SearchByNameListForLongguest[arg])
-        that.visitaddress1 = search.name;
-        that.visitaddress = "";
-
-        that.showSearchByName = false;
-        that.longguestpoup = false
-
-      }
-      ,
-      showSearch()
-      {
-        let that = this;
-        that.showSearchByName = true;
-        window.islongorvisiter = "visiter";
-        setTimeout(function () {
-          $(".mint-popup.tab").css("z-index", "3001")
-          $(".v-modal").css("z-index", "3000")
-        })
-
-      }
-      ,
-      hideSearchByName()
-      {
-        let that = this;
-        that.showSearchByName = false;
-        that.longguestpoup = false
-      }
-      ,
-      addInput(arg)
-      {
-        let that = this;
-        let thisItenm = that.frequentlyUsedHistory[arg].historyItem;
-//        console.log(thisItenm)
-        that.visitername = thisItenm.guestName;
-        that.guestIdcardNo = thisItenm.guestIdcardNo;
-        that.telnum = thisItenm.guestPhone;
-        that.visitdate = thisItenm.visitPlanTime;
-        that.visitaddress = thisItenm.guestCompanyName;
-        that.department = thisItenm.userDeptName;
-        that.factoryselected = thisItenm.visitBranchIdIn;
-        that.areaselected = thisItenm.visitAreaIdIn;
-        that.gateselected = thisItenm.visitDoorIdIn;
-        that.sendForChecker = thisItenm.checkUserId;
-
-        that.showSearchByName = false;
-      }
-      ,
-
-
-      useHistoryClick(e)
-      {
-        e.stopPropagation()
-        e.preventDefault()
-
-      }
-      ,
-      save(arg, oldval)
-      {
-        this.ischangeName = -1
-        if (this.changeNameVal != "") {
-          this.frequentlyUsedHistory[arg].historyName = this.changeNameVal
-//          console.log(this.frequentlyUsedHistory[arg].historyName)
-          localStorage.setItem("frequentlyUsedHistory", JSON.stringify(this.frequentlyUsedHistory))
-          this.changeNameVal = ""
-        } else {
-          return
-        }
-
-      }
-      ,
-
-      changeName(arg)
-      {
-        let that = this;
-        that.ischangeName = arg;
-
-      }
-      ,
-      deleteThisHistory(arg)
-      {
-        let that = this;
-        // frequentlyUsedHistory:
-        that.frequentlyUsedHistory.splice(arg, 1);
-        // that.frequentlyUsedHistory.map(function(item,index){
-        //   item.historyName="记录"+(index+1)
-        // });
-        localStorage.setItem("frequentlyUsedHistory", JSON.stringify(that.frequentlyUsedHistory))
-//        console.log(JSON.parse(localStorage.getItem("frequentlyUsedHistory")))
-      }
-      ,
-      clearInput()
-      {
-//        console.log("清空input")
-        let that = this;
-        that.visitername = "";
-        that.guestIdcardNo = "";
-        that.telnum = "";
-        that.visitdate = "";
-        that.visitaddress = "";
-        that.visitmatter = "";
-        that.personContent = [];
-        that.personContentForThing = [];
-        that.personContentForCar = [];
-        that.isAddVisiterInfor = []
-        that.datetimevalue = null,
-          that.validDay = "1",
-          that.youWant = "请输入来访日期"
-        that.cardType = that.cardTypeList[0].value,
-          that.supplierType = "普通供应商",
-          that.sendForChecker = that.checkerInfo[0].checkerNameForSend;
-        that.gateselected = that.gate[0].id
-        that.areaselected = that.area[0].id
-        $(function () {
-          var nowTime = new Date()
-          $('.datetime').mobiscroll().datetime({
-            defaultValue: new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate() + 1, "8", "00"),
-            dateFormat: 'yy-mm-dd', // 日期格式
-            dateOrder: 'yymmdd', //面板中日期排列格式
-            theme: 'android-holo light', //皮肤样式
-            mode: 'scroller', //日期选择模式
-            lang: 'zh',
-            display: 'modal',
-            stepMinute: 15,
-            minDate: new Date(nowTime.getFullYear(), nowTime.getMonth(), nowTime.getDate(), "8", "00"),
-            onClose: function (valueText, inst) {
-              that.youWant = valueText;
-            },
-            onSelect: function (valueText, inst) {
-              console.log(valueText);
-              that.youWant = valueText;
-              that.visitdate = that.youWant
-            },
-
-          });
-        })
-      }
-      ,
-
-
     }
+    ,
+
+
   }
+}
 </script>
 
 <style scoped>
-  #order {
-    width: 100%;
-    text-align: left;
-    /*第二种方案*/
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50px;
-    bottom: 55px;
-    /*overflow-y: scroll;*/
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
+#order {
+  width: 100%;
+  text-align: left;
+  /*第二种方案*/
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50px;
+  bottom: 55px;
+  /*overflow-y: scroll;*/
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
 
-  }
+.test {
+  width: 100%;
+}
 
-  .test {
-    width: 100%;
-  }
+.dis {
+  display: none !important;
+  background: red !important;
+}
 
-  .dis {
-    display: none !important;
-    background: red !important;
-  }
+select {
 
-  select {
+  width: 100%;
+  border: none;
+  font-size: 16px;
+  direction: rtl;
+  padding-right: 15px;
+  -webkit-appearance: none;
+  outline: none;
+  background: transparent !important;
+  position: relative;
+  z-index: 51;
+}
 
-    width: 100%;
-    border: none;
-    font-size: 16px;
-    direction: rtl;
-    padding-right: 15px;
-    -webkit-appearance: none;
-    outline: none;
-    background: transparent !important;
-    position: relative;
-    z-index: 51;
+select>option {
+  background: white !important;
+}
 
-  }
+.selectiIcon {
+  position: absolute;
+  /*right: 10px;*/
+  right: 8px;
+  z-index: 50;
+  /*height: 48px;*/
+  /*line-height:48px;*/
+  /*background: red;*/
+  top: 16px;
+  text-align: right;
+}
 
-  select > option {
-    background: white !important;
-  }
+option {
+  /*text-align: right;*/
+  direction: ltr;
+}
 
-  .selectiIcon {
-    position: absolute;
-    /*right: 10px;*/
-    right: 8px;
-    z-index: 50;
-    /*height: 48px;*/
-    /*line-height:48px;*/
-    /*background: red;*/
-    top: 16px;
-    text-align: right;
+.addformation,
+.addthingformation {
+  margin-top: 8px;
+}
 
-  }
+.addformation>.head,
+.addthingformation>.head {
+  width: 100%;
+  height: 48px;
+  display: inline-flex;
+  background: #26a2ff;
+  color: white;
+  justify-content: space-between;
+  align-items: center
+}
 
-  option {
-    /*text-align: right;*/
-    direction: ltr;
-  }
+.addformation>.head>div:nth-child(1),
+.addthingformation>.head>div:nth-child(1) {
+  margin-left: 8px
+}
 
-  .addformation, .addthingformation {
-    margin-top: 8px;
-  }
+.addformation>.head>div:nth-child(2),
+.addthingformation>.head>div:nth-child(2) {
+  margin-right: 8px
+}
 
-  .addformation > .head, .addthingformation > .head {
-    width: 100%;
-    height: 48px;
-    display: inline-flex;
-    background: #26a2ff;
-    color: white;
-    justify-content: space-between;
-    align-items: center
-  }
+.addformation>.head>.icongroup>span,
+.addthingformation>.head>.icongroup>span {
+  display: inline-block;
+  padding-left: 25px
+}
 
-  .addformation > .head > div:nth-child(1), .addthingformation > .head > div:nth-child(1) {
-    margin-left: 8px
-  }
+.addformation>.content,
+.addthingformation>.content {
+  height: 96px;
+  /*width: calc(100% - 8px);*/
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .addformation > .head > div:nth-child(2), .addthingformation > .head > div:nth-child(2) {
-    margin-right: 8px
-  }
+.addthingformation>.content {
+  height: 192px;
+}
 
-  .addformation > .head > .icongroup > span, .addthingformation > .head > .icongroup > span {
-    display: inline-block;
-    padding-left: 25px
-  }
+.addthingformation.car>.content {
+  height: 48px;
+}
 
-  .addformation > .content,
-  .addthingformation > .content {
-    height: 96px;
-    /*width: calc(100% - 8px);*/
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+.addformation>.content>div:nth-child(2),
+.addthingformation>.content>div:nth-child(2) {
+  width: 10%;
+  text-align: center;
+  height: 90%;
+  background: #fe0000;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .addthingformation > .content {
-    height: 192px;
-  }
+.buttongroup {
+  width: 100%;
+  height: 70px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .addthingformation.car > .content {
-    height: 48px;
-  }
+.buttongroup>button {
+  width: 40%;
+  height: 40px;
+  line-height: 40px;
+  letter-spacing: 10px;
+  text-indent: 10px;
+  margin: 0 20px;
+}
 
-  .addformation > .content > div:nth-child(2), .addthingformation > .content > div:nth-child(2) {
-    width: 10%;
-    text-align: center;
-    height: 90%;
-    background: #fe0000;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
+.buttongroup>button:nth-child(1) {
+  background: #26a2ff
+}
 
-  .buttongroup {
-    width: 100%;
-    height: 70px;
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+.buttongroup>button:nth-child(2) {
+  background: transparent;
+  color: #26a2ff;
+  border: 1px solid #26a2ff
+}
 
-  .buttongroup > button {
-    width: 40%;
-    height: 40px;
-    line-height: 40px;
-    letter-spacing: 10px;
-    text-indent: 10px;
-    margin: 0 20px;
-  }
+.poup>.poupHead {
+  /*height: 20%;*/
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #26a2ff;
+  color: white;
+  box-sizing: border-box;
+  border: 8px solid transparent
+}
 
-  .buttongroup > button:nth-child(1) {
-    background: #26a2ff
-  }
+.poup>.poupContent {
+  /*height: 80%;*/
+  height: calc(100% - 40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .buttongroup > button:nth-child(2) {
-    background: transparent;
-    color: #26a2ff;
-    border: 1px solid #26a2ff
-  }
+.poup>.poupContent>button {
+  background: transparent;
+  color: #26a2ff;
+  border: 1px solid #26a2ff;
+  /*margin-top: -60px!important;*/
+}
 
-  .poup > .poupHead {
-    /*height: 20%;*/
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #26a2ff;
-    color: white;
-    box-sizing: border-box;
-    border: 8px solid transparent
-  }
+.poup>.poupContent>button:nth-child(1) {
+  width: 35%;
+  margin-right: 5%;
+}
 
-  .poup > .poupContent {
-    /*height: 80%;*/
-    height: calc(100% - 40px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.poup>.poupContent>button:nth-child(2) {
+  width: 35%;
+  margin-left: 5%
+}
 
-  }
+.poup>.poupHead {
+  background: transpartent
+}
 
-  .poup > .poupContent > button {
-    background: transparent;
-    color: #26a2ff;
-    border: 1px solid #26a2ff;
-    /*margin-top: -60px!important;*/
-  }
+.poupSearch>.poupHead {
+  border: none;
+}
 
-  .poup > .poupContent > button:nth-child(1) {
-    width: 35%;
-    margin-right: 5%;
-  }
+.poupSearch .mint-navbar {
+  width: 100%;
+  background: #26a2ff
+}
 
-  .poup > .poupContent > button:nth-child(2) {
-    width: 35%;
-    margin-left: 5%
-  }
+.fa-search {
+  height: 48px;
+  width: 20px;
+  line-height: 48px;
+  color: black;
+}
 
-  .poup > .poupHead {
-    background: transpartent
+.poupSearch .fa-remove {
+  position: absolute;
+  right: 4px;
+  top: 0px;
+  height: 40px;
+  width: 20px;
+  /*background: red;*/
+  line-height: 40px;
+  text-align: center;
+}
 
-  }
+.poupSearch .mint-tab-container-wrap {
+  /*margin-top: 20px;*/
+}
 
-  .poupSearch > .poupHead {
-    border: none;
-  }
+.poupSearch .mint-tab-container {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: scroll;
+  border-left: 8px solid white;
+  border-right: 8px solid white;
+}
 
-  .poupSearch .mint-navbar {
-    width: 100%;
-    background: #26a2ff
+.poupSearch ul {
+  border-bottom: 1px solid #c8c8cd;
+  height: 48px;
+}
 
-  }
+.poupSearch.namePoup ul {
+  border-bottom: 1px solid #c8c8cd;
+  height: 72px;
+}
 
-  .fa-search {
-    height: 48px;
-    width: 20px;
-    line-height: 48px;
-    color: black;
-  }
+.poupSearch.namePoup .useHistory {
+  border-bottom: 1px solid #c8c8cd;
+  height: 48px;
+}
 
-  .poupSearch .fa-remove {
-    position: absolute;
-    right: 4px;
-    top: 0px;
-    height: 40px;
-    width: 20px;
-    /*background: red;*/
-    line-height: 40px;
-    text-align: center;
-  }
+.poupSearch .mint-tab-container li {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  .poupSearch .mint-tab-container-wrap {
-    /*margin-top: 20px;*/
+.poupSearch .mint-tab-container li div {
+  flex: 50%;
+  height: 24px;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: clip;
+}
 
-  }
+.poupSearch .mint-tab-container li div:nth-child(1) {
+  flex: 40%;
+  height: 24px;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: clip;
+  padding-right: 10%;
+}
 
-  .poupSearch .mint-tab-container {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    overflow: scroll;
-    border-left: 8px solid white;
-    border-right: 8px solid white;
-  }
+.poupSearch .mint-navbar .mint-tab-item {
+  padding: 0;
+}
 
-  .poupSearch ul {
-    border-bottom: 1px solid #c8c8cd;
-    height: 48px;
-  }
+.poupSearch .mint-navbar .mint-tab-item.is-selected {
+  color: white;
+}
 
-  .poupSearch.namePoup ul {
-    border-bottom: 1px solid #c8c8cd;
-    height: 72px;
-  }
+.poupSearch .useHistory li {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
 
-  .poupSearch.namePoup .useHistory {
-    border-bottom: 1px solid #c8c8cd;
-    height: 48px;
-  }
+.poupSearch .useHistory li>span {
+  position: relative;
+}
 
-  .poupSearch .mint-tab-container li {
-    display: flex;
-    flex-wrap: wrap;
-  }
+.color1 {
+  color: #969696
+}
 
-  .poupSearch .mint-tab-container li div {
-    flex: 50%;
-    height: 24px;
-    line-height: 24px;
-    overflow: hidden;
-    text-overflow: clip;
+.color1 {
+  color: black
+}
 
-  }
-
-  .poupSearch .mint-tab-container li div:nth-child(1) {
-    flex: 40%;
-    height: 24px;
-    line-height: 24px;
-    overflow: hidden;
-    text-overflow: clip;
-    padding-right: 10%;
-
-  }
-
-  .poupSearch .mint-navbar .mint-tab-item {
-    padding: 0;
-  }
-
-  .poupSearch .mint-navbar .mint-tab-item.is-selected {
-    color: white;
-  }
-
-  .poupSearch .useHistory li {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-
-  }
-
-  .poupSearch .useHistory li > span {
-    position: relative;
-  }
-
-  .color1 {
-    color: #969696
-  }
-
-  .color1 {
-    color: black
-  }
-
-  .ffixed {
-    position: absolute !important;
-  }
-
-
+.ffixed {
+  position: absolute !important;
+}
 </style scoped>
