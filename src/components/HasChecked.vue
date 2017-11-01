@@ -199,7 +199,8 @@ export default {
             (function(LL, myindex) {
               Vue.QueryVisit2(LL,
                 function(e) {
-                  currenti++
+                  currenti++;
+                  console.log(e)
                   if (e.data.guests.length == 1) {
                     // 随访访人员
                     hasperson[myindex] = "无"
@@ -227,7 +228,7 @@ export default {
                     if (e.data.guests[i] != undefined) {
 
                       if (e.data.guests[i].guestType != 1) {
-                        Zp.push([e.data.guests[i].guestName + "" + myindex, e.data.guests[i].guestIdcardNo])
+                        Zp.push([e.data.guests[i].guestName, e.data.guests[i].guestIdcardNo])
                         // person[myindex]=[e.data.guests[i].guestName+""+myindex,e.data.guests[i].guestIdcardNo+""+myindex]
                       }
                     } else {

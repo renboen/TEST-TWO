@@ -403,6 +403,8 @@ export default {
       Vue.PlusReady(function() {
         try {
             var currentUser = NativeObj.getUserName();
+        // var currentUser = "apptest01";
+      
         // var currentUser = "srz7lw";
         // var currentUser = "apptest01";
         // var currentUser = "s5j74n";
